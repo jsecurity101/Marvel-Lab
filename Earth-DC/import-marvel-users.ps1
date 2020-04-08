@@ -1,4 +1,4 @@
-﻿#Jonathan Johnson
+#Jonathan Johnson
 #github:https://github.com/jsecurity101
 
 Write-Output "
@@ -22,6 +22,9 @@ Import-Module activedirectory
 #Update the path to where the .csv file is stored. 
 
 $ADUsers = Import-csv C:\Marvel-Lab\Earth-DC\Import-Marvel\marvel_users.csv
+
+#Adding AD Group for Local Admins on Workstations
+New-ADGroup -Name "Local Admins" -SamAccountName LocalAdmins -GroupCategory Security -GroupScope Global -DisplayName "Local Admins" -Path "CN=Users,DC=marvel,DC=local" -Description "Members of this group are Local Administrators on Workstations"
 
 foreach ($User in $ADUsers)
 
@@ -55,8 +58,6 @@ foreach ($User in $ADUsers)
 	{
         #Update to UserPrincipalName to match personal domain. Ex: If domain is: example.com. Should read as - $Username@example.com
         #Update "-Path" on line 58 to match domain.
-
-		New-ADGroup -Name "Local Admins" -SamAccountName LocalAdmins -GroupCategory Security -GroupScope Global -DisplayName "Local Admins" -Path "CN=Users,DC=marvel,DC=local" -Description "Members of this group are Local Administrators on Workstations"
 
 		New-ADUser `
             -SamAccountName $Username `
