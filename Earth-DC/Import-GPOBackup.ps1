@@ -1,5 +1,4 @@
 ﻿# Author: Jonathan Johnson
-# Purpose: Install GPO's from: https://github.com/Cyb3rWard0g/mordor/tree/master/environment/shire/GPOBackup.
 
 
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Configuring auditing policy GPOs."
