@@ -7,4 +7,4 @@
 $User = Read-Host "Please enter username"
 $Password = Read-Host "Please enter username password" -AsSecureString
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $Password
-Rename-computer –computername $env:COMPUTERNAME –newname (“Wakanda-Workstation”) -DomainCredential $Credential -Force -Restart
+Rename-computer –computername $env:COMPUTERNAME –newname (“Wakanda-WrkStn”) -DomainCredential $Credential -Force -Restart
