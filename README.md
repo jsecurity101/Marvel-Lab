@@ -37,11 +37,11 @@ Two different scripts. One is just to install [Sysmon](https://docs.microsoft.co
 
 The `RDP` policy should look like this: 
 
-<p align="center"><img src="https://github.com/jsecurity101/Marvel-Lab/images/RDP.png"></p>
+<p align="center"><img src="https://github.com/jsecurity101/Marvel-Lab/images/RDP.PNG"></p>
 
 The `Workstation Local Administrator Policy` should look like this: 
 
-<p align="center"><img src="https://github.com/jsecurity101/Marvel-Lab/images/LocalAdmin.png"></p>
+<p align="center"><img src="https://github.com/jsecurity101/Marvel-Lab/images/LocalAdmin.PNG"></p>
 
 **Yolo Method:** 
 * Delete these two GPO's and implement locally on box. 
