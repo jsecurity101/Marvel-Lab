@@ -5,5 +5,5 @@ A collection of Powershell scripts that will help automate the build process for
 
 
 
-## Notes from author: 
+## Notes from Author: 
 This project is not officially supported. Tickets will probably be closed immediately. However, in the future there will be updates as I see fit. 
