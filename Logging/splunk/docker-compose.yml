@@ -1,0 +1,51 @@
+version: "3"
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer:latest
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer:/data
+    restart: always
+    
+  splunk:
+    container_name: splunk
+    image: splunk/splunk:8.0.3 # Update this if starting with new volumes
+    ports:
+      - 8000:8000
+      - 9997:9997
+      - 8089:8089
+    environment:
+      SPLUNK_PASSWORD: 'Changeme1!'
+      SPLUNK_START_ARGS: '--accept-license'
+      TZ: 'America/Chicago'
+      #SPLUNK_UPGRADE: 'true' # Only use when upgrading splunk
+    volumes:
+      - splunk_etc:/opt/splunk/etc
+      - splunk_var:/opt/splunk/var
+    restart: unless-stopped
+    
+  base-notebook:
+    container_name: jupyter-notebooks
+    ports:
+        - 8888:8888
+        #- 8000:8000
+        #- 8089:8089
+    environment:
+        - NB_UID=1001
+        - NB_GID=1001
+        - JUPYTER_ENABLE_LAB=yes
+        - NB_USER=splunk
+        - CHOWN_EXTRA=/home/splunk
+    volumes:
+        - splunk_etc:/home/splunk/etc
+        - splunk_var:/home/splunk/var
+    image: jupyter/base-notebook
+
+volumes:
+  portainer:
+  splunk_etc:
+  splunk_var:
+

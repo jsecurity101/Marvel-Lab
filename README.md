@@ -27,7 +27,7 @@ A collection of Powershell scripts that will help automate the build process for
   
   
 **Logging:**
-Two different scripts. One is just to install [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon). The other is to install Sysmon and send logs to a [HELK](https://github.com/Cyb3rWard0g/HELK) build. Future version might have a Splunk/Sysmon script. 
+Three different scripts. One is just to install [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon). Another is to install Sysmon and send logs to a [HELK](https://github.com/Cyb3rWard0g/HELK) build. Last option will build out docker containers for: Splunk, Portainer, and Jupyter Notebooks. 
 
 ## Troubleshooting tips
 1. It is very likely the GPO's: `Workstation Local Administrator Policy` and `RDP` will not work. This is a SID problem with the groups within AD. You can fix this one of two ways: 
@@ -46,8 +46,8 @@ The `Workstation Local Administrator Policy` should look like this:
 **Yolo Method:** 
 * Delete these two GPO's and implement locally on box. 
 
-
 2. If you do not see the GPO's are being properly pushed to your workstation, go to workstation open powershell.exe and run: `gpupate /force`. 
 
-## Notes from Author: 
-This project is not officially supported. Tickets will probably be closed immediately. However, in the future there will be updates as I see fit. 
+# Author:
+* [Jonathan Johnson](https://twitter.com/jsecurity101) 
+* [Ben Shell](https://twitter.com/UsernameIsBen)
