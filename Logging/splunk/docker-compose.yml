@@ -27,12 +27,13 @@ services:
       - splunk_var:/opt/splunk/var
     restart: unless-stopped
     
-  base-notebook:
+  jupyter-notebooks:
     container_name: jupyter-notebooks
+    image: jupyter/base-notebook
     ports:
         - 8888:8888
-        #- 8000:8000
-        #- 8089:8089
+        #- 8000:8000 #REMOVE IF NOT NEEDED
+        #- 8089:8089 #REMOVE IF NOT NEEDED
     environment:
         - NB_UID=1001
         - NB_GID=1001
@@ -42,10 +43,12 @@ services:
     volumes:
         - splunk_etc:/home/splunk/etc
         - splunk_var:/home/splunk/var
-    image: jupyter/base-notebook
+        - jupyter-notebooks
+    restart: always
 
 volumes:
   portainer:
   splunk_etc:
   splunk_var:
+  jupyter-notebooks:
 
