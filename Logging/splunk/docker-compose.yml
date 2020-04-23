@@ -43,7 +43,7 @@ services:
     volumes:
         - splunk_etc:/home/splunk/etc
         - splunk_var:/home/splunk/var
-        - jupyter-notebooks
+        - jupyter-notebooks:/home/jovyan
     restart: always
 
 volumes:

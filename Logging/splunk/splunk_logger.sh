@@ -2,27 +2,30 @@
 #Authors: Jonathan Johnson & Ben Shell
 #References: https://stackoverflow.com/ && https://github.com/target/huntlib.git 
 
-#Checking to see if script is running as root
+# Checking to see if script is running as root
 if [[ $EUID -ne 0 ]]; then
-  echo -e "\x1B[01;31mScript Must Be Ran As ROOT\x1B[0m" 
+  echo -e "\x1B[01;31m[X] Script Must Be Run As ROOT\x1B[0m" 
    exit 1
 fi
 
-#Installing Docker Compose
-echo -e "\x1B[01;34mChecking to see if docker is installed\x1B[0m"
+# Installing Docker Compose
+echo -e "\x1B[01;34m[*] Checking to see if docker is installed\x1B[0m"
 
 if [[ $(which docker-compose) && $(docker-compose --version) ]]; then
-    echo -e "\x1B[01;32mDocker Compose is installed\x1B[0m"
+    echo -e "\x1B[01;32m[*] Docker Compose is installed\x1B[0m"
   else
-   echo -e "\x1B[01;32mInstalling Docker Compose\x1B[0m" 
+   echo -e "\x1B[01;34m[*] Installing Docker Compose\x1B[0m" 
     apt-get install docker-compose -y
 fi
 
+# Starting containers
+echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
 docker-compose up -d
-sleep 30
 
-#Installing Jupyter Notebooks:
-echo -e "\x1B[01;32mInstalling Jupyter Notebooks\x1B[0m"
-docker exec -it jupyter-notebooks sh -c 'jupyter notebook list'
+# Checking Jupyter Notebooks
+echo -e "\x1B[01;34m[*] Checking Jupyter Notebooks\x1B[0m"
+sleep 5
+token="$(docker exec -it jupyter-notebooks sh -c 'jupyter notebook list' | grep token | sed 's/.*token=\([^ ]*\).*/\1/')"
 
-
+echo -e "\x1B[01;32m[*] Splunk credentials are \"admin:Changeme1!\" (unless you changed it in the Dockerfile)\x1B[0m"
+echo -e "\x1B[01;32m[*] Jupyter notebook token is $token\x1B[0m"
