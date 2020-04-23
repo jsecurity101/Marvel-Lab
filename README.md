@@ -15,6 +15,7 @@ A collection of Powershell scripts that will help automate the build process for
   * `import-marvel-users.ps1`
   * `add-ou.ps1`
   * `Import-GPOBackup`
+   * Install Logging. Go to **Logging** below and follow steps. 
 
 
 **Workstations**:
@@ -24,10 +25,28 @@ A collection of Powershell scripts that will help automate the build process for
 4. Run these scripts in order: 
   * `rename-workstation.ps1`
   * `join-domain.ps1`
+  * Install Logging. Go to **Logging** below and follow steps. 
   
   
 **Logging:**
-Two different scripts. One is just to install [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon). The other is to install Sysmon and send logs to a [HELK](https://github.com/Cyb3rWard0g/HELK) build. Future version might have a Splunk/Sysmon script. 
+
+`splunk_logging.sh` is stored in the Logging directory. This will install docker containers for: Portainer, Jupyter Notebooks, and Splunk. 
+
+**Note**: Only Ubuntu 18 is supported for this script. 
+
+`Logging.ps1` offers three different build options. 
+1. Just to install [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon). 
+2. To install Sysmon and send logs to a [HELK](https://github.com/Cyb3rWard0g/HELK) build (we do not build this for you, it assumes you already have it built). 
+3. To install Sysmon and send logs to Splunk. 
+
+### Steps to get logging set up: 
+
+1. On the Ubuntu machine download the Marvel-Lab repository. 
+2. Go into `Marvel-Lab\Logging\splunk` and run `splunk_logging.sh`.
+3. On the Workstation and Domain-Controller down the the he Marvel-Lab repository in the `C:\` directory. (If .zip is downloaded take out the second Marvel-Lab folder and put it in `C:\` directory). 
+4. Go into `Marvel-Lab\Logging` and run `Logging.ps1`. 
+
+
 
 ## Troubleshooting tips
 1. It is very likely the GPO's: `Workstation Local Administrator Policy` and `RDP` will not work. This is a SID problem with the groups within AD. You can fix this one of two ways: 
@@ -46,8 +65,14 @@ The `Workstation Local Administrator Policy` should look like this:
 **Yolo Method:** 
 * Delete these two GPO's and implement locally on box. 
 
-
 2. If you do not see the GPO's are being properly pushed to your workstation, go to workstation open powershell.exe and run: `gpupate /force`. 
 
-## Notes from Author: 
-This project is not officially supported. Tickets will probably be closed immediately. However, in the future there will be updates as I see fit. 
+# Author:
+* [Jonathan Johnson](https://twitter.com/jsecurity101) 
+* [Ben Shell](https://twitter.com/UsernameIsBen)
+
+
+# To Do List: 
+
+* Add OSQuery
+* Add Zeek/Bro Logs
