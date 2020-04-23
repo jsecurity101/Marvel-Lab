@@ -25,11 +25,4 @@ sleep 30
 echo -e "\x1B[01;32mInstalling Jupyter Notebooks\x1B[0m"
 docker exec -it jupyter-notebooks sh -c 'jupyter notebook list'
 
-if [[$(which git) ]]; then
-   echo -e "\x1B[01;32mGit is already installed\x1B[0m"
-  else
-   echo -e "\x1B[01;32mGit is already installed\x1B[0m"
-    apt-get install git -y
-fi
-
 
