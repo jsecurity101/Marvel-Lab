@@ -33,7 +33,7 @@ function Install-Sysmon {
 #Sysmon Arguments:
 $SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
 $SysmonOutputFile = "Sysmon.zip"
-$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/c8f70e1ee90b91e7512960021efb1da783040f70.zip"
+$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/6be7403aae07cf1e41af6573a433888e27bd8a54.zip"
 $SysmonZip = "sysmon.zip"
 
 
@@ -45,8 +45,8 @@ Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysm
 #Pulling Sysmon Config
 Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonZip
 Expand-Archive -LiteralPath C:\Sysmon\$SysmonZip -DestinationPath C:\Sysmon\
-Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-c8f70e1ee90b91e7512960021efb1da783040f70\sysmon.xml C:\Sysmon
-Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-c8f70e1ee90b91e7512960021efb1da783040f70
+Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54\sysmon.xml C:\Sysmon
+Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54
 
 Write-Host "Installing Sysmon.." -ForegroundColor Green
 & cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1'  
@@ -66,7 +66,7 @@ $WinlogZip = "winlogconfig.zip"
 #Sysmon Arguments:
 $SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
 $SysmonOutputFile = "Sysmon.zip"
-$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/c8f70e1ee90b91e7512960021efb1da783040f70.zip"
+$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/6be7403aae07cf1e41af6573a433888e27bd8a54.zip"
 $SysmonZip = "sysmon.zip"
 
 
@@ -78,8 +78,8 @@ Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysm
 #Pulling Sysmon Config
 Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonZip
 Expand-Archive -LiteralPath C:\Sysmon\$SysmonZip -DestinationPath C:\Sysmon\
-Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-c8f70e1ee90b91e7512960021efb1da783040f70\sysmon.xml C:\Sysmon
-Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-c8f70e1ee90b91e7512960021efb1da783040f70
+Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54\sysmon.xml C:\Sysmon
+Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54
 
 Write-Host "Installing Sysmon.." -ForegroundColor Green
 & cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1' 
@@ -116,7 +116,7 @@ $Splunk_IP = Read-Host "Please input the IP of your Splunk box"
 #Sysmon Arguments:
 $SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
 $SysmonOutputFile = "Sysmon.zip"
-$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/c8f70e1ee90b91e7512960021efb1da783040f70.zip"
+$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/6be7403aae07cf1e41af6573a433888e27bd8a54.zip"
 $SysmonZip = "sysmon.zip"
 
 #Splunk Arugments:
@@ -131,8 +131,8 @@ Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysm
 #Pulling Sysmon Config
 Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonZip
 Expand-Archive -LiteralPath C:\Sysmon\$SysmonZip -DestinationPath C:\Sysmon\
-Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-c8f70e1ee90b91e7512960021efb1da783040f70\sysmon.xml C:\Sysmon
-Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-c8f70e1ee90b91e7512960021efb1da783040f70
+Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54\sysmon.xml C:\Sysmon
+Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54
 
 Write-Host "Installing Sysmon.." -ForegroundColor Green
 & cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1' 
