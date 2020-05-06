@@ -3,6 +3,8 @@ A collection of scripts that will help automate the build process for a Marvel d
 
 <img src="https://thumbs.gfycat.com/KlutzyIdealisticCanine-size_restricted.gif" width=900 />
 
+**These scripts assume the path to the folder is C:\Marvel-Lab. If this isn't the path of the repo, the scripts will error out.**
+
 ## Build Steps: 
 
 **Domain Controller**: 
