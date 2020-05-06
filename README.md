@@ -9,7 +9,7 @@ A collection of scripts that will help automate the build process for a Marvel d
 
 **Domain Controller**: 
 1. Build stock Windows Server VM. 
-2. Go into Server and download this repo into the `C:\` directory. 
+2. Go into Server and download this repo into the `C:\` directory. If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`. 
 3. Go into the `Earth-DC` folder. 
 4. Run these scripts in order: 
   * `rename-dc.ps1`
@@ -22,7 +22,7 @@ A collection of scripts that will help automate the build process for a Marvel d
 
 **Workstations**:
 1. Build Windows 10 VM.
-2. Go into one of the Windows VM and download this repoo into the `C:\` directory. 
+2. Go into one of the Windows VM and download this repoo into the `C:\` directory. If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`. 
 3. Go into one of the Workstaion folders. This project supports two different Workstations. 
 4. Run these scripts in order: 
   * `rename-workstation.ps1`
@@ -45,7 +45,7 @@ A collection of scripts that will help automate the build process for a Marvel d
 
 1. On the Ubuntu machine download the Marvel-Lab repository. 
 2. Go into `Marvel-Lab\Logging\splunk` and run `splunk_logging.sh`.
-3. On the Workstation and Domain-Controller down the Marvel-Lab repository in the `C:\` directory. (If .zip is downloaded take out the Marvel-Lab-master folder and rename the parent folder Marvel-Lab and put it in `C:\` directory). 
+3. On the Workstation and Domain-Controller down the Marvel-Lab repository in the `C:\` directory. (If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`). 
 4. Go into `Marvel-Lab\Logging` and run `Logging.ps1`. 
 
 
