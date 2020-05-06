@@ -56,7 +56,10 @@ A collection of scripts that will help automate the build process for a Marvel d
 **Preferred method:** 
 Steps to fix `RDP` GPO:
 
+
+```
 Tools -> Group Policy Management -> Domains -> marvel.local -> Workstations -> RDP; Right click -> Edit; Computer Configuration -> Policies -> Windows Settings -> Security Settings -> Restricted Groups; Right click on SID -> Delete; Right click -> Add Group -> Browse -> Input: Domain Users -> Ok ->  Ok -> within "this group is a member of" click Add -> Browse -> input: Remote Desktop Users -> Ok -> Ok -> Apply -> Ok
+```
 
 The `RDP` policy should look like this: 
 
@@ -65,7 +68,9 @@ The `RDP` policy should look like this:
 
 Steps to fix `Workstation Local Administrator Policy` GPO:
 
+```
 Tools -> Group Policy Management -> Domains -> marvel.local -> Workstations -> Workstation Local Administrators; Right click -> Edit; Computer Configuration -> Policies -> Windows Settings -> Security Settings -> Restricted Groups; Right click on SID -> Delete; Right click -> Add Group -> Browse -> Input LocalAdmins -> Ok ->  Ok -> within "this group is a member of" click Add -> Browse -> input: Administrators -> Ok -> Ok -> Apply -> Ok
+```
 
 The `Workstation Local Administrator Policy` should look like this: 
 
