@@ -54,11 +54,18 @@ A collection of scripts that will help automate the build process for a Marvel d
 1. It is very likely the GPO's: `Workstation Local Administrator Policy` and `RDP` will not work. This is a SID problem with the groups within AD. You can fix this one of two ways: 
 
 **Preferred method:** 
-* Fix the Restricted Groups within each policy. Go to: `Computer Configuration -> Policy -> Windows Settings -> Security Settings -> Restricted Groups`. 
+Steps to fix `RDP` GPO:
+
+Tools -> Group Policy Management -> Domains -> marvel.local -> Workstations -> RDP; Right click -> Edit; Computer Configuration -> Policies -> Windows Settings -> Security Settings -> Restricted Groups; Right click on SID -> Delete; Right click -> Add Group -> Browse -> Input: Domain Users -> Ok ->  Ok -> within "this group is a member of" click Add -> Browse -> input: Remote Desktop Users -> Ok -> Ok -> Apply -> Ok
 
 The `RDP` policy should look like this: 
 
 <p align="center"><img src="https://github.com/jsecurity101/Marvel-Lab/blob/master/images/RDP.PNG"></p>
+
+
+Steps to fix `Workstation Local Administrator Policy` GPO:
+
+Tools -> Group Policy Management -> Domains -> marvel.local -> Workstations -> Workstation Local Administrators; Right click -> Edit; Computer Configuration -> Policies -> Windows Settings -> Security Settings -> Restricted Groups; Right click on SID -> Delete; Right click -> Add Group -> Browse -> Input LocalAdmins -> Ok ->  Ok -> within "this group is a member of" click Add -> Browse -> input: Administrators -> Ok -> Ok -> Apply -> Ok
 
 The `Workstation Local Administrator Policy` should look like this: 
 
