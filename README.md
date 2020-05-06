@@ -45,7 +45,7 @@ A collection of scripts that will help automate the build process for a Marvel d
 
 1. On the Ubuntu machine download the Marvel-Lab repository. 
 2. Go into `Marvel-Lab\Logging\splunk` and run `splunk_logging.sh`.
-3. On the Workstation and Domain-Controller down the the he Marvel-Lab repository in the `C:\` directory. (If .zip is downloaded take out the second Marvel-Lab folder and put it in `C:\` directory). 
+3. On the Workstation and Domain-Controller down the Marvel-Lab repository in the `C:\` directory. (If .zip is downloaded take out the Marvel-Lab-master folder and rename the parent folder Marvel-Lab and put it in `C:\` directory). 
 4. Go into `Marvel-Lab\Logging` and run `Logging.ps1`. 
 
 
