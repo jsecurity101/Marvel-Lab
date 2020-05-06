@@ -8,7 +8,7 @@ $GPOName = 'Audit Logs'
 $OU = "ou=Workstations,dc=marvel,dc=local"
 $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
 Write-Host "Importing $GPOName..."
-Import-GPO -BackupGpoName $GPOName -Path "C:\Github\Marvel-Lab\Earth-DC\GPOBackup\Audit Logs" -TargetName $GPOName -CreateIfNeeded
+Import-GPO -BackupGpoName $GPOName -Path "C:\Marvel-Lab\Earth-DC\GPOBackup\Audit Logs" -TargetName $GPOName -CreateIfNeeded
 $gpLinks = $null
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU1 -Properties name,distinguishedName, gPLink, gPOptions
@@ -29,7 +29,7 @@ else
 $GPOName = 'RDP'
 $OU = "ou=Workstations,dc=marvel,dc=local"
 Write-Host "Importing $GPOName..."
-Import-GPO -BackupGpoName $GPOName -Path "C:\Github\Marvel-Lab\Earth-DC\GPOBackup\RDP" -TargetName $GPOName -CreateIfNeeded
+Import-GPO -BackupGpoName $GPOName -Path "C:\Marvel-Lab\Earth-DC\GPOBackup\RDP" -TargetName $GPOName -CreateIfNeeded
 $gpLinks = $null
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
 $GPO = Get-GPO -Name $GPOName
@@ -47,7 +47,7 @@ else
 $GPOName = 'Workstation Local Administrators'
 $OU = "ou=Workstations,dc=marvel,dc=local"
 Write-Host "Importing $GPOName..."
-Import-GPO -BackupGpoName $GPOName -Path "C:\Github\Marvel-Lab\Earth-DC\GPOBackup\Workstation Local Administrators" -TargetName $GPOName -CreateIfNeeded
+Import-GPO -BackupGpoName $GPOName -Path "C:\Marvel-Lab\Earth-DC\GPOBackup\Workstation Local Administrators" -TargetName $GPOName -CreateIfNeeded
 $gpLinks = $null
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
 $GPO = Get-GPO -Name $GPOName
@@ -65,7 +65,7 @@ $GPOName = 'Disable Windows Firewall'
 $OU = "ou=Workstations,dc=marvel,dc=local"
 $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
 Write-Host "Importing $GPOName..."
-Import-GPO -BackupGpoName $GPOName -Path "C:\Github\Marvel-Lab\Earth-DC\GPOBackup\Disable Windows Firewall" -TargetName $GPOName -CreateIfNeeded
+Import-GPO -BackupGpoName $GPOName -Path "C:\Marvel-Lab\Earth-DC\GPOBackup\Disable Windows Firewall" -TargetName $GPOName -CreateIfNeeded
 $gpLinks = $null
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU1 -Properties name,distinguishedName, gPLink, gPOptions
@@ -86,7 +86,7 @@ $GPOName = 'Disable Windows Defender'
 $OU = "ou=Workstations,dc=marvel,dc=local"
 $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
 Write-Host "Importing $GPOName..."
-Import-GPO -BackupGpoName $GPOName -Path "C:\Github\Marvel-Lab\Earth-DC\GPOBackup\Disable Windows Defender" -TargetName $GPOName -CreateIfNeeded
+Import-GPO -BackupGpoName $GPOName -Path "C:\Marvel-Lab\Earth-DC\GPOBackup\Disable Windows Defender" -TargetName $GPOName -CreateIfNeeded
 $gpLinks = $null
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU1 -Properties name,distinguishedName, gPLink, gPOptions
@@ -107,7 +107,7 @@ $GPOName = 'Disable Windows Automatic Updates'
 $OU = "ou=Workstations,dc=marvel,dc=local"
 $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
 Write-Host "Importing $GPOName..."
-Import-GPO -BackupGpoName $GPOName -Path "C:\Github\Marvel-Lab\Earth-DC\GPOBackup\Disable Windows Automatic Updates" -TargetName $GPOName -CreateIfNeeded
+Import-GPO -BackupGpoName $GPOName -Path "C:\Marvel-Lab\Earth-DC\GPOBackup\Disable Windows Automatic Updates" -TargetName $GPOName -CreateIfNeeded
 $gpLinks = $null
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU1 -Properties name,distinguishedName, gPLink, gPOptions
@@ -128,7 +128,7 @@ $GPOName = 'Powershell Logging'
 $OU = "ou=Workstations,dc=marvel,dc=local"
 $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
 Write-Host "Importing $GPOName..."
-Import-GPO -BackupGpoName $GPOName -Path "C:\Github\Marvel-Lab\Earth-DC\GPOBackup\Powershell Logging" -TargetName $GPOName -CreateIfNeeded
+Import-GPO -BackupGpoName $GPOName -Path "C:\Marvel-Lab\Earth-DC\GPOBackup\Powershell Logging" -TargetName $GPOName -CreateIfNeeded
 $gpLinks = $null
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
 $gPLinks = Get-ADOrganizationalUnit -Identity $OU1 -Properties name,distinguishedName, gPLink, gPOptions
