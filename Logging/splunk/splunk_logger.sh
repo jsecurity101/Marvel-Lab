@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
   echo -e "\x1B[01;31m[X] Script Must Be Run As ROOT\x1B[0m"
    exit 1
 fi
-Host_IP="$(hostname -I | awk '{ print $1 }')"
+read -p 'Input your IP and press [ENTER]: ' Host_IP
 
 # Installing Docker Compose
 echo -e "\x1B[01;34m[*] Checking to see if docker is installed\x1B[0m"
