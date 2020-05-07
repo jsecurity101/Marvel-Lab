@@ -26,15 +26,31 @@ function Show-Menu {
     Write-Host "3: Press '3' for Sysmon + Splunk UF which will forward Sysmon and Windows Events to Splunk."
 
 }
-function Install-Sysmon {
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12  
-
 
 #Sysmon Arguments:
 $SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
 $SysmonOutputFile = "Sysmon.zip"
 $SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/6be7403aae07cf1e41af6573a433888e27bd8a54.zip"
 $SysmonZip = "sysmon.zip"
+
+$WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-7.5.2-windows-x86_64.zip"
+$WinlogbeatOutputFile = "winlogbeat.zip"
+$WinlogbeatConfig = "https://gist.github.com/jsecurity101/ec4c829e6d32a984d7ccf4c1e9247590/archive/8d85c6c443704e821a7f53e536be61667c67febd.zip"
+$WinlogZip = "winlogconfig.zip"
+
+#Splunk Arugments:
+$SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.0.3&product=universalforwarder&filename=splunkforwarder-8.0.3-a6754d8441bf-x64-release.msi&wget=true"
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
+
+Write-Host "Checking for elevated permissions..."
+if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
+[Security.Principal.WindowsBuiltInRole] "Administrator")) {
+Write-Warning "You need to run this script as an Administrator. Please open up new window as Administrator."
+Break
+}
+else {
+function Install-Sysmon {
 
 
 New-Item -Path "c:\" -Name "Sysmon" -ItemType "directory"
@@ -53,24 +69,10 @@ Write-Host "Installing Sysmon.." -ForegroundColor Green
 }
 
 function Install-Sysmon-HELK {
-$HELK_IP = Read-Host "Please input the IP of your HELK/ELK box"
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12  
-
-
-
-$WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-7.5.2-windows-x86_64.zip"
-$WinlogbeatOutputFile = "winlogbeat.zip"
-$WinlogbeatConfig = "https://gist.github.com/jsecurity101/ec4c829e6d32a984d7ccf4c1e9247590/archive/8d85c6c443704e821a7f53e536be61667c67febd.zip"
-$WinlogZip = "winlogconfig.zip"
-
-#Sysmon Arguments:
-$SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
-$SysmonOutputFile = "Sysmon.zip"
-$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/6be7403aae07cf1e41af6573a433888e27bd8a54.zip"
-$SysmonZip = "sysmon.zip"
-
+$HELK_IP = Read-Host "Please input the IP of your HELK/ELK box" 
 
 New-Item -Path "c:\" -Name "Sysmon" -ItemType "directory"
+
 #Downloading and Installing Sysmon 
 Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\$SysmonOutputFile
 Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysmon\
@@ -97,9 +99,7 @@ Remove-Item C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml
 Move-Item C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd\winlogbeat.yml C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\
 Remove-Item C:\Winlogbeat\$WinlogZip, C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd
 
-$IP = Read-Host "Enter IP of HELK box"
-
-(Get-Content C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml).replace('<HELK-IP>', $IP) | Set-Content C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml
+(Get-Content C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml).replace('<HELK-IP>', $HELK_IP) | Set-Content C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml
 
 Remove-Item C:\Winlogbeat\$WinlogbeatOutputFile 
 
@@ -110,20 +110,9 @@ Start-Service winlogbeat
 
 function Install-Sysmon-Splunk {
 $Splunk_IP = Read-Host "Please input the IP of your Splunk box"
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12  
-
-
-#Sysmon Arguments:
-$SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
-$SysmonOutputFile = "Sysmon.zip"
-$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/6be7403aae07cf1e41af6573a433888e27bd8a54.zip"
-$SysmonZip = "sysmon.zip"
-
-#Splunk Arugments:
-$SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.0.3&product=universalforwarder&filename=splunkforwarder-8.0.3-a6754d8441bf-x64-release.msi&wget=true"
-
-
+ 
 New-Item -Path "c:\" -Name "Sysmon" -ItemType "directory"
+
 #Downloading and Installing Sysmon 
 Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\$SysmonOutputFile
 Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysmon\
@@ -146,7 +135,7 @@ Invoke-WebRequest $SplunkUF -OutFile $env:HOMEDRIVE:\splunk_forwarder.msi
 
 Remove-Item 'C:\Program Files\SplunkUniversalForwarder\etc\apps\SplunkUniversalForwarder\local\inputs.conf'
 
-Move-Item C:\Marvel-Lab\Logging\splunk\inputs.conf 'C:\Program Files\SplunkUniversalForwarder\etc\apps\SplunkUniversalForwarder\local\inputs.conf'
+Copy-Item C:\Marvel-Lab\Logging\splunk\inputs.conf 'C:\Program Files\SplunkUniversalForwarder\etc\apps\SplunkUniversalForwarder\local\inputs.conf'
 
 & cmd.exe /c 'C:\Program Files\SplunkUniversalForwarder\bin\splunk.exe' start
 
@@ -169,11 +158,10 @@ $selection = Read-Host "Please make a selection"
     } 
     '3' {
     Write-Host "You chose to install Sysmon + Splunk UF which will forward Sysmon and Windows Events to Splunk"
-
     Install-Sysmon-Splunk
     }
     }
  }
  until ($selection -eq '1' -or '2' -or '3' )
 
-
+}
