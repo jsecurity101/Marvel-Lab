@@ -16,7 +16,7 @@ A collection of scripts that will help automate the build process for a Marvel d
   * `deploying-marvel-forest.ps1`
   * `import-marvel-users.ps1`
   * `add-ou.ps1`
-  * `Import-GPOBackup`
+  * `Import-GPOBackup.ps1`
    * Install Logging. Go to **Logging** below and follow steps. 
 
 
@@ -32,23 +32,17 @@ A collection of scripts that will help automate the build process for a Marvel d
   
 **Logging:**
 
-`splunk_logging.sh` is stored in the Logging directory. This will install docker containers for: Portainer, Jupyter Notebooks, and Splunk. 
-
 **Note**: Only Ubuntu 18 is supported for this script. 
-
-`Logging.ps1` offers three different build options. 
-1. Just to install [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon). 
-2. To install Sysmon and send logs to a [HELK](https://github.com/Cyb3rWard0g/HELK) build (we do not build this for you, it assumes you already have it built). 
-3. To install Sysmon and send logs to Splunk. 
 
 ### Steps to get logging set up: 
 
+#### On Ubuntu box: 
 1. On the Ubuntu machine download the Marvel-Lab repository. 
 2. Go into `Marvel-Lab\Logging\splunk` and run `splunk_logging.sh`.
-3. On the Workstation and Domain-Controller down the Marvel-Lab repository in the `C:\` directory. (If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`). 
-4. Go into `Marvel-Lab\Logging` and run `Logging.ps1`. 
 
-
+#### On Workstation and DC:
+1. Download the Marvel-Lab repository in the `C:\` directory. (If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`). 
+2. Go into `Marvel-Lab\Logging` and run `Logging.ps1`. 
 
 ## Troubleshooting tips
 1. It is very likely the GPO's: `Workstation Local Administrator Policy` and `RDP` will not work. This is a SID problem with the groups within AD. You can fix this one of two ways: 
@@ -81,7 +75,40 @@ The `Workstation Local Administrator Policy` should look like this:
 
 2. If you do not see the GPO's are being properly pushed to your workstation, go to workstation open powershell.exe and run: `gpupate /force`. 
 
-# Author:
+
+## Scripts:
+
+  * `rename-dc.ps1`
+    * Powershell script that will rename the computer name of the Domain Controller to: Earth-DC.
+  
+  * `deploying-marvel-forest.ps1`
+    * Powershell script that will create and deploy a forest with the domain name of: marvel.local
+
+  * `import-marvel-users.ps1`
+    * Powershell script that imports marvel characters from a csv into the AD infrastructure. This script will assign groups to domain users as well. 
+
+  * `add-ou.ps1`
+    * Powershell script that will add the Workstation organizational unit to the AD infrastructure. 
+
+  * `Import-GPOBackup.ps1`
+    * Powershell script that will import mulitple Group Policy Objects (GPOs) into the group policy management. GPO's will be linked and enforced with this script as well. 
+
+  * `rename-workstation.ps1`
+    * Powershell script that will rename the computer name of the Win10 workstation to either: Asgard-WrkStn or Wakanda-Wrkstn
+  
+  * `join-domain.ps1`
+    * Powershell script that will join the workstation to the marvel.local.
+
+  * `Logging.ps1`
+    * Powershell script will give 3 options for endpoint logging: 
+     1. Just to install [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon). 
+     2. To install Sysmon and send logs to a [HELK](https://github.com/Cyb3rWard0g/HELK) build (we do not build this for you, it assumes you already have it built). 
+     3. To install Sysmon and send logs to Splunk.
+   
+  * `splunk_logging.sh`
+    * Bash script that will build out Splunk, Portainer, and Jupyter Notebooks within a docker container. 
+
+# Authors:
 * [Jonathan Johnson](https://twitter.com/jsecurity101) 
 * [Ben Shell](https://twitter.com/UsernameIsBen)
 
@@ -90,3 +117,4 @@ The `Workstation Local Administrator Policy` should look like this:
 
 * Add OSQuery
 * Add Zeek/Bro Logs
+* Add update scripts 

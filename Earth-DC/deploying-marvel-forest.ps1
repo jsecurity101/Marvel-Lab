@@ -5,26 +5,26 @@
 # https://stackoverflow.com/a/4409448
 # https://raw.githubusercontent.com/jsecurity101/mordor/master/environment/shire/aws/scripts/DC/deploy_forest.ps1
 
-$host_info = gwmi win32_computersystem
-$hostname = ($host_info).Name
-$domain_name = ($host_info).Domain
+$host_information = Get-WmiObject win32_computersystem
+$hostname = ($host_information).Name
+$DomainName = ($host_information).Domain
 $SafeModeAdministratorPassword = Read-Host "Please enter password you would like for administrator safe mode" -AsSecureString
 
-if (($host_info).partofdomain -eq $false) 
+if (($host_information).partofdomain -eq $false) 
 {
-    write-host -fore green "$hostname is not the domain controller yet. Creating forest now"
+    Write-Host -fore green "$hostname is not the domain controller yet. Creating forest now"
     
     # Windows Features Installation
     Get-Command -module ServerManager
-    write-host -fore green "Installing Windows features:"
+    Write-Host -fore green "Installing Windows features:"
     $windows_features = @("AD-Domain-Services", "DNS")
     $windows_features.ForEach({
-        write-host -fore yello "Installing $_ Windows feature.."
+        Write-Host -fore yello "Installing $_ Windows feature.."
         Install-WindowsFeature -name $_ -IncludeManagementTools
     })
     
     # Creating Forest
-    write-host -fore green "Deploying a new forest and promoting $hostname to Domain Controller.."
+    Write-Host -fore green "Deploying a new forest and promoting $hostname to Domain Controller."
 
     Import-Module ADDSDeployment
     Install-ADDSForest `
@@ -45,5 +45,7 @@ if (($host_info).partofdomain -eq $false)
 else 
 {
 
-    write-host -fore red "Cannot create forest. $hostname is already either apart of $domain_name domain or is already the domain controller"
+    Write-Host -fore red "Cannot create forest. $hostname is already either apart of $DomainName domain or is already the domain controller"
 } 
+
+Restart-Computer -Force
