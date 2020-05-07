@@ -22,7 +22,7 @@ A collection of scripts that will help automate the build process for a Marvel d
 
 **Workstations**:
 1. Build Windows 10 VM.
-2. Go into one of the Windows VM and download this repoo into the `C:\` directory. If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`. 
+2. Go into one of the Windows VMs and download this repoo into the `C:\` directory. If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`. 
 3. Go into one of the Workstaion folders. This project supports two different Workstations. 
 4. Run these scripts in order: 
   * `rename-workstation.ps1`
