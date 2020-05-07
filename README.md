@@ -28,6 +28,7 @@ A collection of scripts that will help automate the build process for a Marvel d
   * `rename-workstation.ps1`
   * `join-domain.ps1` 
   * `updating-groups.ps1`
+  * `Tools.ps1`
   
 **Note:** If `join-domain.ps1` fails, make sure that the host is pointing to Earth-DC's IP for DNS. 
 
@@ -85,6 +86,9 @@ A collection of scripts that will help automate the build process for a Marvel d
      1) Just to install [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon). 
      2) To install Sysmon and send logs to a [HELK](https://github.com/Cyb3rWard0g/HELK) build (we do not build this for you, it assumes you already have it built). 
      3) To install Sysmon and send logs to Splunk.
+
+  *  `Tools.ps1`
+     *  Powershell script that will install various different Red-Team tools and Wireshark. 
    
   * `splunk_logging.sh`
     * Bash script that will build out Splunk, Portainer, and Jupyter Notebooks within a docker container. 
