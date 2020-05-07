@@ -12,14 +12,14 @@ Break
 }
 else {
     Write-Host "Adding users to Local Administrators Group"
-    Add-LocalGroupMember -Group "Administrators" -Member "marvel.com\loki"
-    Add-LocalGroupMember -Group "Administrators" -Member "marvel.com\panther"
-    Add-LocalGroupMember -Group "Administrators" -Member "marvel.com\spidy"
-    Add-LocalGroupMember -Group "Administrators" -Member "marvel.com\ironman"
+    Add-LocalGroupMember -Group "Administrators" -Member "marvel.local\loki"
+    Add-LocalGroupMember -Group "Administrators" -Member "marvel.local\panther"
+    Add-LocalGroupMember -Group "Administrators" -Member "marvel.local\spidy"
+    Add-LocalGroupMember -Group "Administrators" -Member "marvel.local\ironman"
 
     Write-Host "Adding users to Remote Desktop Users Group"
-    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.com\loki"
-    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.com\panther"
-    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.com\spidy"
-    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.com\ironman"
+    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.local\loki"
+    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.local\panther"
+    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.local\spidy"
+    Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.local\ironman"
 }
