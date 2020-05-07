@@ -26,7 +26,10 @@ A collection of scripts that will help automate the build process for a Marvel d
 3. Go into one of the Workstaion folders. This project supports two different Workstations. 
 4. Run these scripts in order: 
   * `rename-workstation.ps1`
-  * `join-domain.ps1`
+  * `join-domain.ps1` 
+  
+**Note:** If `join-domain.ps1` fails, make sure that the host is pointing to Earth-DC's IP for DNS. 
+
   * Install Logging. Go to **Logging** below and follow steps. 
   
   
