@@ -27,6 +27,7 @@ A collection of scripts that will help automate the build process for a Marvel d
 4. Run these scripts in order: 
   * `rename-workstation.ps1`
   * `join-domain.ps1` 
+  * `updating-groups.ps1`
   
 **Note:** If `join-domain.ps1` fails, make sure that the host is pointing to Earth-DC's IP for DNS. 
 
@@ -48,38 +49,12 @@ A collection of scripts that will help automate the build process for a Marvel d
 2. Go into `Marvel-Lab\Logging` and run `Logging.ps1`. 
 
 ## Troubleshooting tips
-1. It is very likely the GPO's: `Workstation Local Administrator Policy` and `RDP` will not work. This is a SID problem with the groups within AD. You can fix this one of two ways: 
-
-**Preferred method:** 
-Steps to fix `RDP` GPO:
-
-
-```
-Tools -> Group Policy Management -> Domains -> marvel.local -> Workstations -> RDP; Right click -> Edit; Computer Configuration -> Policies -> Windows Settings -> Security Settings -> Restricted Groups; Right click on SID -> Delete; Right click -> Add Group -> Browse -> Input: Domain Users -> Ok ->  Ok -> within "this group is a member of" click Add -> Browse -> input: Remote Desktop Users -> Ok -> Ok -> Apply -> Ok
-```
-
-The `RDP` policy should look like this: 
-
-<p align="center"><img src="https://github.com/jsecurity101/Marvel-Lab/blob/master/images/RDP.PNG"></p>
-
-
-Steps to fix `Workstation Local Administrator Policy` GPO:
-
-```
-Tools -> Group Policy Management -> Domains -> marvel.local -> Workstations -> Workstation Local Administrators; Right click -> Edit; Computer Configuration -> Policies -> Windows Settings -> Security Settings -> Restricted Groups; Right click on SID -> Delete; Right click -> Add Group -> Browse -> Input LocalAdmins -> Ok ->  Ok -> within "this group is a member of" click Add -> Browse -> input: Administrators -> Ok -> Ok -> Apply -> Ok
-```
-
-The `Workstation Local Administrator Policy` should look like this: 
-
-<p align="center"><img src="https://github.com/jsecurity101/Marvel-Lab/blob/master/images/LocalAdmin.PNG"></p>
-
-**Yolo Method:** 
-* Delete these two GPO's and implement locally on box. 
+1. If the docker containers are not starting correctly after reboot, run `sudo docker ps` on the splunk box. Make sure the containers were started. 
 
 2. If you do not see the GPO's are being properly pushed to your workstation, go to workstation open powershell.exe and run: `gpupate /force`. 
 
 
-## Scripts:
+## Script Explanations:
 
   * `rename-dc.ps1`
     * Powershell script that will rename the computer name of the Domain Controller to: Earth-DC.
@@ -102,14 +77,23 @@ The `Workstation Local Administrator Policy` should look like this:
   * `join-domain.ps1`
     * Powershell script that will join the workstation to the marvel.local.
 
+  * `updating-groups.ps1`
+    * Powershell script that will add users within the LocalAdmin group in AD to the Local Administrators and Remote Desktop Users groups on the host.  
+
   * `Logging.ps1`
     * Powershell script will give 3 options for endpoint logging: 
-     1. Just to install [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon). 
-     2. To install Sysmon and send logs to a [HELK](https://github.com/Cyb3rWard0g/HELK) build (we do not build this for you, it assumes you already have it built). 
-     3. To install Sysmon and send logs to Splunk.
+     1) Just to install [Sysmon](https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon). 
+     2) To install Sysmon and send logs to a [HELK](https://github.com/Cyb3rWard0g/HELK) build (we do not build this for you, it assumes you already have it built). 
+     3) To install Sysmon and send logs to Splunk.
    
   * `splunk_logging.sh`
     * Bash script that will build out Splunk, Portainer, and Jupyter Notebooks within a docker container. 
+
+## Support: 
+
+* Windows 10 +
+* Windows Server 2016 +
+* Ubuntu 18 +
 
 # Authors:
 * [Jonathan Johnson](https://twitter.com/jsecurity101) 
@@ -121,3 +105,4 @@ The `Workstation Local Administrator Policy` should look like this:
 * Add OSQuery
 * Add Zeek/Bro Logs
 * Add update scripts 
+* Add box resource suggestions

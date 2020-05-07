@@ -43,6 +43,13 @@ $SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architect
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
 
+Write-Host "Checking for elevated permissions..."
+if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
+[Security.Principal.WindowsBuiltInRole] "Administrator")) {
+Write-Warning "You need to run this script as an Administrator. Please open up new window as Administrator."
+Break
+}
+else {
 function Install-Sysmon {
 
 
@@ -157,4 +164,4 @@ $selection = Read-Host "Please make a selection"
  }
  until ($selection -eq '1' -or '2' -or '3' )
 
-
+}

@@ -18,6 +18,10 @@ if [[ $(which docker-compose) && $(docker-compose --version) ]]; then
     apt-get install docker-compose -y
 fi
 
+# Enabling docker service:
+echo -e "\x1B[01;34m[*] Enabling Docker Service\x1B[0m"
+sudo systemctl enable docker.service
+
 # Starting containers
 echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
 docker-compose up -d
