@@ -23,15 +23,21 @@ fi
 echo -e "\x1B[01;34m[*] Enabling Docker Service\x1B[0m"
 sudo systemctl enable docker.service
 
+# Pull quick-fleet
+echo -e "\x1B[01;34m[*] Cloning quick-fleet\x1B[0m"
+git clone https://github.com/benjaminshell/quick-fleet.git
+
 # Starting containers
 echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
-docker-compose up -d
+#docker-compose up -d
+docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml up -d
 
 # Checking Jupyter Notebooks
 echo -e "\x1B[01;34m[*] Checking Jupyter Notebooks\x1B[0m"
 sleep 10
 token="$(docker exec -it jupyter-notebooks sh -c 'jupyter notebook list' | grep token | sed 's/.*token=\([^ ]*\).*/\1/')"
-echo -e "\x1B[01;32m[*] Portainer's IP is: $Host_IP:9000\x1B[0m"
-echo -e "\x1B[01;32m[*] Splunk's IP is: $Host_IP:8000 ; Credentials - admin:Changeme1! (unless you changed them in the DockerFile)\x1B[0m"
-echo -e "\x1B[01;32m[*] Jupyter Notebook's IP is: $Host_IP:8888\x1B[0m"
+echo -e "\x1B[01;32m[*] Portainer's IP is: http://$Host_IP:9000\x1B[0m"
+echo -e "\x1B[01;32m[*] Splunk's IP is: http://$Host_IP:8000 ; Credentials - admin:Changeme1! (unless you changed them in the DockerFile)\x1B[0m"
+echo -e "\x1B[01;32m[*] Jupyter Notebook's IP is: http://$Host_IP:8888\x1B[0m"
 echo -e "\x1B[01;32m[*] Jupyter Notebook token is $token\x1B[0m"
+echo -e "\x1B[01;32m[*] Kolide Fleet's IP is: https://$Host_IP:8443\x1B[0m"
