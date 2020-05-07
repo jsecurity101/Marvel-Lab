@@ -24,13 +24,20 @@ echo -e "\x1B[01;34m[*] Enabling Docker Service\x1B[0m"
 sudo systemctl enable docker.service
 
 # Pull quick-fleet
-echo -e "\x1B[01;34m[*] Cloning quick-fleet\x1B[0m"
-git clone https://github.com/benjaminshell/quick-fleet.git
+echo -e "\x1B[01;34m[*] Cloning/Pulling quick-fleet\x1B[0m"
+if [ ! -d "quick-fleet" ]; then
+  git clone https://github.com/benjaminshell/quick-fleet.git
+else
+  (cd quick-fleet; git pull)
+fi
 
 # Starting containers
 echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
 #docker-compose up -d
 docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml up -d
+
+# To remove the containers
+# docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml down
 
 # Checking Jupyter Notebooks
 echo -e "\x1B[01;34m[*] Checking Jupyter Notebooks\x1B[0m"
