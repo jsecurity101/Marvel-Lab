@@ -49,6 +49,9 @@ A collection of scripts that will help automate the build process for a Marvel d
 1. Download the Marvel-Lab repository in the `C:\` directory. (If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`). 
 2. Go into `Marvel-Lab\Logging` and run `Logging.ps1`. 
 
+
+**Note:** The Sysmon configuration is up to date with version - 11.0. FileDelete Events will only be logged within the \Downloads\ folder of each user. Deletions are saved within the C:\ArchivedFiles\ folder. 
+
 ## Troubleshooting tips
 1. If the docker containers are not starting correctly after reboot, run `sudo docker ps` on the splunk box. Make sure the containers were started. 
 
