@@ -30,7 +30,7 @@ function Show-Menu {
 #Sysmon Arguments:
 $SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
 $SysmonOutputFile = "Sysmon.zip"
-$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/6be7403aae07cf1e41af6573a433888e27bd8a54.zip"
+$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/b7e99bf91d075862de3bc0668fd71a6ad7f19f17.zip"
 $SysmonZip = "sysmon.zip"
 
 $WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-7.5.2-windows-x86_64.zip"
@@ -61,8 +61,8 @@ Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysm
 #Pulling Sysmon Config
 Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonZip
 Expand-Archive -LiteralPath C:\Sysmon\$SysmonZip -DestinationPath C:\Sysmon\
-Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54\sysmon.xml C:\Sysmon
-Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54
+Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17\sysmon.xml C:\Sysmon
+Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17
 
 Write-Host "Installing Sysmon.." -ForegroundColor Green
 & cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1'  
@@ -80,8 +80,8 @@ Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysm
 #Pulling Sysmon Config
 Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonZip
 Expand-Archive -LiteralPath C:\Sysmon\$SysmonZip -DestinationPath C:\Sysmon\
-Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54\sysmon.xml C:\Sysmon
-Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54
+Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17\sysmon.xml C:\Sysmon
+Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17
 
 Write-Host "Installing Sysmon.." -ForegroundColor Green
 & cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1' 
@@ -120,8 +120,8 @@ Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysm
 #Pulling Sysmon Config
 Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonZip
 Expand-Archive -LiteralPath C:\Sysmon\$SysmonZip -DestinationPath C:\Sysmon\
-Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54\sysmon.xml C:\Sysmon
-Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-6be7403aae07cf1e41af6573a433888e27bd8a54
+Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17\sysmon.xml C:\Sysmon
+Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17
 
 Write-Host "Installing Sysmon.." -ForegroundColor Green
 & cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1' 
