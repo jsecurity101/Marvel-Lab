@@ -51,7 +51,9 @@ Write-Host "Installing Chrome" -ForegroundColor Green
 choco install googlechrome -y
 
 Write-Host "Installing Git" -ForegroundColor Green
-choco install git -y
+choco install git.install -y
+powershell.exe refreshenv
+refreshenv
 refreshenv
 
 Write-Host "Installing Tools" -ForegroundColor Green
