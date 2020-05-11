@@ -24,42 +24,6 @@ else
     Write-Host "GpLink $GPOName already linked on $OU1. Moving On."
 }
 
-
-#RDP
-$GPOName = 'RDP'
-$OU = "ou=Workstations,dc=marvel,dc=local"
-Write-Host "Importing $GPOName..."
-Import-GPO -BackupGpoName $GPOName -Path "C:\Marvel-Lab\Earth-DC\GPOBackup\RDP" -TargetName $GPOName -CreateIfNeeded
-$gpLinks = $null
-$gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
-$GPO = Get-GPO -Name $GPOName
-If ($gPLinks.LinkedGroupPolicyObjects -notcontains $gpo.path)
-{
-    New-GPLink -Name $GPOName -Target $OU -Enforced yes
-}
-else
-{
-    Write-Host "GpLink $GPOName already linked on $OU. Moving On."
-}
-
-
-#Workstation Local Administrators
-$GPOName = 'Workstation Local Administrators'
-$OU = "ou=Workstations,dc=marvel,dc=local"
-Write-Host "Importing $GPOName..."
-Import-GPO -BackupGpoName $GPOName -Path "C:\Marvel-Lab\Earth-DC\GPOBackup\Workstation Local Administrators" -TargetName $GPOName -CreateIfNeeded
-$gpLinks = $null
-$gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
-$GPO = Get-GPO -Name $GPOName
-If ($gPLinks.LinkedGroupPolicyObjects -notcontains $gpo.path)
-{
-    New-GPLink -Name $GPOName -Target $OU -Enforced yes
-}
-else
-{
-    Write-Host "GpLink $GPOName already linked on $OU. Moving On."
-}
-
 #Disable Windows Firewall
 $GPOName = 'Disable Windows Firewall'
 $OU = "ou=Workstations,dc=marvel,dc=local"

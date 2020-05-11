@@ -29,11 +29,9 @@ A collection of scripts that will help automate the build process for a Marvel d
   * `join-domain.ps1` 
   * `updating-groups.ps1`
   * `Tools.ps1`
-  
-**Note:** If `join-domain.ps1` fails, make sure that the host is pointing to Earth-DC's IP for DNS. 
-
   * Install Logging. Go to **Logging** below and follow steps. 
   
+**Note:** If `join-domain.ps1` fails, make sure that the host is pointing to Earth-DC's IP for DNS. 
   
 **Logging:**
 
@@ -95,6 +93,36 @@ A collection of scripts that will help automate the build process for a Marvel d
    
   * `splunk_logging.sh`
     * Bash script that will build out Splunk, Portainer, and Jupyter Notebooks within a docker container. 
+
+## Tools Added:
+
+### Red: 
+
+* [Powersploit](https://github.com/PowerShellMafia/PowerSploit)
+
+* [Rubeus](https://github.com/GhostPack/Rubeus)
+
+* [PowershellArsenal](https://github.com/mattifestation/PowerShellArsenal)
+
+* [GhostPack Seatbelt](https://github.com/GhostPack/Seatbelt)
+
+* [Mimikatz](https://github.com/gentilkiwi/mimikatz)
+
+
+### Blue: 
+
+* [Wireshark](https://www.wireshark.org/)
+
+
+### Misc:
+
+* Git
+  
+* Google Chrome
+
+* Chocolatey
+
+
 
 ## Support: 
 
