@@ -17,6 +17,9 @@ else {
     Add-LocalGroupMember -Group "Administrators" -Member "marvel.local\spidy"
     Add-LocalGroupMember -Group "Administrators" -Member "marvel.local\ironman"
 
+    Write-Host "Allowing RDP"
+    Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0
+
     Write-Host "Adding users to Remote Desktop Users Group"
     Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.local\loki"
     Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.local\panther"
