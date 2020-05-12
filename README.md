@@ -122,8 +122,6 @@ A collection of scripts that will help automate the build process for a Marvel d
 
 * Chocolatey
 
-
-
 ## Support: 
 
 * Windows 10 +
