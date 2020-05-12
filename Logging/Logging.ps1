@@ -52,8 +52,6 @@ Break
 }
 else {
 function Install-Sysmon {
-
-
 New-Item -Path "c:\" -Name "Sysmon" -ItemType "directory"
 #Downloading and Installing Sysmon 
 Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\$SysmonOutputFile
