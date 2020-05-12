@@ -69,23 +69,8 @@ Write-Host "Installing Sysmon.." -ForegroundColor Green
 & cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1'  
 }
 
-function Install-Sysmon-HELK {
+function Install-Winlogbeat {
 $HELK_IP = Read-Host "Please input the IP of your HELK/ELK box" 
-
-New-Item -Path "c:\" -Name "Sysmon" -ItemType "directory"
-
-#Downloading and Installing Sysmon 
-Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\$SysmonOutputFile
-Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysmon\
-
-#Pulling Sysmon Config
-Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonZip
-Expand-Archive -LiteralPath C:\Sysmon\$SysmonZip -DestinationPath C:\Sysmon\
-Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17\sysmon.xml C:\Sysmon
-Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17
-
-Write-Host "Installing Sysmon.." -ForegroundColor Green
-& cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1' 
 
 #Downloading and Installing Winlogbeat
 New-Item -Path "c:\" -Name "Winlogbeat" -ItemType "directory"
@@ -109,23 +94,8 @@ C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\install-service-winlogbeat.ps1
 Start-Service winlogbeat
 }
 
-function Install-Sysmon-Splunk {
+function Install-Splunk {
 $Splunk_IP = Read-Host "Please input the IP of your Splunk box"
- 
-New-Item -Path "c:\" -Name "Sysmon" -ItemType "directory"
-
-#Downloading and Installing Sysmon 
-Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\$SysmonOutputFile
-Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysmon\
-
-#Pulling Sysmon Config
-Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonZip
-Expand-Archive -LiteralPath C:\Sysmon\$SysmonZip -DestinationPath C:\Sysmon\
-Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17\sysmon.xml C:\Sysmon
-Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17
-
-Write-Host "Installing Sysmon.." -ForegroundColor Green
-& cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1' 
 
 #Installing Splunk
 Write-Host "Installing SplunkUF" -ForegroundColor Green
@@ -155,11 +125,13 @@ $selection = Read-Host "Please make a selection"
     } 
     '2' {
     Write-Host "You chose to install Sysmon + Winlogbeat which will forward Sysmon and Windows Events to HELK/ELK Instance"
-    Install-Sysmon-HELK
+    Install-Sysmon
+    Install-Winlogbeat
     } 
     '3' {
     Write-Host "You chose to install Sysmon + Splunk UF which will forward Sysmon and Windows Events to Splunk"
-    Install-Sysmon-Splunk
+    Install-Sysmon
+    Install-Splunk
     }
     }
  }
