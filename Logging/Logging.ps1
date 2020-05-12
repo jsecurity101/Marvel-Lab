@@ -21,9 +21,9 @@ function Show-Menu {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 "
     Write-Host "================ $Question =============="
-    Write-Host "1: Press '1' to install Sysmon + OSQuery with no forwarding."
+    Write-Host "1: Press '1' to install Sysmon with no forwarding."
     Write-Host "2: Press '2' for Sysmon + Winlogbeat which will forward Sysmon and Windows Events to HELK/ELK Instance."
-    Write-Host "3: Press '3' for Sysmon + OSQuery + Splunk UF which will forward Sysmon and Windows Events to Splunk."
+    Write-Host "3: Press '3' for Sysmon + Splunk UF which will forward Sysmon and Windows Events to Splunk."
 
 }
 
@@ -41,9 +41,6 @@ $WinlogZip = "winlogconfig.zip"
 
 #Splunk Arugments:
 $SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.0.3&product=universalforwarder&filename=splunkforwarder-8.0.3-a6754d8441bf-x64-release.msi&wget=true"
-
-#OSQuery Arguments: 
-$OSQueryConfig = "https://gist.github.com/jsecurity101/bf80206db6597607875665c9c3e188c0/archive/7d1e988b7f488fe5181ef4b14f83ee28a9de3093.zip"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
 
@@ -112,7 +109,7 @@ C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\install-service-winlogbeat.ps1
 Start-Service winlogbeat
 }
 
-function Install-Sysmon-Splunk-OSQuery {
+function Install-Sysmon-Splunk {
 $Splunk_IP = Read-Host "Please input the IP of your Splunk box"
  
 New-Item -Path "c:\" -Name "Sysmon" -ItemType "directory"
@@ -129,15 +126,6 @@ Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094
 
 Write-Host "Installing Sysmon.." -ForegroundColor Green
 & cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1' 
-
-#Installing OSQuery
-Write-Host "Installing OSQuery via chocolatey" -ForegroundColor Green
-choco install osquery --params='/InstallService' -y
-& refreshenv
-Remove-Item 'C:\Program Files\osquery\osquery.conf'
-Invoke-WebRequest $OSQueryConfig -OutFile 'C:\Program Files\osquery.conf'
-& 'C:\Program Files\osquery\manage-osqueryd.ps1' -installWelManifest
-Start-Service osqueryd
 
 #Installing Splunk
 Write-Host "Installing SplunkUF" -ForegroundColor Green
@@ -171,7 +159,7 @@ $selection = Read-Host "Please make a selection"
     } 
     '3' {
     Write-Host "You chose to install Sysmon + Splunk UF which will forward Sysmon and Windows Events to Splunk"
-    Install-Sysmon-Splunk-OSQuery
+    Install-Sysmon-Splunk
     }
     }
  }
