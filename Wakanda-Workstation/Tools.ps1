@@ -80,3 +80,6 @@ Invoke-WebRequest $mimikatz -OutFile "C:\Tools\Red\Mimikatz.zip"
 #Wireshark:
 choco install wireshark -y
 
+#Notepad++:
+choco install notepadplusplus -y
+

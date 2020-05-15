@@ -35,13 +35,15 @@ A collection of scripts that will help automate the build process for a Marvel d
   
 **Logging:**
 
-**Note**: Only Ubuntu 18 is supported for this script. 
-
 ### Steps to get logging set up: 
+
+#### If you plan on using Splunk/Jupyter Notebooks/Kolide - install the required scripts on the Ubuntu box first before setting up logging on endpoints. 
 
 #### On Ubuntu box: 
 1. On the Ubuntu machine download the Marvel-Lab repository. 
 2. Go into `Marvel-Lab\Logging\splunk` and run `splunk_logging.sh`.
+
+**Note**: Only Ubuntu 18 is supported for this script. 
 
 #### On Workstation and DC:
 1. Download the Marvel-Lab repository in the `C:\` directory. (If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`). 
