@@ -37,7 +37,7 @@ A collection of scripts that will help automate the build process for a Marvel d
 
 ### Steps to get logging set up: 
 
-#### If you plan on using Splunk/Jupyter Notebooks/Kolide - install the required scripts on the Ubuntu box first before setting up logging on endpoints. 
+#### If you plan on using Splunk/Jupyter Notebooks - install the required scripts on the Ubuntu box first before setting up logging on endpoints. 
 
 #### On Ubuntu box: 
 1. On the Ubuntu machine download the Marvel-Lab repository. 
