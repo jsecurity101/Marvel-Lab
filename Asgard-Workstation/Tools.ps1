@@ -53,12 +53,11 @@ choco install googlechrome -y
 Write-Host "Installing Git" -ForegroundColor Green
 choco install git.install -y
 powershell.exe refreshenv
-refreshenv
-refreshenv
+refreshenv #sanity check
+refreshenv #sanity check
 
 Write-Host "Installing Tools" -ForegroundColor Green
 New-Item -Path "C:\" -Name "Tools" -ItemType "directory"
-New-Item -Path "C:\Tools" -Name "Blue" -ItemType "directory"
 New-Item -Path "C:\Tools" -Name "Red" -ItemType "directory"
 
 #Powersploit:
