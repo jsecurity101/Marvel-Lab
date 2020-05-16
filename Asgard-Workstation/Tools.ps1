@@ -1,4 +1,4 @@
-#Author: Jonathan Johnson
+﻿#Author: Jonathan Johnson
 #Resources -
 #https://chocolatey.org/docs/installation
 
@@ -37,7 +37,7 @@ Write-Host "
     ████████                                  
   ███████                                    
  ███████                                      
-██████                                        
+██████                                       
 
 "
 
