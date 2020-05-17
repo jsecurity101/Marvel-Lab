@@ -36,7 +36,11 @@ read -r -p "Zeek needs a network interface to monitor, would you like to print o
 
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
 then
-    ifconfig
+	if hash ifconfig 2>/dev/null; then
+		ifconfig
+	else
+		ip address
+	fi
 else
     echo -e "\x1B[01;34mMoving on..\x1B[0m"
 fi
@@ -44,7 +48,10 @@ fi
 read -p 'Input the network interface you would like zeek to monitor and press [ENTER]: ' Interface
 echo -e "\x1B[01;34m[*] Installing Zeek:\x1B[0m"
 docker pull blacktop/zeek
-docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/pcap/:/pcap:rw blacktop/zeek -i $Interface
+if [ "$(docker ps -a -q -f name=zeek)" ]; then
+	docker stop zeek && docker rm zeek
+fi
+docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/zeek-logs/:/zeek-logs:rw blacktop/zeek -i $Interface
 
 
 # Starting containers
