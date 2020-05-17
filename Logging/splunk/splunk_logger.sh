@@ -51,7 +51,7 @@ docker pull blacktop/zeek
 if [ "$(docker ps -a -q -f name=zeek)" ]; then
 	docker stop zeek && docker rm zeek
 fi
-docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/zeek-logs/:/zeek-logs:rw blacktop/zeek -i $Interface
+docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/zeek-logs/:/pcap:rw blacktop/zeek -i $Interface
 
 
 # Starting containers
