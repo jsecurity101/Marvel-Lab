@@ -31,6 +31,22 @@ else
   (cd quick-fleet; git pull)
 fi
 
+# Zeek
+read -r -p "Zeek needs a network interface to monitor, would you like to print out your interfaces to see which one to monitor? [y/N] " response
+
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+    ifconfig
+else
+    echo -e "\x1B[01;34mMoving on..\x1B[0m"
+fi
+
+read -p 'Input the network interface you would like zeek to monitor and press [ENTER]: ' Interface
+echo -e "\x1B[01;34m[*] Installing Zeek:\x1B[0m"
+docker pull blacktop/zeek
+docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/pcap/:/pcap:rw blacktop/zeek -i $Interface
+
+
 # Starting containers
 echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
 #docker-compose up -d
@@ -48,3 +64,4 @@ echo -e "\x1B[01;32m[*] Splunk's IP is: http://$Host_IP:8000 ; Credentials - adm
 echo -e "\x1B[01;32m[*] Jupyter Notebook's IP is: http://$Host_IP:8888\x1B[0m"
 echo -e "\x1B[01;32m[*] Jupyter Notebook token is $token\x1B[0m"
 echo -e "\x1B[01;32m[*] Kolide Fleet's IP is: https://$Host_IP:8443\x1B[0m"
+
