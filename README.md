@@ -7,7 +7,7 @@ A collection of scripts that will help automate the build process for a Marvel d
 
 ## Build Steps: 
 
-**Domain Controller**: 
+### Domain Controller: 
 1. Build stock Windows Server VM. 
 2. Go into Server and download this repo into the `C:\` directory. If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`. 
 3. Go into the `Earth-DC` folder. 
@@ -20,7 +20,7 @@ A collection of scripts that will help automate the build process for a Marvel d
    * Install Logging. Go to **Logging** below and follow steps. 
 
 
-**Workstations**:
+### Workstations:
 1. Build Windows 10 VM.
 2. Go into one of the Windows VMs and download this repo into the `C:\` directory. If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to `Marvel-Lab`. 
 3. Go into one of the Workstaion folders. This project supports two different Workstations. 
@@ -33,11 +33,11 @@ A collection of scripts that will help automate the build process for a Marvel d
   
 **Note:** If `join-domain.ps1` fails, make sure that the host is pointing to Earth-DC's IP for DNS. 
   
-**Logging:**
+### Logging:
 
-### Steps to get logging set up: 
+#### Steps to get logging set up: 
 
-#### If you plan on using Splunk/Jupyter Notebooks - install the required scripts on the Ubuntu box first before setting up logging on endpoints. 
+##### If you plan on using Splunk/Jupyter Notebooks/OSQuery/Kolide - install the required scripts on the Ubuntu box first before setting up logging on endpoints. 
 
 #### On Ubuntu box: 
 1. On the Ubuntu machine download the Marvel-Lab repository. 
@@ -138,6 +138,5 @@ A collection of scripts that will help automate the build process for a Marvel d
 # To Do List: 
 
 * Add OSQuery
-* Add Zeek/Bro Logs
 * Add update scripts 
 * Add box resource suggestions

@@ -52,6 +52,7 @@ if [ "$(docker ps -a -q -f name=zeek)" ]; then
 	docker stop zeek && docker rm zeek
 fi
 docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/zeek-logs/:/pcap:rw blacktop/zeek -i $Interface
+docker exec -it splunk /bin/sh -c 'sudo /opt/splunk/bin/splunk install app /logs/corelight-app-for-splunk_200.tgz -auth "admin:Changeme1!"'
 
 
 # Starting containers
