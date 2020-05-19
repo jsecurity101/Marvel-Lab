@@ -46,19 +46,22 @@ else
 fi
 
 read -p 'Input the network interface you would like zeek to monitor and press [ENTER]: ' Interface
-echo -e "\x1B[01;34m[*] Installing Zeek:\x1B[0m"
+echo -e "\x1B[01;34m[*] Creating Zeek:\x1B[0m"
 docker pull blacktop/zeek
 if [ "$(docker ps -a -q -f name=zeek)" ]; then
 	docker stop zeek && docker rm zeek
 fi
-docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/zeek-logs/:/pcap:rw blacktop/zeek -i $Interface
-docker exec -it splunk /bin/sh -c 'sudo /opt/splunk/bin/splunk install app /logs/corelight-app-for-splunk_200.tgz -auth "admin:Changeme1!"'
+docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/zeek/zeek-logs/:/pcap:rw -v `pwd`/zeek/__load__.zeek:/usr/local/zeek/share/zeek/base/bif/__load__.zeek blacktop/zeek -i $Interface
 
 
 # Starting containers
 echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
-#docker-compose up -d
 docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml up -d
+sleep 30 # Wait for splunk to finish installing
+# The docker cp is needed after splunk install, otherwise our custom config would be overwritten
+docker cp splunk/inputs.conf splunk:/opt/splunk/etc/system/local/inputs.conf
+docker restart splunk
+
 
 # To remove the containers
 # docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml down

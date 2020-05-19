@@ -1,2 +1,2 @@
-/Logging/splunk/quick-fleet
-/Logging/splunk/zeek-logs
+Logging/splunk/quick-fleet
+Logging/splunk/zeek/zeek-logs/*

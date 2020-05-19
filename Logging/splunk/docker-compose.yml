@@ -25,6 +25,9 @@ services:
     volumes:
       - splunk_etc:/opt/splunk/etc
       - splunk_var:/opt/splunk/var
+      - ./zeek/zeek-logs/:/logs/zeek-logs/
+      - ./quick-fleet/osquery_result:/logs/osquery/osquery_result
+      - ./quick-fleet/osquery_status:/logs/osquery/osquery_status
     restart: unless-stopped
     
   jupyter-notebooks:
