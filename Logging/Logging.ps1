@@ -23,7 +23,7 @@ function Show-Menu {
     Write-Host "================ $Question =============="
     Write-Host "1: Press '1' to install Sysmon with no forwarding."
     Write-Host "2: Press '2' for Sysmon + Winlogbeat which will forward Sysmon and Windows Events to HELK/ELK Instance."
-    Write-Host "3: Press '3' for Sysmon + Splunk UF which will forward Sysmon/Windows Events/OSQuery to Splunk."
+    Write-Host "3: Press '3' for Sysmon + OSQuery + Splunk UF which will forward Sysmon/Windows Events/OSQuery to Splunk."
 
 }
 
@@ -41,11 +41,8 @@ $WinlogZip = "winlogconfig.zip"
 #Splunk Arugments:
 $SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.0.3&product=universalforwarder&filename=splunkforwarder-8.0.3-a6754d8441bf-x64-release.msi&wget=true"
 
-
-$OSQueryConfig = "https://gist.github.com/jsecurity101/bf80206db6597607875665c9c3e188c0/archive/7d1e988b7f488fe5181ef4b14f83ee28a9de3093.zip"
-$KolideLauncher 
-$KolideZip
-$KolideCert = "https://raw.githubusercontent.com/benjaminshell/quick-fleet/master/server.cert"
+#OSQuery Arguments
+$KolideLauncher = "https://github.com/kolide/launcher/releases/download/v0.11.9/launcher_v0.11.9.zip"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
 
@@ -99,18 +96,20 @@ Start-Service winlogbeat
 }
 
 function Install-OSQuery {
-    $KolideSecretKey = Read-Host "Please go to Kolide Fleet and copy the Secret Key and input it here:"
+    New-Item -Path "c:\" -Name "OSQuery" -ItemType "directory"
+    $OSQuery_IP = Read-Host "Please Input the IP and port number of the Kolide Server" 
+    $Enroll_Secret = Read-Host "Go to https://"$OSQuery_IP":8443, click on 'Add New Host', copy the Enroll Secret and paste here"
+   
+    Invoke-WebRequest $KolideLauncher -OutFile 'C:\OSQuery\kolidelauncher.zip'
+    Expand-Archive -LiteralPath C:\OSquery\kolidelauncher.zip -DestinationPath C:\OSquery\
 
-    choco install --limit-output --no-progress osquery -y 
-    Invoke-WebRequest $OSQueryConfig -OutFile 'C:\Program Files\osquery\'
-    Expand-Archive -LiteralPath 'C:\Program Files\osquery\' -DestinationPath 'C:\Program Files\osquery\'
-    Move-Item 'C:\Program Files\osquery\bf80206db6597607875665c9c3e188c0-7d1e988b7f488fe5181ef4b14f83ee28a9de3093\osquery.conf' 'C:\Program Files\osquery\osquery.conf'
-    Remove-Item 'C:\Program Files\osquery\$OSQueryConfig', 'C:\Program Files\osquery\bf80206db6597607875665c9c3e188c0-7d1e988b7f488fe5181ef4b14f83ee28a9de3093'
-
-    Invoke-WebRequest $KolideCert -OutFile 'C:\Program Files\osquery\certs\kolide.cert'
-
-    Write-Host "OSQuery logs are now available in Splunk and in Kolide Fleet" -ForegroundColor Green
+    ((Get-Content -path "C:\Marvel-Lab\Logging\Kolide_Launcher_Service.ps1") -replace 'OSQuery_IP', $OSQuery_IP -replace 'KolideSecret', $Enroll_Secret) | Set-Content -Path "C:\Marvel-Lab\Logging\Kolide_Launcher_Service.ps1"
+    & powershell C:\Marvel-Lab\Logging\Kolide_Launcher_Service.ps1
+    sc.exe start kolide_launcher 
+    Remove-Item C:\OSQuery\kolidelauncher.zip
+    Write-Host "OSQuery logs are now available in Kolide Fleet" -ForegroundColor Green
 }
+
 
 function Install-Splunk {
 $Splunk_IP = Read-Host "Please input the IP of your Splunk box"
@@ -147,8 +146,9 @@ $selection = Read-Host "Please make a selection"
     Install-Winlogbeat
     } 
     '3' {
-    Write-Host "You chose to install Sysmon + Splunk UF which will forward Sysmon/Windows Events/OSQuery to Splunk"
+    Write-Host "You chose to install Sysmon + OSQuery + Splunk UF which will forward Sysmon/Windows Events/OSQuery to Splunk"
     Install-Sysmon
+    Install-OSQuery
     Install-Splunk
     }
     }

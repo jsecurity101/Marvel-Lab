@@ -31,10 +31,37 @@ else
   (cd quick-fleet; git pull)
 fi
 
+# Zeek
+read -r -p "Zeek needs a network interface to monitor, would you like to print out your interfaces to see which one to monitor? [y/N] " response
+
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+	if hash ifconfig 2>/dev/null; then
+		ifconfig
+	else
+		ip address
+	fi
+else
+    echo -e "\x1B[01;34mMoving on..\x1B[0m"
+fi
+
+read -p 'Input the network interface you would like zeek to monitor and press [ENTER]: ' Interface
+echo -e "\x1B[01;34m[*] Creating Zeek:\x1B[0m"
+docker pull blacktop/zeek
+if [ "$(docker ps -a -q -f name=zeek)" ]; then
+	docker stop zeek && docker rm zeek
+fi
+docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/zeek/zeek-logs/:/pcap:rw -v `pwd`/zeek/__load__.zeek:/usr/local/zeek/share/zeek/base/bif/__load__.zeek blacktop/zeek -i $Interface
+
+
 # Starting containers
 echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
-#docker-compose up -d
 docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml up -d
+sleep 30 # Wait for splunk to finish installing
+# The docker cp is needed after splunk install, otherwise our custom config would be overwritten
+docker cp splunk/inputs.conf splunk:/opt/splunk/etc/system/local/inputs.conf
+docker restart splunk
+
 
 # To remove the containers
 # docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml down
@@ -48,3 +75,4 @@ echo -e "\x1B[01;32m[*] Splunk's IP is: http://$Host_IP:8000 ; Credentials - adm
 echo -e "\x1B[01;32m[*] Jupyter Notebook's IP is: http://$Host_IP:8888\x1B[0m"
 echo -e "\x1B[01;32m[*] Jupyter Notebook token is $token\x1B[0m"
 echo -e "\x1B[01;32m[*] Kolide Fleet's IP is: https://$Host_IP:8443\x1B[0m"
+
