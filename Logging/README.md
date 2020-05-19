@@ -7,7 +7,7 @@
   - Configuration is being pulled from this [Github Gist](https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2)
   - Configuration file changes on a constant basis to help reduce noise. 
 - [Zeek](https://zeek.org/)
-  - Logs are stored within the Marvel-Lab directory you created under: `Marvel-Lab/Logging/splunk/zeek-logs`
+  - Logs are stored within the Marvel-Lab directory you created under: `Marvel-Lab/Logging/splunk/zeek/zeek-logs`
 - [OSQuery](https://osquery.readthedocs.io/en/latest/)
   
 ## Analytic Platforms: 
