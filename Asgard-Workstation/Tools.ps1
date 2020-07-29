@@ -78,7 +78,7 @@ $mimikatz = "https://github.com/gentilkiwi/mimikatz/releases/download/2.2.0-2020
 Invoke-WebRequest $mimikatz -OutFile "C:\Tools\Red\Mimikatz.zip"
 
 #Wireshark:
-choco install wireshark -y
+choco install -y --limit-output --no-progress wireshark winpcap #command borrowed from - https://github.com/clong/DetectionLab/blob/6525456492bc311c3ae061adb854691f424e4ba7/Vagrant/scripts/install-choco-extras.ps1#L13
 
 #Notepad++:
 choco install notepadplusplus -y
