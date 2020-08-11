@@ -76,6 +76,7 @@ function Install-Basic {
   $env:ChocolateyInstall = Convert-Path "$((Get-Command choco).Path)\..\.."   
   Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
   refreshenv 
+  refreshenv 
 
 #Wireshark:
 choco install -y --limit-output --no-progress wireshark winpcap #command borrowed from - https://github.com/clong/DetectionLab/blob/6525456492bc311c3ae061adb854691f424e4ba7/Vagrant/scripts/install-choco-extras.ps1#L13
@@ -94,7 +95,7 @@ $Powersploit = "https://github.com/PowerShellMafia/PowerSploit/archive/dev.zip"
 Invoke-WebRequest $Powersploit -OutFile "C:\Tools\Red\PowerSploit.zip"
 
 #Rubeus:
-powershell.exe git clone https://github.com/GhostPack/Rubeus.git C:\Tools\Red\Rubeus
+git clone https://github.com/GhostPack/Rubeus.git C:\Tools\Red\Rubeus
 
 #Powershell Arsenal:
 git clone https://github.com/mattifestation/PowerShellArsenal.git C:\Tools\Red\PowershellArsenal
