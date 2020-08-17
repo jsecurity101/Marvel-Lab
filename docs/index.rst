@@ -8,8 +8,10 @@ Marvel Lab
    :align: center
    :alt: thor-rocket
 
-To Do: 
-------------------------------
+To Do:
+------
+
+-  Forward OSQuery logs to Splunk
 
 
 .. toctree::
@@ -21,4 +23,10 @@ To Do:
    subpages/troubleshooting
    subpages/script_explanations
 
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Logging
+
+   subpages/logging
 
