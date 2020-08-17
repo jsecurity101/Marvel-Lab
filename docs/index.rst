@@ -20,13 +20,7 @@ References
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: Network Diagram
+   :caption: Build Steps
 
    subpages/build_steps
 
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Network Diagram
-
-   subpages/networkdiagram
