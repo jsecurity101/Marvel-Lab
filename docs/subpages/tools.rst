@@ -1,7 +1,8 @@
+*******
 Tools: 
-=======================================
+*******
 Red:
-~~~~
+#####
 
 -  `Powersploit`_
 
@@ -14,13 +15,13 @@ Red:
 -  `Mimikatz`_
 
 Blue:
-~~~~~
+#####
 
 -  `Wireshark`_
 -  `Sysinternals`_
 
 Debugging:
-~~~~~~~~~~
+##########
 
 -  `Windows SDK`_
 -  `IDA Pro`_
@@ -28,7 +29,7 @@ Debugging:
 -  `DNSpy`_
 
 Misc:
-~~~~~
+#####
 
 -  Git
 

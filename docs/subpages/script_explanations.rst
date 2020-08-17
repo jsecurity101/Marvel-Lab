@@ -1,5 +1,6 @@
-Script Explanations: 
-=======================================
+********************
+Script Explanations 
+********************
 -  ``rename-dc.ps1``
 
    -  Powershell script that will rename the computer name of the Domain

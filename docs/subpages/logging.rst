@@ -1,9 +1,13 @@
+********
+Logging:
+********
+
 .. image:: ../images/tonystark.gif
    :align: center
    :alt: tonystark
 
 Data Sensors Available:
------------------------
+#######################
 
 -  Window Event Logs (Application, Security, System, Setup)
 
@@ -23,7 +27,7 @@ Data Sensors Available:
 -  `OSQuery`_ (Currently not fully opperational)
 
 Analytic Platforms:
--------------------
+###################
 
 -  Splunk
 
@@ -34,17 +38,12 @@ Analytic Platforms:
 -  Jupyter Notebooks
 
 Current data sources being shipped to Splunk:
----------------------------------------------
+#############################################
 
 -  Windows Events (Window Event Logs (Application, Security, System,
    Setup)
 -  Sysmon
 -  Zeek
-
-To Do:
-------
-
--  Forward OSQuery logs to Splunk
 
 .. _Sysmon v11.0: https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 .. _Github Gist: https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2

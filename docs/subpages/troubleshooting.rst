@@ -1,5 +1,6 @@
-Troubleshooting Steps: 
-=======================================
+*********************
+Troubleshooting Steps 
+*********************
 
 1. If the docker containers are not starting correctly after reboot, run
    ``sudo docker ps`` on the splunk box. Make sure the containers were

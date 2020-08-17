@@ -1,5 +1,6 @@
+***********
 Marvel Lab
-=======================================
+***********
 
 .. meta::
    description lang=en: A collection of scripts that will help automate the build process for a Marvel domain.
@@ -8,11 +9,9 @@ Marvel Lab
    :align: center
    :alt: thor-rocket
 
-To Do:
-------
-
+To Do: 
+------------------------------
 -  Forward OSQuery logs to Splunk
-
 
 .. toctree::
    :maxdepth: 2
