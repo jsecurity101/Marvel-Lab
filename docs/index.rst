@@ -11,8 +11,9 @@ Marvel Lab
 :doc:`Build Steps <subpages/build_steps>`
 ------------------------------
 
+:doc:`Troubleshooting <subpages/troubleshooting>`
 
-References
+To Do: 
 ------------------------------
 
 
@@ -23,3 +24,16 @@ References
 
    subpages/build_steps
 
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Troubleshooting Steps
+
+   subpages/troubleshooting
+
+   .. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Script Explanations
+
+   subpages/script_explanations
