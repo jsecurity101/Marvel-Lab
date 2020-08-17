@@ -114,6 +114,7 @@ A collection of scripts that will help automate the build process for a Marvel d
 ### Blue: 
 
 * [Wireshark](https://www.wireshark.org/)
+* [Sysinternals](https://docs.microsoft.com/en-us/sysinternals/)
 
 
 ### Misc:
