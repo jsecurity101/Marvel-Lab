@@ -8,11 +8,6 @@ Marvel Lab
    :align: center
    :alt: thor-rocket
 
-:doc:`Build Steps <subpages/build_steps>`
-------------------------------
-
-:doc:`Troubleshooting <subpages/troubleshooting>`
-
 To Do: 
 ------------------------------
 
@@ -20,20 +15,10 @@ To Do:
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: Build Steps
+   :caption: Lab Info
 
    subpages/build_steps
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Troubleshooting Steps
-
    subpages/troubleshooting
-
-   .. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Script Explanations
-
    subpages/script_explanations
+
+
