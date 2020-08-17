@@ -6,8 +6,7 @@ Marvel Lab
 
 .. image:: /images/thor-rocket.gif
    :align: center
-   :width: 300px
-   :alt: Mjölnir
+   :alt: thor-rocket
 
 :doc:`Build Steps <subpages/build_steps>`
 ------------------------------
