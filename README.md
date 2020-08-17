@@ -138,5 +138,5 @@ A collection of scripts that will help automate the build process for a Marvel d
 # To Do List: 
 
 * Add OSQuery
-* Add update scripts 
+* Add ReadTheDocs
 * Add box resource suggestions
