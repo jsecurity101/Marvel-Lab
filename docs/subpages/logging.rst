@@ -1,5 +1,5 @@
 ********
-Logging:
+Logging
 ********
 
 .. image:: ../images/tonystark.gif
