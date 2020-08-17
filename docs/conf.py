@@ -19,7 +19,7 @@
 
 project = 'Marvel Lab'
 copyright = '2020, Jonathan Johnson'
-author = 'Jonathan Johnson', 'Ben Shell'
+author = 'Jonathan Johnson, Ben Shell'
 
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
