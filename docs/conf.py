@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Marvel Lab'
-copyright = '2020, Jonathan Johnson'
+copyright = '2020, Jonathan Johnson, Ben Shell'
 author = 'Jonathan Johnson, Ben Shell'
 
 # The full version, including alpha/beta/rc tags
