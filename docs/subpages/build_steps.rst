@@ -43,7 +43,7 @@ Logging:
 ########
 
 Steps to get logging set up:
-############################
+****************************
 
 If you plan on using Splunk/Jupyter Notebooks/OSQuery/Kolide - install the required scripts on the Ubuntu box first before setting up logging on endpoints.
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
