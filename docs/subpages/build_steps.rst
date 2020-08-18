@@ -67,4 +67,4 @@ On Workstation and DC:
 **Note:** The Sysmon configuration is up to date with version - 11.0.
 FileDelete Events will only be logged within the
 :raw-latex:`\Downloads` folder of each user. Deletions are saved within
-the C::raw-latex:`\ArchivedFiles` folder.
+the :raw-latex:`C:\ArchivedFiles` folder.
