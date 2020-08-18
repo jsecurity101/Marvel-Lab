@@ -11,15 +11,15 @@ Marvel Lab
 
 Installation: 
 -------------
-Go see :doc:`Build Steps <subpages/build_steps>`. 
+Go see - :doc:`Build Steps <subpages/build_steps>`. 
 
 Logging: 
 --------
-This lab is meant to be used for research and detection development. The logging information for this lab is held within the :doc:`Logging <subpages/logging>` page. If there is any other telemtry you would like to see, let us know! 
+This lab is meant to be used for research and detection development. The logging information for this lab is held within the - :doc:`Logging <subpages/logging>` page. If there is any other telemtry you would like to see, let us know! 
 
 Troubleshooting:
 ----------------
-Before creating an issue within the Github, please check out the :doc:`Troubleshooing <subpages/troubleshooting>` page. 
+Before creating an issue within the Github, please check out the - :doc:`Troubleshooing <subpages/troubleshooting>` page. 
 
 Scripts: 
 --------
@@ -28,7 +28,7 @@ Many scripts are being used for this build, for explanations on these scripts pl
 
 Tools: 
 ------
-Tools for red-teaming, blue-teaming, and debugging are installed. To see the full list, visit the :doc:`Tools <subpages/tools>`page. If there is any other tools you'd like to see, let us know!
+Tools for red-teaming, blue-teaming, and debugging are installed. To see the full list, visit the - :doc:`Tools <subpages/tools>` page. If there is any other tools you'd like to see, let us know!
 
 To Do: 
 ------------------------------
