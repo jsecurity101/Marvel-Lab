@@ -47,7 +47,7 @@ To Do:
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: Logging
+   :caption: Logging information
 
    subpages/logging
 

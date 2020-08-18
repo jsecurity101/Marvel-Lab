@@ -1,6 +1,6 @@
-********
-Logging
-********
+*******************
+Telemetry/Logging Information
+*******************
 
 .. image:: ../images/tonystark.gif
    :align: center
