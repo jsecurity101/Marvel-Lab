@@ -32,7 +32,7 @@ services:
     
   jupyter-notebooks:
     container_name: jupyter-notebooks
-    image: jupyter/base-notebook
+    image: jupyter/all-spark-notebook
     ports:
         - 8888:8888
         #- 8000:8000 #REMOVE IF NOT NEEDED
