@@ -49,3 +49,27 @@ Current data sources being shipped to Splunk:
 .. _Github Gist: https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2
 .. _Zeek: https://zeek.org/
 .. _OSQuery: https://osquery.readthedocs.io/en/latest/
+
+Splunk Universal Forwarder:
+#############################################
+
+The Forwarder currently has some exclusions set within the `inputs.conf`. These can be found below: 
+
+
+::
+
+   blacklist1=EventCode="4688" Message="New Process Name:\s*(?i)(?:[C-F]:\\Program Files\\Splunk(?:UniversalForwarder)?\\bin\\(?:btool|splunkd|splunk|splunk\-(?:MonitorNoHandle|admon|netmon|perfmon|powershell|regmon|winevtlog|winhostinfo|winprintmon|wmi|optimize))\.exe)"
+
+Rule was borrowed from: https://gist.github.com/automine/a3915d5238e2967c8d44b0ebcfb66147
+
+
+::
+
+   blacklist2=EventCode="4689" Message="Process Name:\s*(?i)(?:[C-F]:\\Program Files\\Splunk(?:UniversalForwarder)?\\bin\\(?:btool|splunkd|splunk|splunk\-(?:MonitorNoHandle|admon|netmon|perfmon|powershell|regmon|winevtlog|winhostinfo|winprintmon|wmi|optimize))\.exe)"
+
+Rule was borrowed from: https://gist.github.com/automine/a3915d5238e2967c8d44b0ebcfb66147
+
+::
+
+   blacklist3=EventCode="5156"  Message="(?ms)Application\sName:\s.*\\windows\\system32\\svchost.exe."
+

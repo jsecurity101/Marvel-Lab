@@ -4,6 +4,8 @@
 #Resources -
 #http://woshub.com/check-powershell-script-running-elevated/
 
+Write-Host "This script will update local groups as well as add a wallpaper for the user running this script"
+
 Write-Host "Checking for elevated permissions..."
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
 [Security.Principal.WindowsBuiltInRole] "Administrator")) {
@@ -26,3 +28,15 @@ else {
     Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.local\spidy"
     Add-LocalGroupMember -Group "Remote Desktop Users" -Member "marvel.local\ironman"
     }
+
+    Function Wallpaper
+    { 
+        New-Item HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\ -Name System
+        Set-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\\System' -name Wallpaper -value "C:\Marvel-Lab\images\thor.jpg"
+        Set-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\\System' -name WallpaperStyle -value "4"
+    
+    } 
+    
+    Wallpaper
+
+    Restart-Computer -Force
