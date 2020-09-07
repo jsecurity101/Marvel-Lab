@@ -46,9 +46,17 @@ Script Explanations
    - This script will also set a wallpaper for the current user NOT all users. If you want to update the wallpaper per user run this following: 
 
    ::
-    New-Item HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\ -Name System
-        Set-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\\System' -name Wallpaper -value "C:\Marvel-Lab\images\<image_name>.jpg"
-        Set-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\\System' -name WallpaperStyle -value "4"
+    
+      New-Item HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\ -Name System
+        
+        
+   ::
+   
+      Set-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\\System' -name Wallpaper -value "C:\Marvel-Lab\images\<image_name>.jpg"
+        
+   ::
+     
+      Set-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\\System' -name WallpaperStyle -value "4"
 
 -  ``Logging.ps1``
 

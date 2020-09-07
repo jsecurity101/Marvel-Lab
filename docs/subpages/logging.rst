@@ -55,20 +55,21 @@ Splunk Universal Forwarder:
 
 The Forwarder currently has some exclusions set within the `inputs.conf`. These can be found below: 
 
-
+Event ID 4688: 
 ::
 
    blacklist1=EventCode="4688" Message="New Process Name:\s*(?i)(?:[C-F]:\\Program Files\\Splunk(?:UniversalForwarder)?\\bin\\(?:btool|splunkd|splunk|splunk\-(?:MonitorNoHandle|admon|netmon|perfmon|powershell|regmon|winevtlog|winhostinfo|winprintmon|wmi|optimize))\.exe)"
 
 Rule was borrowed from: https://gist.github.com/automine/a3915d5238e2967c8d44b0ebcfb66147
 
-
+Event ID 4689:
 ::
 
    blacklist2=EventCode="4689" Message="Process Name:\s*(?i)(?:[C-F]:\\Program Files\\Splunk(?:UniversalForwarder)?\\bin\\(?:btool|splunkd|splunk|splunk\-(?:MonitorNoHandle|admon|netmon|perfmon|powershell|regmon|winevtlog|winhostinfo|winprintmon|wmi|optimize))\.exe)"
 
 Rule was borrowed from: https://gist.github.com/automine/a3915d5238e2967c8d44b0ebcfb66147
 
+Event ID 5156: 
 ::
 
    blacklist3=EventCode="5156"  Message="(?ms)Application\sName:\s.*\\windows\\system32\\svchost.exe."
