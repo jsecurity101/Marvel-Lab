@@ -24,7 +24,7 @@ Data Sensors Available:
    -  Logs are stored within the Marvel-Lab directory you created under:
       ``Marvel-Lab/Logging/splunk/zeek/zeek-logs``
 
--  `OSQuery`_ (Currently not fully opperational)
+-  `OSQuery`_ (Mac and Windows)
 
 Analytic Platforms:
 ###################

@@ -104,7 +104,8 @@ git clone https://github.com/mattifestation/PowerShellArsenal.git C:\Tools\Red\P
 git clone https://github.com/GhostPack/Seatbelt.git C:\Tools\Red\Seatbelt
 
 #Mimikatz:
-$mimikatz = "https://github.com/gentilkiwi/mimikatz/releases/download/2.2.0-20200502/mimikatz_trunk.zip"
+$release = (Invoke-WebRequest "https://api.github.com/repos/gentilkiwi/mimikatz/releases" -UseBasicParsing | ConvertFrom-Json)[0].tag_name #Line taken from: https://github.com/clong/DetectionLab/blob/eabe0fa90c7d0a85b18e0f7557b00d5ca055d646/Vagrant/scripts/install-redteam.ps1#L36
+$mimikatz = "https://github.com/gentilkiwi/mimikatz/releases/download/$release/mimikatz_trunk.zip"
 Invoke-WebRequest $mimikatz -OutFile "C:\Tools\Red\Mimikatz.zip"
 
 }
@@ -130,7 +131,8 @@ $APIMonitorx64 = "http://www.rohitab.com/download/api-monitor-v2r13-setup-x64.ex
 $APIMonitorx86 = "http://www.rohitab.com/download/api-monitor-v2r13-setup-x86.exe"
 
 #DnSpy:
-$Dnspy = "https://github.com/0xd4d/dnSpy/releases/download/v6.1.6/dnSpy-net472.zip"
+$release1 = (Invoke-WebRequest "https://api.github.com/repos/0xd4d/dnSpy/releases" -UseBasicParsing | ConvertFrom-Json)[0].tag_name
+$Dnspy = "https://github.com/0xd4d/dnSpy/releases/download/$release1/dnSpy-net472.zip"
 
 #IDAPro: 
 $IDAPro = "https://out7.hex-rays.com/files/idafree70_windows.exe"

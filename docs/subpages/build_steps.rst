@@ -19,7 +19,7 @@ Domain Controller:
 -  ``Import-GPOBackup.ps1``
 -  Install Logging. Go to **Logging** below and follow steps.
 
-Workstations:
+Workstations (Windows):
 #############
 
 1. Build Windows 10 VM.
@@ -39,6 +39,26 @@ Workstations:
 **Note:** If ``join-domain.ps1`` fails, make sure that the host is
 pointing to Earth-DC’s IP for DNS.
 
+Workstations (MacOS):
+#############
+
+1. Build Mac VM.
+2. Pull down the Marvel-Lab repo
+3. Go into the ``Marvel-Lab/Workstations/MacOS/`` directory 
+4. Run these scripts in order:
+
+-  ``build.sh``
+-  ``tools.sh``
+-  Install Logging. Go to **Logging** below and follow steps.
+
+**Note:** If ``build.sh`` fails, make sure that the host is
+pointing to Earth-DC’s IP for DNS.
+
+Adding Earth-DC's IP:  ``System Preferences -> Network -> Ethernet Adapter -> Advanced -> DNS -> Add the IP of Earth-DC under DNS Servers``
+
+Adding domain name to ``Search Domains``:  ``System Preferences -> Network -> Ethernet Adapter -> Advanced -> DNS -> Add marvel.local in the Search Domains``
+
+
 Logging:
 ########
 
@@ -56,8 +76,8 @@ On Ubuntu box:
 
 **Note**: Only Ubuntu 18 is supported for this script.
 
-On Workstation and DC:
-######################
+On Windows Workstation and DC:
+##############################
 
 1. Download the Marvel-Lab repository in the ``C:\`` directory. (If you
    downloaded the .zip of the repo, move the child folder to the
@@ -68,3 +88,12 @@ On Workstation and DC:
 FileDelete Events will only be logged within the
 ``\Downloads`` folder of each user. Deletions are saved within
 the ``C:\ArchivedFiles`` folder.
+
+On MacOS Workstation:
+######################
+1. Run ``logging.sh``
+2. During installation there will be some prompt that will need to be filled in when accepting the Splunk License. Exact steps are below: 
+- Press Enter
+- Press q
+- Press y, then Enter
+- Enter admin username/password of your choice (You might have to do this twice) 

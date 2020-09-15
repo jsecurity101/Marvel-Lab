@@ -32,7 +32,7 @@ Tools for red-teaming, blue-teaming, and debugging are installed. To see the ful
 
 To Do: 
 ------------------------------
--  Forward OSQuery logs to Splunk
+
 
 .. toctree::
    :maxdepth: 2
