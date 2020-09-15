@@ -73,7 +73,7 @@ On Ubuntu box:
 
 1. On the Ubuntu machine download the Marvel-Lab repository.
 2. Go into ``Marvel-Lab\Logging\splunk`` and run ``splunk_logging.sh``.
-3. Go to the hosts and AFTER Kolide has been set up from the ``On Windows Workstation and DC`` instructions, run ``fleet.sh``. 
+3. Go to the hosts and AFTER Kolide has been set up from the ``On Windows Workstation and DC`` instructions, run ``fleet-pack.sh``. 
 
 **Note**: Only Ubuntu 18+ is supported for this script.
 
