@@ -62,6 +62,11 @@ sleep 30 # Wait for splunk to finish installing
 docker cp splunk/inputs.conf splunk:/opt/splunk/etc/system/local/inputs.conf
 docker restart splunk
 
+rm -rf quick-fleet/result.log/
+rm -rf quick-fleet/status.log/
+touch quick-fleet/result.log
+touch quick-fleet/status.log
+
 
 # To remove the containers
 # docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml down

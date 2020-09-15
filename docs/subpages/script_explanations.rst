@@ -77,5 +77,18 @@ Script Explanations
    -  Bash script that will build out Splunk, Portainer, and Jupyter
       Notebooks within a docker container.
 
+- ``fleet.sh``
+   - Sets up osquery packs in fleet. 
+
+- ``build.sh``
+   - Rename hostname of MacOS Workstation and binds host to the domain - marvel.local. 
+
+- ``tools.sh``
+   - Install Homebrew/Wget on MacOS Workstation. 
+
+- ``logging.sh``
+   - Installs OSQuery/Splunk Forwarder. 
+   - Configures OSQuery and Splunk Forwarder. 
+   
 .. _Sysmon: https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 .. _HELK: https://github.com/Cyb3rWard0g/HELK

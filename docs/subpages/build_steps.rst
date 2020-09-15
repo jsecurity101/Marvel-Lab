@@ -73,21 +73,28 @@ On Ubuntu box:
 
 1. On the Ubuntu machine download the Marvel-Lab repository.
 2. Go into ``Marvel-Lab\Logging\splunk`` and run ``splunk_logging.sh``.
+3. Go to the hosts and AFTER Kolide has been set up from the ``On Windows Workstation and DC`` instructions, run ``fleet.sh``. 
 
-**Note**: Only Ubuntu 18 is supported for this script.
+**Note**: Only Ubuntu 18+ is supported for this script.
 
 On Windows Workstation and DC:
 ##############################
 
+**In order to recieve logs in Splunk, the ``splunk_logging.sh`` script must have succeeded on the Logger box (Ubuntu).**
+
 1. Download the Marvel-Lab repository in the ``C:\`` directory. (If you
    downloaded the .zip of the repo, move the child folder to the
    C: directory and rename to ``Marvel-Lab``).
-2. Go into ``Marvel-Lab\Logging`` and run ``Logging.ps1``.
+2. Go to KolideIP:8443, set up Username/Password. 
+3. Set Organization Name to ``Marvel Lab``. You don't have to do the URL. When it shows you the fleet web address, press Submit, then Finish. 
+4. Go into ``Marvel-Lab\Logging`` and run ``Logging.ps1``.
 
 **Note:** The Sysmon configuration is up to date with version - 11.0.
 FileDelete Events will only be logged within the
 ``\Downloads`` folder of each user. Deletions are saved within
 the ``C:\ArchivedFiles`` folder.
+
+
 
 On MacOS Workstation:
 ######################
@@ -96,4 +103,4 @@ On MacOS Workstation:
 - Press Enter
 - Press q
 - Press y, then Enter
-- Enter admin username/password of your choice (You might have to do this twice) 
+- Enter admin username/password of your choice (You might have to do this twice)  

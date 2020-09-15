@@ -13,6 +13,7 @@ Documentation on the project can be found project's [ReadTheDocs](https://marvel
 * Windows 10 +
 * Windows Server 2016 +
 * Ubuntu 18 +
+* MacOS Catalina
 
 # Authors:
 * [Jonathan Johnson](https://twitter.com/jsecurity101) 
@@ -21,5 +22,4 @@ Documentation on the project can be found project's [ReadTheDocs](https://marvel
 
 # To Do List: 
 
-* Add OSQuery
 * Add box resource suggestions

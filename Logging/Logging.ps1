@@ -97,7 +97,8 @@ Start-Service winlogbeat
 
 function Install-OSQuery {
     New-Item -Path "c:\" -Name "OSQuery" -ItemType "directory"
-    $OSQuery_IP = Read-Host "Please Input the IP and port number of the Kolide Server" 
+    Write-Host "STOP. If you haven't set up Splunk and Kolide on the Logger box, this must be done first."
+    $OSQuery_IP = Read-Host "Please Input the IP of the Kolide Server." 
     $Enroll_Secret = Read-Host "Go to https://"$OSQuery_IP":8443, click on 'Add New Host', copy the Enroll Secret and paste here"
    
     Invoke-WebRequest $KolideLauncher -OutFile 'C:\OSQuery\kolidelauncher.zip'
