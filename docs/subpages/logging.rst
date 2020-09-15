@@ -25,7 +25,8 @@ Data Sensors Available:
       ``Marvel-Lab/Logging/splunk/zeek/zeek-logs``
 
 -  `OSQuery`_ (Mac and Windows)
-   - Mac configs are coming from: https://github.com/palantir/osquery-configuration
+
+   - Configs are coming from: https://github.com/palantir/osquery-configuration
 
 Analytic Platforms:
 ###################
