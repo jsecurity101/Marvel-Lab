@@ -67,7 +67,13 @@ rm -rf quick-fleet/status.log/
 touch quick-fleet/result.log
 touch quick-fleet/status.log
 
-
+# Adding indexes for Splunk: 
+docker exec -ti splunk /bin/bash -c 'sudo /opt/splunk/bin/splunk add index Windows'
+echo -e "\x1B[01;32m[*] Windows index added!\x1B[0m"
+docker exec -ti splunk /bin/bash -c 'sudo /opt/splunk/bin/splunk add index Zeek'
+echo -e "\x1B[01;32m[*] Zeek index added!\x1B[0m"
+docker exec -ti splunk /bin/bash -c 'sudo /opt/splunk/bin/splunk add index MacOS'
+echo -e "\x1B[01;32m[*] MacOS index added!\x1B[0m"
 # To remove the containers
 # docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml down
 
