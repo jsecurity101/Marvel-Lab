@@ -43,9 +43,10 @@ Current data sources being shipped to Splunk:
 #############################################
 
 -  Windows Events (Window Event Logs (Application, Security, System,
-   Setup)
--  Sysmon
+   Setup) (Windows Workstations) 
+-  Sysmon (Windows Workstations) 
 -  Zeek
+- OSQuery (Windows/MacOS Workstations)
 
 .. _Sysmon v11.0: https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 .. _Github Gist: https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2
