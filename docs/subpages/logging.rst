@@ -15,7 +15,7 @@ Data Sensors Available:
 
 -  `Sysmon`_
 
-   -  Configuration is being pulled from Olaf Hartong's sysmon-modlular_ project
+   -  Configuration is being pulled from Olaf Hartong's `sysmon-modular`_ project
 
 -  `Zeek`_
 
