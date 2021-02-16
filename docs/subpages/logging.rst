@@ -13,11 +13,9 @@ Data Sensors Available:
 
    -  Security events are being configured/audited via GPO.
 
--  `Sysmon v11.0`_
+-  `Sysmon`_
 
-   -  Configuration is being pulled from this `Github Gist`_
-   -  Configuration file changes on a constant basis to help reduce
-      noise.
+   -  Configuration is being pulled from Olaf Hartongs `sysmon-modlular`_ project
 
 -  `Zeek`_
 
@@ -48,8 +46,8 @@ Current data sources being shipped to Splunk:
 -  Zeek
 - OSQuery (Windows/MacOS Workstations)
 
-.. _Sysmon v11.0: https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
-.. _Github Gist: https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2
+.. _Sysmon: https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+.. _sysmon-modular: https://github.com/olafhartong/sysmon-modular
 .. _Zeek: https://zeek.org/
 .. _OSQuery: https://osquery.readthedocs.io/en/latest/
 

@@ -30,8 +30,14 @@ Tools:
 ------
 Tools for red-teaming, blue-teaming, and debugging are installed. To see the full list, visit the - :doc:`Tools <subpages/tools>` page. If there is any other tools you'd like to see, let us know!
 
+Acknowledgements: 
+-------
+
+- `Olaf Hartong`_'s Sysmon Modular `Config`_
+
+
 To Do: 
-------------------------------
+-------
 
 
 .. toctree::
@@ -51,3 +57,5 @@ To Do:
 
    subpages/logging
 
+.. _Config: https://github.com/olafhartong/sysmon-modular
+.. _Olaf Hartong: https://twitter.com/olafhartong
