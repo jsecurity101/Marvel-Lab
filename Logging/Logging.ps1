@@ -1,4 +1,4 @@
-﻿#Author Jonathan Johnson
+#Author Jonathan Johnson
 
 #References:https://powershellexplained.com/2016-10-21-powershell-installing-msi-files/ && https://docs.splunk.com/Documentation/Splunk/8.0.3/Installation/InstallonWindowsviathecommandline
 
@@ -29,8 +29,8 @@ function Show-Menu {
 
 #Sysmon Arguments:
 $SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
-$SysmonOutputFile = "Sysmon.zip"
-$SysmonConfig = "https://gist.github.com/jsecurity101/77fbb4d01887af8700b256a612094fe2/archive/b7e99bf91d075862de3bc0668fd71a6ad7f19f17.zip"
+$SysmonOutputFile = "sysmonconfig.xml"
+$SysmonConfig = "https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml"
 
 #Winlogbeat Arguments:
 $WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-7.5.2-windows-x86_64.zip"
@@ -57,17 +57,16 @@ function Install-Sysmon {
 New-Item -Path "c:\" -Name "Sysmon" -ItemType "directory"
 
 #Downloading and Installing Sysmon 
-Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\$SysmonOutputFile
-Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysmon\
+Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\Sysmon.zip
+Expand-Archive -LiteralPath C:\Sysmon\Sysmon.zip -DestinationPath C:\Sysmon\
 
 #Pulling Sysmon Config
 Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonOutputFile
-Expand-Archive -LiteralPath C:\Sysmon\$SysmonOutputFile -DestinationPath C:\Sysmon\
-Move-Item C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17\sysmon.xml C:\Sysmon
-Remove-Item C:\Sysmon\$SysmonOutputFile, C:\Sysmon\77fbb4d01887af8700b256a612094fe2-b7e99bf91d075862de3bc0668fd71a6ad7f19f17
+
+
 
 Write-Host "Installing Sysmon.." -ForegroundColor Green
-& cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmon.xml -a ArchivedFiles 2>&1'  
+& cmd.exe /c 'C:\Sysmon\Sysmon64.exe -accepteula -i C:\Sysmon\sysmonconfig.xml -a ArchivedFiles 2>&1'  
 }
 
 function Install-Winlogbeat {
@@ -97,8 +96,7 @@ Start-Service winlogbeat
 
 function Install-OSQuery {
     New-Item -Path "c:\" -Name "OSQuery" -ItemType "directory"
-    Write-Host "STOP. If you haven't set up Splunk and Kolide on the Logger box, this must be done first."
-    $OSQuery_IP = Read-Host "Please Input the IP of the Kolide Server." 
+    $OSQuery_IP = Read-Host "Please Input the IP and port number of the Kolide Server" 
     $Enroll_Secret = Read-Host "Go to https://"$OSQuery_IP":8443, click on 'Add New Host', copy the Enroll Secret and paste here"
    
     Invoke-WebRequest $KolideLauncher -OutFile 'C:\OSQuery\kolidelauncher.zip'
