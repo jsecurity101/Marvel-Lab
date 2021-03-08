@@ -3,18 +3,23 @@ services:
   portainer:
     container_name: portainer
     image: portainer/portainer-ce:latest
-    ports:
-      - 9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer:/data
+    labels:
+      - "traefik.http.routers.portainer.rule=PathPrefix(`/portainer/`)"
+      - "traefik.http.routers.portainer.middlewares=https-redirect"
+      - "traefik.http.routers.portainer-secure.tls=true"
+      - "traefik.http.routers.portainer-secure.rule=PathPrefix(`/portainer/`)"
+      - "traefik.http.routers.portainer-secure.middlewares=portainer-stripprefix"
+      - "traefik.http.middlewares.portainer-stripprefix.stripprefix.prefixes=/portainer/"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
     restart: always
     
   splunk:
     container_name: splunk
     image: splunk/splunk:8.0.3 # Update this if starting with new volumes
     ports:
-      - 8000:8000
       - 9997:9997
       - 8089:8089
     environment:
@@ -25,9 +30,16 @@ services:
     volumes:
       - splunk_etc:/opt/splunk/etc
       - splunk_var:/opt/splunk/var
+      - ./web.conf:/opt/splunk/etc/system/local/web.conf
       - ./zeek/zeek-logs/:/logs/zeek-logs/
       - ./quick-fleet/result.log:/logs/osquery/result.log
       - ./quick-fleet/status.log:/logs/osquery/status.log
+    labels:
+      - "traefik.http.routers.splunk.rule=PathPrefix(`/splunk`)"
+      - "traefik.http.routers.splunk.middlewares=https-redirect"
+      - "traefik.http.routers.splunk-secure.tls=true"
+      - "traefik.http.routers.splunk-secure.rule=PathPrefix(`/splunk`)"
+      - "traefik.http.services.splunk.loadbalancer.server.port=8000"
     restart: unless-stopped
     
   jupyter-notebooks:
@@ -35,8 +47,6 @@ services:
     image: jupyter/all-spark-notebook
     ports:
         - 8888:8888
-        #- 8000:8000 #REMOVE IF NOT NEEDED
-        #- 8089:8089 #REMOVE IF NOT NEEDED
     environment:
         - NB_UID=1001
         - NB_GID=1001
@@ -47,6 +57,32 @@ services:
         - splunk_etc:/home/splunk/etc
         - splunk_var:/home/splunk/var
         - jupyter-notebooks:/home/jovyan
+    restart: always
+  
+  traefik:
+    container_name: traefik
+    image: traefik:v2.4.5
+    command:
+      - --providers.docker=true 
+      - --providers.file.directory=/files/
+      - --providers.file.watch=true
+      - --serversTransport.insecureSkipVerify=true
+      - --api.dashboard=true # Enable dashboard
+      - --entrypoints.web.address=:80
+      - --entrypoints.web-secure.address=:443
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - .:/files
+    labels:
+      - "traefik.http.routers.api.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.middlewares=https-redirect"
+      - "traefik.http.routers.api-secure.tls=true"
+      - "traefik.http.routers.api-secure.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
     restart: always
 
 volumes:
