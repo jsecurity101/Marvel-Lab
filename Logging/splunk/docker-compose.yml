@@ -46,36 +46,77 @@ services:
     container_name: jupyter-notebooks
     image: jupyter/all-spark-notebook
     ports:
-        - 8888:8888
+      - "8888:8888"
     environment:
-        - NB_UID=1001
-        - NB_GID=1001
-        - JUPYTER_ENABLE_LAB=yes
-        - NB_USER=splunk
-        - CHOWN_EXTRA=/home/splunk
+      - NB_UID=1001
+      - NB_GID=1001
+      - JUPYTER_ENABLE_LAB=yes
+      - NB_USER=splunk
+      - CHOWN_EXTRA=/home/splunk
     volumes:
-        - splunk_etc:/home/splunk/etc
-        - splunk_var:/home/splunk/var
-        - jupyter-notebooks:/home/jovyan
+      - splunk_etc:/home/splunk/etc
+      - splunk_var:/home/splunk/var
+      - jupyter-notebooks:/home/jovyan
+    labels:
+      - "traefik.http.routers.jupyter.rule=PathPrefix(`/jupyter`)"
+      - "traefik.http.routers.jupyter.middlewares=https-redirect"
+      - "traefik.http.routers.jupyter-secure.tls=true"
+      - "traefik.http.routers.jupyter-secure.rule=PathPrefix(`/jupyter`)"
+      - "traefik.http.services.jupyter.loadbalancer.server.port=8888"
     restart: always
+    
+  thehive:
+    container_name: thehive
+    image: thehiveproject/thehive:3.5.0-1
+    depends_on:
+      - elasticsearch
+      - cortex
+    #command:
+    #  - --cortex-port\ 9001
+    # ports:
+      # - "9000:9000"
+    volumes:
+      - ./application.conf:/etc/thehive/application.conf
+    labels:
+      - "traefik.http.routers.thehive.rule=PathPrefix(`/thehive/`)"
+      - "traefik.http.routers.thehive.middlewares=https-redirect"
+      - "traefik.http.routers.thehive-secure.tls=true"
+      - "traefik.http.routers.thehive-secure.rule=PathPrefix(`/thehive/`)"
+      - "traefik.http.services.thehive.loadbalancer.server.port=9000"
+  cortex:
+    container_name: cortex
+    image: thehiveproject/cortex:3.1.0-1
+    depends_on:
+      - elasticsearch
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.9.1
+    environment:
+      - http.host=0.0.0.0
+      - discovery.type=single-node
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
   
   traefik:
     container_name: traefik
     image: traefik:v2.4.5
     command:
       - --providers.docker=true 
-      - --providers.file.directory=/files/
-      - --providers.file.watch=true
       - --serversTransport.insecureSkipVerify=true
       - --api.dashboard=true # Enable dashboard
       - --entrypoints.web.address=:80
       - --entrypoints.web-secure.address=:443
+      # - --api.insecure=true
     ports:
       - "80:80"
       - "443:443"
+      # - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - .:/files
     labels:
       - "traefik.http.routers.api.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
       - "traefik.http.routers.api.service=api@internal"
@@ -90,4 +131,5 @@ volumes:
   splunk_etc:
   splunk_var:
   jupyter-notebooks:
+  elasticsearch:
 
