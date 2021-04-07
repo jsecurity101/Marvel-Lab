@@ -7,6 +7,11 @@ if [[ $EUID -ne 0 ]]; then
   echo -e "\x1B[01;31m[X] Script Must Be Run As ROOT\x1B[0m"
    exit 1
 fi
+
+echo -e "\x1B[01;34m[*] Setting timezone to UTC..\x1B[0m"
+
+timedatectl set-timezone UTC
+
 read -p 'Input your IP and press [ENTER]: ' Host_IP
 
 # Installing Docker Compose
@@ -21,7 +26,7 @@ fi
 
 # Enabling docker service:
 echo -e "\x1B[01;34m[*] Enabling Docker Service\x1B[0m"
-sudo systemctl enable docker.service
+systemctl enable docker.service
 
 # Pull quick-fleet
 echo -e "\x1B[01;34m[*] Cloning/Pulling quick-fleet\x1B[0m"
