@@ -6,6 +6,12 @@
 #Microsoft-Docs: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/get-credential?view=powershell-6
 #http://woshub.com/check-powershell-script-running-elevated/
 
+Write-Output "Setting timezone to UTC...."
+
+c:\windows\system32\tzutil.exe /s "UTC"
+
+Write-Output "Renaming Host..."
+
 Write-Host "Checking for elevated permissions..."
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
 [Security.Principal.WindowsBuiltInRole] "Administrator")) {
