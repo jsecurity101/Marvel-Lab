@@ -2,7 +2,7 @@ version: "3.5"
 services:
   portainer:
     container_name: portainer
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ce:${PORTAINER_VER}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer:/data
@@ -18,7 +18,7 @@ services:
     
   splunk:
     container_name: splunk
-    image: splunk/splunk:8.0.3 # Update this if starting with new volumes
+    image: splunk/splunk:${SPLUNK_VER}
     ports:
       - 9997:9997
       - 8089:8089
@@ -26,7 +26,7 @@ services:
       SPLUNK_PASSWORD: 'Changeme1!'
       SPLUNK_START_ARGS: '--accept-license'
       TZ: 'America/Chicago'
-      #SPLUNK_UPGRADE: 'true' # Only use when upgrading splunk
+      #SPLUNK_UPGRADE: 'true' # Only use when upgrading splunk. Modify SPLUNK_VER in .env to the version you want
     volumes:
       - splunk_etc:/opt/splunk/etc
       - splunk_var:/opt/splunk/var
@@ -44,7 +44,7 @@ services:
     
   jupyter-notebooks:
     container_name: jupyter-notebooks
-    image: jupyter/all-spark-notebook
+    image: jupyter/all-spark-notebook:${JUPYTER_VER}
     ports:
       - "8888:8888"
     environment:
@@ -67,7 +67,7 @@ services:
     
   thehive:
     container_name: thehive
-    image: thehiveproject/thehive:3.5.0-1
+    image: thehiveproject/thehive:${HIVE_VER}
     depends_on:
       - elasticsearch
       - cortex
@@ -85,12 +85,12 @@ services:
       - "traefik.http.services.thehive.loadbalancer.server.port=9000"
   cortex:
     container_name: cortex
-    image: thehiveproject/cortex:3.1.0-1
+    image: thehiveproject/cortex:${CORTEX_VER}
     depends_on:
       - elasticsearch
   elasticsearch:
     container_name: elasticsearch
-    image: elasticsearch:7.9.1
+    image: elasticsearch:${ELASTIC_VER}
     environment:
       - http.host=0.0.0.0
       - discovery.type=single-node
@@ -103,7 +103,7 @@ services:
   
   traefik:
     container_name: traefik
-    image: traefik:v2.4.5
+    image: traefik:${TRAEFIK_VER}
     command:
       - --providers.docker=true 
       - --serversTransport.insecureSkipVerify=true

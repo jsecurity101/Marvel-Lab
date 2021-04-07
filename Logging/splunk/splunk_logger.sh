@@ -58,36 +58,46 @@ if [ "$(docker ps -a -q -f name=zeek)" ]; then
 fi
 docker run -d --name zeek --restart always --cap-add=NET_RAW --net=host -v `pwd`/zeek/zeek-logs/:/pcap:rw -v `pwd`/zeek/__load__.zeek:/usr/local/zeek/share/zeek/base/bif/__load__.zeek blacktop/zeek -i $Interface -C
 
-
 # Starting containers
 echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
 docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml up -d
-sleep 30 # Wait for splunk to finish installing
+
+# Define healthcheck function for splunk
+splunk_healthcheck(){
+	echo -e "\x1B[01;32m[*] Waiting for splunk...\x1B[0m"
+	SPLUNK_STATUS=""
+	while [[ "$SPLUNK_STATUS" != "\"healthy"\" ]]
+	do
+		sleep 3
+		SPLUNK_STATUS=$(docker inspect --format='{{json .State.Health.Status}}' splunk)
+	done
+}
+
+# Wait for splunk to finish installing
+splunk_healthcheck
+
 # The docker cp is needed after splunk install, otherwise our custom config would be overwritten
 docker cp splunk/inputs.conf splunk:/opt/splunk/etc/system/local/inputs.conf
+docker cp splunk/indexes.conf splunk:/opt/splunk/etc/system/local/indexes.conf
+echo -e "\x1B[01;32m[*] Restarting splunk to apply inputs.conf and indexes.conf\x1B[0m"
 docker restart splunk
+splunk_healthcheck
 
+# To remove the containers
+# docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml down
+
+# Reset log files for quick-fleet
 rm -rf quick-fleet/result.log/
 rm -rf quick-fleet/status.log/
 touch quick-fleet/result.log
 touch quick-fleet/status.log
 
-# Adding indexes for Splunk: 
-docker exec -ti splunk /bin/bash -c 'sudo /opt/splunk/bin/splunk add index Windows'
-echo -e "\x1B[01;32m[*] Windows index added!\x1B[0m"
-docker exec -ti splunk /bin/bash -c 'sudo /opt/splunk/bin/splunk add index Zeek'
-echo -e "\x1B[01;32m[*] Zeek index added!\x1B[0m"
-docker exec -ti splunk /bin/bash -c 'sudo /opt/splunk/bin/splunk add index MacOS'
-echo -e "\x1B[01;32m[*] MacOS index added!\x1B[0m"
-# To remove the containers
-# docker-compose -f docker-compose.yml -f quick-fleet/docker-compose.yml down
-
 # Checking Jupyter Notebooks
 echo -e "\x1B[01;34m[*] Checking Jupyter Notebooks\x1B[0m"
 sleep 10
 token="$(docker exec -it jupyter-notebooks sh -c 'jupyter notebook list' | grep token | sed 's/.*token=\([^ ]*\).*/\1/')"
-echo -e "\x1B[01;32m[*] Portainer's IP is: http://$Host_IP:9000\x1B[0m"
-echo -e "\x1B[01;32m[*] Splunk's IP is: http://$Host_IP:8000 ; Credentials - admin:Changeme1! (unless you changed them in the DockerFile)\x1B[0m"
+echo -e "\x1B[01;32m[*] Access Portainer at https://$Host_IP/portainer/ \x1B[0m"
+echo -e "\x1B[01;32m[*] Access Splunk at https://$Host_IP/splunk/ ; Credentials - admin:Changeme1! (unless you changed them in the DockerFile)\x1B[0m"
 echo -e "\x1B[01;32m[*] Jupyter Notebook's IP is: http://$Host_IP:8888\x1B[0m"
 echo -e "\x1B[01;32m[*] Jupyter Notebook token is $token\x1B[0m"
 echo -e "\x1B[01;32m[*] Kolide Fleet's IP is: https://$Host_IP:8443\x1B[0m"
