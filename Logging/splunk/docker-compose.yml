@@ -30,7 +30,7 @@ services:
     volumes:
       - splunk_etc:/opt/splunk/etc
       - splunk_var:/opt/splunk/var
-      - ./web.conf:/opt/splunk/etc/system/local/web.conf
+      - ./splunk/web.conf:/opt/splunk/etc/system/local/web.conf
       - ./zeek/zeek-logs/:/logs/zeek-logs/
       - ./quick-fleet/result.log:/logs/osquery/result.log
       - ./quick-fleet/status.log:/logs/osquery/status.log
@@ -76,7 +76,7 @@ services:
     # ports:
       # - "9000:9000"
     volumes:
-      - ./application.conf:/etc/thehive/application.conf
+      - ./thehive/application.conf:/etc/thehive/application.conf
     labels:
       - "traefik.http.routers.thehive.rule=PathPrefix(`/thehive/`)"
       - "traefik.http.routers.thehive.middlewares=https-redirect"
@@ -107,16 +107,17 @@ services:
     command:
       - --providers.docker=true 
       - --serversTransport.insecureSkipVerify=true
-      - --api.dashboard=true # Enable dashboard
+      #- --api.dashboard=true
       - --entrypoints.web.address=:80
       - --entrypoints.web-secure.address=:443
-      # - --api.insecure=true
+      #- --log.filePath=/files/traefik.log
+      #- --log.level=DEBUG
     ports:
       - "80:80"
       - "443:443"
-      # - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - .:/files
     labels:
       - "traefik.http.routers.api.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
       - "traefik.http.routers.api.service=api@internal"
