@@ -30,7 +30,7 @@ function Show-Menu {
 #Sysmon Arguments:
 $SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
 $SysmonOutputFile = "sysmonconfig.xml"
-$SysmonConfig = "https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml"
+
 
 #Winlogbeat Arguments:
 $WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-7.5.2-windows-x86_64.zip"
@@ -61,6 +61,21 @@ Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\Sysmon.zip
 Expand-Archive -LiteralPath C:\Sysmon\Sysmon.zip -DestinationPath C:\Sysmon\
 
 #Pulling Sysmon Config
+
+$configtype = Read-Host "Would you like to install a modular config for Sysmon (by Olaf) or a research config that is less restricted? Choose: modular OR research"
+
+if ($configtype -eq 'research') 
+{
+$SysmonConfig = "https://raw.githubusercontent.com/jsecurity101/Marvel-Lab/master/Logging/research-sysmon-config.xml"
+}
+if ($configtype -eq 'modular') 
+{
+$SysmonConfig = "https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml"
+}
+if ($configtype -ne 'modular' -or $configtype -ne 'research')
+{
+Write-Host "Invalid selection"
+}
 Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonOutputFile
 
 
