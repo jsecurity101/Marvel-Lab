@@ -19,7 +19,7 @@ This lab is meant to be used for research and detection development. The logging
 
 Troubleshooting:
 ----------------
-Before creating an issue within the Github, please check out the - :doc:`Troubleshooing <subpages/troubleshooting>` page. 
+Before creating an issue within the Github, please check out the - :doc:`Troubleshooting <subpages/troubleshooting>` page. 
 
 Scripts: 
 --------
