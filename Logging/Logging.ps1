@@ -27,22 +27,26 @@ function Show-Menu {
 
 }
 
+# Disable download progress bar to improve download speed
+$ProgressPreference = 'SilentlyContinue'
+
 #Sysmon Arguments:
 $SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
 $SysmonOutputFile = "sysmonconfig.xml"
 
 
 #Winlogbeat Arguments:
-$WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-7.5.2-windows-x86_64.zip"
+$WinlogbeatVer = "7.13.0"
+$WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-" + $WinlogbeatVer + "-windows-x86_64.zip"
 $WinlogbeatOutputFile = "winlogbeat.zip"
 $WinlogbeatConfig = "https://gist.github.com/jsecurity101/ec4c829e6d32a984d7ccf4c1e9247590/archive/8d85c6c443704e821a7f53e536be61667c67febd.zip"
 $WinlogZip = "winlogconfig.zip"
 
 #Splunk Arugments:
-$SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.0.3&product=universalforwarder&filename=splunkforwarder-8.0.3-a6754d8441bf-x64-release.msi&wget=true"
+$SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.2.0&product=universalforwarder&filename=splunkforwarder-8.2.0-e053ef3c985f-x64-release.msi&wget=true"
 
-#OSQuery Arguments
-$KolideLauncher = "https://github.com/kolide/launcher/releases/download/v0.11.9/launcher_v0.11.9.zip"
+#OSQuery Arguments:
+$KolideLauncher = "https://github.com/kolide/launcher/releases/download/v0.11.19/windows.amd64_v0.11.19.zip"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
 
@@ -96,15 +100,15 @@ Expand-Archive -LiteralPath C:\Winlogbeat\$WinlogbeatOutputFile -DestinationPath
 Invoke-WebRequest $WinlogbeatConfig -OutFile C:\Winlogbeat\$WinlogZip
 Expand-Archive -LiteralPath C:\Winlogbeat\$WinlogZip -DestinationPath C:\Winlogbeat\
 
-Remove-Item C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml
-Move-Item C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd\winlogbeat.yml C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\
+Remove-Item C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml
+Move-Item C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd\winlogbeat.yml C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\
 Remove-Item C:\Winlogbeat\$WinlogZip, C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd
 
-(Get-Content C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml).replace('<HELK-IP>', $HELK_IP) | Set-Content C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml
+(Get-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml).replace('<HELK-IP>', $HELK_IP) | Set-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml
 
 Remove-Item C:\Winlogbeat\$WinlogbeatOutputFile 
 
-C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\install-service-winlogbeat.ps1 
+& C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\install-service-winlogbeat.ps1 
 
 Start-Service winlogbeat
 }
