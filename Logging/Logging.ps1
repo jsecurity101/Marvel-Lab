@@ -47,6 +47,7 @@ $SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architect
 
 #OSQuery Arguments:
 $KolideLauncher = "https://github.com/kolide/launcher/releases/download/v0.11.19/windows.amd64_v0.11.19.zip"
+$FleetFolderName = "windows.amd64_v0.11.19"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
 
@@ -114,20 +115,24 @@ Start-Service winlogbeat
 }
 
 function Install-OSQuery {
+    Write-Host "Installing Chocolatey" -ForegroundColor Green
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    choco install osquery -y
+    refreshenv
+}
+
+function Install-Fleet {
     New-Item -Path "c:\" -Name "OSQuery" -ItemType "directory"
     $OSQuery_IP = Read-Host "Please Input the IP and port number of the Kolide Server" 
     $Enroll_Secret = Read-Host "Go to https://"$OSQuery_IP":8443, click on 'Add New Host', copy the Enroll Secret and paste here"
    
     Invoke-WebRequest $KolideLauncher -OutFile 'C:\OSQuery\kolidelauncher.zip'
     Expand-Archive -LiteralPath C:\OSquery\kolidelauncher.zip -DestinationPath C:\OSquery\
-
-    ((Get-Content -path "C:\Marvel-Lab\Logging\Kolide_Launcher_Service.ps1") -replace 'OSQuery_IP', $OSQuery_IP -replace 'KolideSecret', $Enroll_Secret) | Set-Content -Path "C:\Marvel-Lab\Logging\Kolide_Launcher_Service.ps1"
-    & powershell C:\Marvel-Lab\Logging\Kolide_Launcher_Service.ps1
+    New-Service -Name "kolide_launcher" -BinaryPathName "C:\OSQuery\$FleetFolderName\launcher.exe --hostname=$OSQuery_IP`:8443 --enroll_secret=$Enroll_Secret --insecure"
     sc.exe start kolide_launcher 
     Remove-Item C:\OSQuery\kolidelauncher.zip
     Write-Host "OSQuery logs are now available in Kolide Fleet" -ForegroundColor Green
 }
-
 
 function Install-Splunk {
 $Splunk_IP = Read-Host "Please input the IP of your Splunk box"
@@ -167,6 +172,7 @@ $selection = Read-Host "Please make a selection"
     Write-Host "You chose to install Sysmon + OSQuery + Splunk UF which will forward Sysmon/Windows Events/OSQuery to Splunk"
     Install-Sysmon
     Install-OSQuery
+    Install-Fleet
     Install-Splunk
     }
     }
