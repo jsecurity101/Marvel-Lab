@@ -27,22 +27,27 @@ function Show-Menu {
 
 }
 
+# Disable download progress bar to improve download speed
+$ProgressPreference = 'SilentlyContinue'
+
 #Sysmon Arguments:
 $SysmonUrl = "https://download.sysinternals.com/files/Sysmon.zip"
 $SysmonOutputFile = "sysmonconfig.xml"
 
 
 #Winlogbeat Arguments:
-$WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-7.5.2-windows-x86_64.zip"
+$WinlogbeatVer = "7.13.0"
+$WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-" + $WinlogbeatVer + "-windows-x86_64.zip"
 $WinlogbeatOutputFile = "winlogbeat.zip"
 $WinlogbeatConfig = "https://gist.github.com/jsecurity101/ec4c829e6d32a984d7ccf4c1e9247590/archive/8d85c6c443704e821a7f53e536be61667c67febd.zip"
 $WinlogZip = "winlogconfig.zip"
 
 #Splunk Arugments:
-$SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.0.3&product=universalforwarder&filename=splunkforwarder-8.0.3-a6754d8441bf-x64-release.msi&wget=true"
+$SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.2.0&product=universalforwarder&filename=splunkforwarder-8.2.0-e053ef3c985f-x64-release.msi&wget=true"
 
-#OSQuery Arguments
-$KolideLauncher = "https://github.com/kolide/launcher/releases/download/v0.11.9/launcher_v0.11.9.zip"
+#OSQuery Arguments:
+$KolideLauncher = "https://github.com/kolide/launcher/releases/download/v0.11.19/windows.amd64_v0.11.19.zip"
+$FleetFolderName = "windows.amd64_v0.11.19"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
 
@@ -96,34 +101,38 @@ Expand-Archive -LiteralPath C:\Winlogbeat\$WinlogbeatOutputFile -DestinationPath
 Invoke-WebRequest $WinlogbeatConfig -OutFile C:\Winlogbeat\$WinlogZip
 Expand-Archive -LiteralPath C:\Winlogbeat\$WinlogZip -DestinationPath C:\Winlogbeat\
 
-Remove-Item C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml
-Move-Item C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd\winlogbeat.yml C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\
+Remove-Item C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml
+Move-Item C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd\winlogbeat.yml C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\
 Remove-Item C:\Winlogbeat\$WinlogZip, C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd
 
-(Get-Content C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml).replace('<HELK-IP>', $HELK_IP) | Set-Content C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\winlogbeat.yml
+(Get-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml).replace('<HELK-IP>', $HELK_IP) | Set-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml
 
 Remove-Item C:\Winlogbeat\$WinlogbeatOutputFile 
 
-C:\Winlogbeat\winlogbeat-7.5.2-windows-x86_64\install-service-winlogbeat.ps1 
+& C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\install-service-winlogbeat.ps1 
 
 Start-Service winlogbeat
 }
 
 function Install-OSQuery {
+    Write-Host "Installing Chocolatey" -ForegroundColor Green
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    choco install osquery -y
+    refreshenv
+}
+
+function Install-Fleet {
     New-Item -Path "c:\" -Name "OSQuery" -ItemType "directory"
     $OSQuery_IP = Read-Host "Please Input the IP and port number of the Kolide Server" 
     $Enroll_Secret = Read-Host "Go to https://"$OSQuery_IP":8443, click on 'Add New Host', copy the Enroll Secret and paste here"
    
     Invoke-WebRequest $KolideLauncher -OutFile 'C:\OSQuery\kolidelauncher.zip'
     Expand-Archive -LiteralPath C:\OSquery\kolidelauncher.zip -DestinationPath C:\OSquery\
-
-    ((Get-Content -path "C:\Marvel-Lab\Logging\Kolide_Launcher_Service.ps1") -replace 'OSQuery_IP', $OSQuery_IP -replace 'KolideSecret', $Enroll_Secret) | Set-Content -Path "C:\Marvel-Lab\Logging\Kolide_Launcher_Service.ps1"
-    & powershell C:\Marvel-Lab\Logging\Kolide_Launcher_Service.ps1
+    New-Service -Name "kolide_launcher" -BinaryPathName "C:\OSQuery\$FleetFolderName\launcher.exe --hostname=$OSQuery_IP`:8443 --enroll_secret=$Enroll_Secret --insecure"
     sc.exe start kolide_launcher 
     Remove-Item C:\OSQuery\kolidelauncher.zip
     Write-Host "OSQuery logs are now available in Kolide Fleet" -ForegroundColor Green
 }
-
 
 function Install-Splunk {
 $Splunk_IP = Read-Host "Please input the IP of your Splunk box"
@@ -163,6 +172,7 @@ $selection = Read-Host "Please make a selection"
     Write-Host "You chose to install Sysmon + OSQuery + Splunk UF which will forward Sysmon/Windows Events/OSQuery to Splunk"
     Install-Sysmon
     Install-OSQuery
+    Install-Fleet
     Install-Splunk
     }
     }
