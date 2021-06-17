@@ -77,7 +77,7 @@ if ($configtype -eq 'modular')
 {
 $SysmonConfig = "https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml"
 }
-if ($configtype -ne 'modular' -or $configtype -ne 'research')
+else
 {
 Write-Host "Invalid selection"
 }
