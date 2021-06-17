@@ -69,17 +69,20 @@ Expand-Archive -LiteralPath C:\Sysmon\Sysmon.zip -DestinationPath C:\Sysmon\
 
 $configtype = Read-Host "Would you like to install a modular config for Sysmon (by Olaf) or a research config that is less restricted? Choose: modular OR research"
 
-if ($configtype -eq 'research') 
+switch ( $configtype )
 {
-$SysmonConfig = "https://raw.githubusercontent.com/jsecurity101/Marvel-Lab/master/Logging/research-sysmon-config.xml"
-}
-if ($configtype -eq 'modular') 
-{
-$SysmonConfig = "https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml"
-}
-else
-{
-Write-Host "Invalid selection"
+    'modular'
+    {
+        $SysmonConfig = "https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml"
+    }
+    'research'
+    {
+        $SysmonConfig = "https://raw.githubusercontent.com/jsecurity101/Marvel-Lab/master/Logging/research-sysmon-config.xml"
+    }
+    default
+    {
+         Write-Host "Invalid selection"
+    }
 }
 Invoke-WebRequest $SysmonConfig -OutFile C:\Sysmon\$SysmonOutputFile
 
