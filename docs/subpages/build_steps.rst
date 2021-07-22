@@ -87,7 +87,7 @@ On Windows Workstation and DC:
    C: directory and rename to ``Marvel-Lab``).
 2. Go to KolideIP:8443, set up Username/Password. 
 3. Set Organization Name to ``Marvel Lab``. You don't have to do the URL. When it shows you the fleet web address, press Submit, then Finish. 
-4. Go into ``Marvel-Lab\Logging`` and run ``Logging.ps1``.
+4. Go into ``Marvel-Lab\Set-Logging`` and run ``Set-Logging.ps1``.
 
 **Note:** The Sysmon configuration is up to date with version - 11.0.
 FileDelete Events will only be logged within the
