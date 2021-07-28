@@ -247,14 +247,20 @@ else {
 
         Write-Host "[*] Checking to see if kolide is installed..."
         $kolide = [bool](Get-Service kolide_launcher -ErrorAction SilentlyContinue)
-        if ($osquery -eq $false) {
+        if ($kolide -eq $false) {
             Write-Host "[*] Kolide is not installed" -ForegroundColor Green
         }
         else {
             Write-Host "[*] Uninstalling kolide and removing its folders.."
             Stop-Service kolide_launcher
             sc.exe delete kolide_launcher
+            $path = Test-Path C:\Osquery\
+            if ($path -eq $false) {
+                Write-Host "Osuqery is note installed"
+                }
+            else{
             Remove-Item "C:\Osquery\" -Recurse -Force
+                }
             }
 
          Write-Host "[*] Checking to see if Osquery is installed..."
