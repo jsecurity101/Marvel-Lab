@@ -122,44 +122,47 @@ Invoke-WebRequest $Sysinternals -OutFile "C:\Tools\Blue\Sysinternals.zip"
 }
 function Install-Debugging {
 
-  New-Item -Path "C:\Tools" -Name "Debugging" -ItemType "directory"
-  New-Item -Path "C:\Tools\Debugging" -Name "WindowSDK" -ItemType "directory"
+New-Item -Path "c:\" -Name "Tools" -ItemType "directory"
+New-Item -Path "c:\Tools" -Name "APIMonitor" -ItemType "directory"
+New-Item -Path "c:\Tools" -Name "WindowsSDK" -ItemType "directory"
+New-Item -Path "c:\Tools" -Name "IDAPro" -ItemType "directory"
 
-
-  # API Monitoring: 
+# Downloads -
+# API Monitoring: 
 $APIMonitorx64 = "http://www.rohitab.com/download/api-monitor-v2r13-setup-x64.exe"
 $APIMonitorx86 = "http://www.rohitab.com/download/api-monitor-v2r13-setup-x86.exe"
 
 #DnSpy:
-$release1 = (Invoke-WebRequest "https://api.github.com/repos/0xd4d/dnSpy/releases" -UseBasicParsing | ConvertFrom-Json)[0].tag_name
-$Dnspy = "https://github.com/0xd4d/dnSpy/releases/download/$release1/dnSpy-net472.zip"
+$version = (Invoke-WebRequest "https://api.github.com/repos/dnspy/dnspy/releases" -UseBasicParsing | ConvertFrom-Json)[0].tag_name
+$Dnspy = "https://github.com/dnSpy/dnSpy/releases/download/$version/dnSpy-net-win64.zip"
 
 #IDAPro: 
 $IDAPro = "https://out7.hex-rays.com/files/idafree70_windows.exe"
 
 #Windows 10 SDK:
-$WindowsSDK = "https://go.microsoft.com/fwlink/p/?linkid=2120843"
+$WindowsSDK = "https://go.microsoft.com/fwlink/p/?linkid=2083338&clcid=0x409"
 
 if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit")
 {
-    Write-Host "You have a 64-bit system"
-    Invoke-WebRequest $APIMonitorx64 -OutFile "C:\Tools\Debugging\api-monitor.exe"
-    Invoke-WebRequest $Dnspy -OutFile "C:\Tools\Debugging\dnspy-net.zip"
-    Invoke-WebRequest $WindowsSDK -OutFile "C:\Tools\Debugging\WindowSDK\winsdksetup.exe"
-    Invoke-WebRequest $IDAPro -OutFile "C:\Tools\Debugging\IDAPro.exe"
+    Write "You have a 64-bit system"
+    Invoke-WebRequest $APIMonitorx64 -OutFile "C:\Tools\APIMonitor\api-monitor.exe"
+    Invoke-WebRequest $Dnspy -OutFile "C:\Tools\dnspy-net.zip"
+    Invoke-WebRequest $WindowsSDK -OutFile "C:\Tools\WindowsSDK\winsdksetup.exe"
+    Invoke-WebRequest $IDAPro -OutFile "C:\Tools\IDAPro\IDAPro.exe"
 }
 else
 {
-    Write-Host "You have a 32-bit system"
-    Invoke-WebRequest $APIMonitorx86 -OutFile  "C:\Tools\Debugging\api-monitor.exe"
-    Invoke-WebRequest $Dnspy -OutFile "C:\Tools\Debugging\dnspy-net.zip"
-    Invoke-WebRequest $WindowsSDK -OutFile "C:\Tools\Debugging\WindowSDK\winsdksetup.exe"
-    Invoke-WebRequest $IDAPro -OutFile "C:\Tools\Debugging\IDAPro.exe"
+    Write "You have a 32-bit system"
+    Invoke-WebRequest $APIMonitorx86 -OutFile "C:\Tools\APIMonitor\api-monitor.exe"
+    Invoke-WebRequest $Dnspy -OutFile "C:\Tools\dnspy-net.zip"
+    Invoke-WebRequest $WindowsSDK -OutFile "C:\Tools\WindowsSDK\winsdksetup.exe"
+    Invoke-WebRequest $IDAPro -OutFile "C:\Tools\IDAPro\IDAPro.exe"
 
 }
 
 #Install Windows SDK: 
-& cmd.exe /c 'C:\Tools\Debugging\WindowSDK\winsdksetup.exe /features + /q 2>&1'
+#This will take a couple of minutes to show up in C:\Tools\WindowsSDK\WindowsKits
+C:\Tools\WindowsSDK\winsdksetup.exe /features + /installpath 'C:\Tools\WindowsSDK\WindowsKits\10\' /q 
 
 }
 
