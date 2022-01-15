@@ -1,4 +1,4 @@
-<Sysmon schemaversion="4.50">
+<Sysmon schemaversion="4.60">
    <!-- Capture all hashes -->
    <HashAlgorithms>*</HashAlgorithms>
   <CaptureClipboard />
@@ -43,7 +43,6 @@
 	      <Image condition="end with">AppData\Roaming\Dashlane\Dashlane.exe</Image>
 	      <Image condition="end with">AppData\Roaming\Dashlane\DashlanePlugin.exe</Image>
 	      <Image condition="end with">winlogbeat.exe</Image>
-	      <Image condition="is">C:\Windows\System32\spoolsv.exe</Image>
 	      <Image condition="is">C:\Program Files\Common Files\microsoft shared\ClickToRun\OfficeClickToRun.exe</Image>
 	      <Image condition="is">C:\Program Files (x86)\Common Files\Acronis\SyncAgent\syncagentsrv.exe</Image>
 	      <Image condition="is">C:\Windows\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe</Image>
@@ -144,11 +143,37 @@
       <WmiEvent onmatch="exclude" />
       <!--Event ID 22 == DNS Query-->
       <DnsQuery onmatch="exclude"/>
-      <!--Event ID 23 == File Delete-->
-      <FileDelete onmatch="include">
-	      <TargetFilename condition="contains">\Downloads\</TargetFilename>
-      <!--Event ID 23 == File Delete-->
-      </FileDelete>
-      <ClipboardChange onmatch="exclude" />	   
+      <!--Event ID 23 == File Delete -  Not Collecting-->
+      <FileDelete onmatch="include" />
+      <ClipboardChange onmatch="exclude" />	
+	  <!-- Event ID 25 == Process tampering events - Excludes Taken from Olaf Hartong's modular config-->
+	  <RuleGroup groupRelation="or">
+	  <ProcessTampering onmatch="exclude">
+		  <Image condition="is">C:\Program Files\Mozilla Firefox\firefox.exe</Image>
+		  <Image condition="is">C:\Program Files\Mozilla Firefox\updater.exe</Image>
+		  <Image condition="is">C:\Program Files\Mozilla Firefox\default-browser-agent.exe</Image>
+		  <Image condition="is">C:\Program Files\Mozilla Firefox\pingsender.exe</Image>
+		  <Image condition="is">C:\Program Files\Git\cmd\git.exe</Image>
+		  <Image condition="is">C:\Program Files\Git\mingw64\bin\git.exe</Image>
+		  <Image condition="is">C:\Program Files\Git\mingw64\libexec\git-core\git.exe</Image>
+		  <Image condition="is">C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe</Image>
+		  <Rule groupRelation="and">
+		  <Image condition="begin with">C:\Program Files (x86)\Microsoft\Edge\Application\</Image>
+		  <Image condition="end with">\BHO\ie_to_edge_stub.exe</Image>
+		  </Rule>
+		  <Rule groupRelation="and">
+		  <Image condition="begin with">C:\Program Files (x86)\Microsoft\Edge\Application\</Image>
+		  <Image condition="end with">\identity_helper.exe</Image>
+		  </Rule>
+		  <Rule groupRelation="and">
+		  <Image condition="begin with">C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\</Image>
+		  <Image condition="contains">\MicrosoftEdge_X64_</Image>
+		  </Rule>
+		  <Image condition="contains">unknown process</Image>
+		  <Image condition="is">C:\Program Files\Microsoft VS Code\Code.exe</Image>
+	  </ProcessTampering>
+	  </RuleGroup>
+	  <!-- Event ID 26  Not Collecting-->
+	  <FileDeleteDetected onmatch="include" />
   </EventFiltering>
 </Sysmon>
