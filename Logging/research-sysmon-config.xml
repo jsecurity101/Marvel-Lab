@@ -1,4 +1,4 @@
-<Sysmon schemaversion="4.60">
+<Sysmon schemaversion="4.81">
    <!-- Capture all hashes -->
    <HashAlgorithms>*</HashAlgorithms>
   <CaptureClipboard />
