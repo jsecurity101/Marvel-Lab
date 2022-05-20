@@ -1,4 +1,4 @@
-﻿#Author Jonathan Johnson
+#Author Jonathan Johnson
 
 #References:https://powershellexplained.com/2016-10-21-powershell-installing-msi-files/ && https://docs.splunk.com/Documentation/Splunk/8.0.3/Installation/InstallonWindowsviathecommandline
 
@@ -188,7 +188,7 @@ else {
         }
         else {
             #Splunk Arugments:
-            $SplunkUF = "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.2.0&product=universalforwarder&filename=splunkforwarder-8.2.0-e053ef3c985f-x64-release.msi&wget=true"
+            $SplunkUF = "https://download.splunk.com/products/universalforwarder/releases/8.2.6/windows/splunkforwarder-8.2.6-a6fe1ee8894b-x64-release.msi"
             $Splunk_IP = Read-Host "Please input the IP of your Splunk box"
 
             #Installing Splunk
