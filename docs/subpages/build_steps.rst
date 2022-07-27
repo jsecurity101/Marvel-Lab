@@ -65,26 +65,28 @@ Logging:
 Steps to get logging set up:
 ****************************
 
-If you plan on using Splunk/Jupyter Notebooks/OSQuery/Kolide - install the required scripts on the Ubuntu box first before setting up logging on endpoints.
+If you plan on using Splunk/Jupyter Notebooks/OSQuery/Kolide - install the required scripts on the Ubuntu box first before setting up logging on the endpoints.
 
 
 On Ubuntu box:
-###############
+**************
 
-1. On the Ubuntu machine download the Marvel-Lab repository.
-2. Go into ``Marvel-Lab\Logging\splunk`` and run ``splunk_logging.sh``.
-3. Go to the hosts and AFTER Kolide has been set up from the ``On Windows Workstation and DC`` instructions, run ``fleet-pack.sh``. 
+1. Install Docker by following these steps, assuming you’re on Ubuntu: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository.
+2. Install Docker Compose by following the documentation here: https://docs.docker.com/compose/install/.
+3. On the Ubuntu machine download the Marvel-Lab repository.
+4. Go into ``Marvel-Lab\Logging\splunk`` and run ``setup_logging.sh``.
 
-**Note**: Only Ubuntu 18+ is supported for this script.
+**Note**: Only Ubuntu 22.04+ is supported for this script.
+
 
 On Windows Workstation and DC:
-##############################
+******************************
 
-**In order to recieve logs in Splunk, the ``splunk_logging.sh`` script must have succeeded on the Logger box (Ubuntu).**
+**Note**: In order to recieve logs in Splunk, the ``setup_logging.sh`` script must have succeeded on the Logger box (Ubuntu).
 
 1. Download the Marvel-Lab repository in the ``C:\`` directory. (If you
    downloaded the .zip of the repo, move the child folder to the
-   C: directory and rename to ``Marvel-Lab``).
+   C:\ directory and rename to ``Marvel-Lab``).
 2. Go to KolideIP:8443, set up Username/Password. 
 3. Set Organization Name to ``Marvel Lab``. You don't have to do the URL. When it shows you the fleet web address, press Submit, then Finish. 
 4. Go into ``Marvel-Lab\Set-Logging`` and run ``Set-Logging.ps1``.
@@ -97,7 +99,7 @@ the ``C:\ArchivedFiles`` folder.
 
 
 On MacOS Workstation:
-######################
+*********************
 1. Run ``logging.sh``
 2. During installation there will be some prompt that will need to be filled in when accepting the Splunk License. Exact steps are below: 
 - Press Enter
