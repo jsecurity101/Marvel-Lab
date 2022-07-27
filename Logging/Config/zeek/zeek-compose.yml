@@ -1,0 +1,13 @@
+services:
+    zeek:
+        container_name: zeek
+        image: blacktop/zeek
+        restart: always
+        network_mode: host
+        cap_add:
+          - NET_RAW
+        volumes:
+          - ./Config/zeek/zeek-logs/:/pcap:rw
+          - ./Config/zeek/__load__.zeek:/usr/local/zeek/share/zeek/base/bif/__load__.zeek
+        command:
+          - -i ${INTERFACE} -C
