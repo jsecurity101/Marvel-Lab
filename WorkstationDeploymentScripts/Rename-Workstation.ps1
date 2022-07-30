@@ -24,5 +24,5 @@ function Rename-Workstation {
         $ScheduledTask = Register-ScheduledTask -Action $action -Trigger $trigger  -Principal $Principal -TaskName Join-Domain  #Update
     }
 
-    Rename-computer –ComputerName $env:COMPUTERNAME -NewName $WorkstationName  -Force -Restart
+    $Rename = Rename-computer –ComputerName $env:COMPUTERNAME -NewName $WorkstationName  -Force -Restart
 }
