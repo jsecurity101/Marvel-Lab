@@ -28,5 +28,5 @@ function Rename-DC {
         $ScheduledTask = Register-ScheduledTask -Action $action -Trigger $trigger  -Principal $Principal -TaskName Initialize-MarvelDomain 
     }
 
-    $Rename = Rename-computer –ComputerName $env:COMPUTERNAME -NewName $DomainControllerName  -Force -Restart
+    $Rename = Rename-computer -ComputerName $env:COMPUTERNAME -NewName $DomainControllerName  -Force -Restart
 }

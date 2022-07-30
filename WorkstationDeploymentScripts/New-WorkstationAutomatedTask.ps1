@@ -7,5 +7,4 @@ function New-WorkstationAutomatedTask {
         $trigger = New-ScheduledTaskTrigger -AtLogOn
         $ScheduledTask = Register-ScheduledTask -Action $action -User 'marvel\thor' -Password 'GodofLightning1!' -Trigger $trigger -TaskName Update-Workstation
         Start-ScheduledTask -TaskName Update-Workstation
-        Unregister-ScheduledTask -TaskName Join-Domain -Confirm:$false
 }

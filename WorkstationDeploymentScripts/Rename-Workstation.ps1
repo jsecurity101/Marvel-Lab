@@ -18,10 +18,10 @@ function Rename-Workstation {
     Write-Output "Renaming Host..."
 
     if ($Automate){
-        $action = New-ScheduledTaskAction -Execute 'powershell' -Argument "Import-Module $ProjectFilePath\Workstations\Windows\WorkstationDeployment.ps1; Join-Domain -ProjectFilePath $ProjectFilePath -Automate 2>&1 | tee -filePath C:\deploymentlog.txt" #Update
-        $trigger = New-ScheduledTaskTrigger -AtLogOn
+        $action = New-ScheduledTaskAction -Execute 'powershell' -Argument "Import-Module $ProjectFilePath\Marvel-Lab.psm1; Join-Domain -ProjectFilePath $ProjectFilePath -Automate 2>&1 | tee -filePath C:\deploymentlog.txt" #Update
+        $trigger = New-ScheduledTaskTrigger -AtStartup
         $principal = New-ScheduledTaskPrincipal -UserID "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount -RunLevel Highest
-        $ScheduledTask = Register-ScheduledTask -Action $action -Trigger $trigger  -Principal $Principal -TaskName Join-Domain  #Update
+        $ScheduledTask = Register-ScheduledTask -Action $action -Trigger $trigger  -Principal $principal -TaskName Join-Domain
     }
 
     $Rename = Rename-computer –ComputerName $env:COMPUTERNAME -NewName $WorkstationName  -Force -Restart

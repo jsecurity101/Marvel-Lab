@@ -31,8 +31,6 @@ function Update-Workstation {
         $action = New-ScheduledTaskAction -Execute 'powershell' -Argument "Import-Module $ProjectFilePath\Marvel-Lab.psm1; Get-Tools -Automate 2>&1 | tee -filePath C:\deploymentlog.txt" #Update
         $ScheduledTask = Register-ScheduledTask -Action $action  -User 'marvel\thor' -Password 'GodofLightning1!' -TaskName Get-Tools  #Update
         $RunTask = Start-ScheduledTask -TaskName Get-Tools
-        $Unregister = Unregister-ScheduledTask -TaskName Create-ScheduledTask -Confirm:$false
-        $Unregister = Unregister-ScheduledTask -TaskName Configure-Workstation -Confirm:$false
     }
 
 }

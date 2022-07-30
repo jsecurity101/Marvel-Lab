@@ -11,6 +11,10 @@ function Get-Tools {
         [Switch]
         $Blue,
 
+        [Parameter(Mandatory, ParameterSetName = 'Full')]
+        [Switch]
+        $Full,
+
         [Parameter(Mandatory, ParameterSetName = 'Red')]
         [Switch]
         $Red,
@@ -181,6 +185,8 @@ function Get-Tools {
         }
     }
      if ($Automate){
-            Unregister-ScheduledTask -TaskName Get-Tools -Confirm:$false
+            $Unregister = Unregister-ScheduledTask -TaskName Get-Tools -Confirm:$false
+            $Unregister = Unregister-ScheduledTask -TaskName New-WorkstationAutomatedScheduledTask -Confirm:$false
+            $Unregister = Unregister-ScheduledTask -TaskName Update-Workstation -Confirm:$false
         }
 }
