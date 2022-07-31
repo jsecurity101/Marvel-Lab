@@ -12,6 +12,7 @@ function Update-Domain {
         [switch]
         $Automate
     )
+    Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Beginning of Update-Domain"
     Import-Module ActiveDirectory
     $ADUsers = Import-CSV $UserCSVFilePath
     #Adding AD Group for Local Admins on Workstations
@@ -58,14 +59,17 @@ function Update-Domain {
             }
 
         Write-Output "$username has been to the domain and added to the $identity group"
+        Add-Content $ProjectFilePath\Deploymentlog.txt "[*] $username has been to the domain and added to the $identity group"
         
     }
     #Setting SPNs for Domain
+    Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Setting SPNs"
     setspn -a mjolnir/marvel.local marvel\thor
     setspn -a mr3000/marvel.local marvel\ironman 
 
     New-ADOrganizationalUnit -Name "Workstations" -Path "DC=MARVEL,DC=LOCAL"
 
+    Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Setting Wallpaper"
     New-Item HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\ -Name System
     Set-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System' -name Wallpaper -value $WallpaperFilePath
     Set-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System' -name WallpaperStyle -value "4"
@@ -77,6 +81,7 @@ function Update-Domain {
     $OU = "ou=Workstations,dc=marvel,dc=local"
     $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
     Write-Host "Importing $GPOName..."
+    Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Importing $GPOName..."
     Import-GPO -BackupGpoName $GPOName -Path $GPOFilePath\$GPOName -TargetName $GPOName -CreateIfNeeded
     $gpLinks = $null
     $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
@@ -98,6 +103,7 @@ function Update-Domain {
     $OU = "ou=Workstations,dc=marvel,dc=local"
     $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
     Write-Host "Importing $GPOName..."
+    Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Importing $GPOName..."
     Import-GPO -BackupGpoName $GPOName -Path $GPOFilePath\$GPOName -TargetName $GPOName -CreateIfNeeded
     $gpLinks = $null
     $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
@@ -119,6 +125,7 @@ function Update-Domain {
     $OU = "ou=Workstations,dc=marvel,dc=local"
     $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
     Write-Host "Importing $GPOName..."
+    Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Importing $GPOName..."
     Import-GPO -BackupGpoName $GPOName -Path $GPOFilePath\$GPOName -TargetName $GPOName -CreateIfNeeded
     $gpLinks = $null
     $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
@@ -140,6 +147,7 @@ function Update-Domain {
     $OU = "ou=Workstations,dc=marvel,dc=local"
     $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
     Write-Host "Importing $GPOName..."
+    Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Importing $GPOName..."
     Import-GPO -BackupGpoName $GPOName -Path $GPOFilePath\$GPOName -TargetName $GPOName -CreateIfNeeded
     $gpLinks = $null
     $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions
@@ -161,6 +169,7 @@ function Update-Domain {
     $OU = "ou=Workstations,dc=marvel,dc=local"
     $OU1 = "ou=Domain Controllers,dc=marvel,dc=local"
     Write-Host "Importing $GPOName..."
+    Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Importing $GPOName..."
     Import-GPO -BackupGpoName $GPOName -Path $GPOFilePath\$GPOName -TargetName $GPOName -CreateIfNeeded
     $gpLinks = $null
     $gPLinks = Get-ADOrganizationalUnit -Identity $OU -Properties name,distinguishedName, gPLink, gPOptions

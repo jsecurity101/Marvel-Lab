@@ -3,8 +3,9 @@ function New-WorkstationAutomatedTask {
         [string]
         $ProjectFilePath = 'C:\Marvel-Lab'
     )
-        $action = New-ScheduledTaskAction -Execute 'powershell' -Argument "Import-Module $ProjectFilePath\Marvel-Lab.psm1; Update-Workstation -ProjectFilePath $ProjectFilePath -Automate 2>&1 | tee -filePath C:\deploymentlog.txt"
-        $trigger = New-ScheduledTaskTrigger -AtLogOn
-        $ScheduledTask = Register-ScheduledTask -Action $action -User 'marvel\thor' -Password 'GodofLightning1!' -Trigger $trigger -TaskName Update-Workstation
+        Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Beginning of New-WorkstationAutomatedTask"
+        Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Creating Scheduled Task for Update-Workstation"
+        $action = New-ScheduledTaskAction -Execute 'powershell' -Argument "Import-Module $ProjectFilePath\Marvel-Lab.psm1; Update-Workstation -ProjectFilePath $ProjectFilePath -Automate"
+        $ScheduledTask = Register-ScheduledTask -Action $action -User 'marvel\thor' -Password 'GodofLightning1!' -TaskName Update-Workstation
         Start-ScheduledTask -TaskName Update-Workstation
 }
