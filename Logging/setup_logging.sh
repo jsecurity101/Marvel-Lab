@@ -3,14 +3,16 @@
 #References: https://stackoverflow.com/ && https://github.com/target/huntlib.git
 
 SETUP_SPLUNK="False"
-SETUP_ELASTIC="False"
-SETUP_ZEEK="False"
+SETUP_ELASTIC="True"
+SETUP_ZEEK="True"
+
+HOST_IP=localhost
 
 # Checking to see if script is running as root
 if [[ $EUID -ne 0 ]]; then
-  echo -e "\x1B[01;31m[X] Script Must Be Run As ROOT\x1B[0m"
-   exit 1
-fi
+	echo -e "\x1B[01;31m[X] Script Must Be Run As ROOT\x1B[0m"
+	exit 1
+	fi
 
 echo -e "\x1B[01;34m[*] Setting timezone to UTC...\x1B[0m"
 timedatectl set-timezone UTC
@@ -23,7 +25,7 @@ if [[ $(which docker) && $(docker compose version) ]]; then
   else
 	echo -e "\x1B[01;31m[*] Docker was not found. See the Read the Docs installation documentation (https://marvel-lab.readthedocs.io/en/latest/subpages/build_steps.html#logging) \x1B[0m"
 	exit 0
-fi
+  fi
 
 # Enabling docker service:
 echo -e "\x1B[01;34m[*] Enabling Docker Service...\x1B[0m"
@@ -49,9 +51,16 @@ if [ "$SETUP_ZEEK" = "True" ]; then
 	fi
 
 	read -p 'Input the network interface you would like Zeek to monitor and press [ENTER]: ' Interface
-	
+
 	echo -e "\x1B[01;34m[*] Creating Zeek:\x1B[0m"
-	docker compose up -d -f ./Config/zeek/zeek-compose.yml
+	docker compose -f ./Config/zeek/zeek-compose.yml up -d
+	fi
+
+# Elastic
+if [ "$SETUP_ELASTIC" = "True" ]; then
+	echo -e "\x1B[01;34m[*] Creating Elastic Stack:\x1B[0m"
+	docker compose -f ./Config/elasticstack/elasticstack-compose.yml up -d
+	fi
 
 # Splunk
 if [ "$SETUP_SPLUNK" = "True" ]; then
@@ -81,9 +90,11 @@ if [ "$SETUP_SPLUNK" = "True" ]; then
 	sleep 10
 	token="$(docker exec -it jupyter-notebooks sh -c 'jupyter notebook list' | grep token | sed 's/.*token=\([^ ]*\).*/\1/')"
 
-	echo -e "\x1B[01;32m[*] Access Splunk at https://$Host_IP/splunk/ ; Credentials - admin:Changeme1! (unless you changed them in the DockerFile)\x1B[0m"
-	echo -e "\x1B[01;32m[*] Access Jupyter Notebook at: http://$Host_IP:8888\x1B[0m"
+	echo -e "\x1B[01;32m[*] Access Splunk at https://$HOST_IP/splunk/ ; Credentials - admin:Changeme1! (unless you changed them in the DockerFile)\x1B[0m"
+	echo -e "\x1B[01;32m[*] Access Jupyter Notebook at: http://$HOST_IP:8888\x1B[0m"
 	echo -e "\x1B[01;32m[*] Jupyter Notebook token is $token\x1B[0m"
+	fi
 
-echo -e "\x1B[01;32m[*] Access Portainer at https://$Host_IP/portainer/ \x1B[0m"
+# Print out info
+echo -e "\x1B[01;32m[*] Access Portainer at https://$HOST_IP/portainer/ \x1B[0m"
 
