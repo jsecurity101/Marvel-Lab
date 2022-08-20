@@ -33,7 +33,9 @@
                         'Join-Domain',
                         'Update-Workstation',
                         'New-WorkstationAutomatedTask',
-                        'Get-Tools'
+                        'Get-Tools',
+                        'Install-Logging',
+                        'Uninstall-Logging'
                         
                         
     
