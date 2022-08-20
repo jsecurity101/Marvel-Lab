@@ -5,13 +5,11 @@ function Install-Logging {
         [string]
         $ProjectFilePath,
 
-        [Parameter(Mandatory=$true)]
-        [switch]
+        [string]
         [ValidateSet('Olaf-Hartong-Modular', 'Marvel-Lab-Research')]
         $SysmonConfigType, 
 
-        [Parameter(Mandatory=$true)]
-        [switch]
+        [string]
         [ValidateSet('Splunk', 'ELK')]
         $SIEM,
 
@@ -146,7 +144,7 @@ function Uninstall-Logging {
         $ProjectFilePath,
 
         [Parameter(Mandatory=$true)]
-        [switch]
+        [string]
         [ValidateSet('Splunk', 'ELK')]
         $SIEM
     )
@@ -176,7 +174,7 @@ function Uninstall-Logging {
             else {
                 Write-Host "[*] Uninstalling Splunk and removing its folders"
                 Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Uninstalling Splunk and removing its folders"
-                Stop-Service SplunkForwarder
+                Stop-Service -Name SplunkForwarder -Force
                 $UniversalForwarder = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "UniversalForwarder"}
                 $UniversalForwarder.Uninstall()
                 Remove-Item "C:\splunk_forwarder.msi"
