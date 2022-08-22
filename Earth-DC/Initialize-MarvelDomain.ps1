@@ -1,5 +1,38 @@
 function Initialize-MarvelDomain {
+    <#
+    .SYNOPSIS
+    Creates marvel domain.
 
+    .DESCRIPTION
+    Initialize-MarvelDomain creates the marvel.local domain.
+
+    .PARAMETER HostName
+    Name of the current machine.
+
+    .PARAMETER DomainName
+    Domain of the current machine.
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+
+     .PARAMETER UserCSVFilePath
+    Path of the Marvel-Lab directory.
+
+    .PARAMETER WallpaperFilePath
+    Path to the wallpaper you want to use.
+
+    .PARAMETER GPOFilePath
+    Path to the GPO files.
+     
+    .PARAMETER Automate
+    Switch statement to create scheduled task - New-DCAutomatedTask.
+    
+    .EXAMPLE
+    Initialize-MarvelDomain -Password 'Changeme1!'
+    
+    .EXAMPLE
+    Initialize-MarvelDomain -Password 'Changeme1!' -Automate
+    #>
     param(
         [string]
         $HostName = (Get-WmiObject win32_computersystem).Name, 

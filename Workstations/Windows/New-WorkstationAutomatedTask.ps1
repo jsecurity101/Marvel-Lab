@@ -1,4 +1,22 @@
 function New-WorkstationAutomatedTask {
+
+    <#
+    .SYNOPSIS
+    Creates Update-Workstation scheduled task.
+
+    .DESCRIPTION
+    New-WorkstationAutomatedTask was designed to create a scheduled task for Update-Workstation with the user marvel\thor.
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+    
+    .EXAMPLE
+    New-WorkstationAutomatedTask
+
+    .EXAMPLE
+    New-WorkstationAutomatedTask -ProjectFilePath C:\Marvel-Lab
+    #>
+
     param(
         [string]
         $ProjectFilePath = 'C:\Marvel-Lab'

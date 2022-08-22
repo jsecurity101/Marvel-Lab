@@ -1,4 +1,37 @@
 function Update-Domain {
+
+    <#
+    .SYNOPSIS
+    Updates domain controllers AD Groups, GPOs, and AD Users.
+
+    .DESCRIPTION
+    Update-Domain updates the domain controllers users, settings, and policies.
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+
+     .PARAMETER UserCSVFilePath
+    Path of the Marvel-Lab directory.
+
+    .PARAMETER WallpaperFilePath
+    Path to the wallpaper you want to use.
+
+    .PARAMETER GPOFilePath
+    Path to the GPO files.
+     
+    .PARAMETER Automate
+    Switch statement to remove previous scheduled tasks.
+    
+    .EXAMPLE
+    Update-Domain
+    
+    .EXAMPLE
+    Update-Workstation -Automate
+
+    .EXAMPLE
+    Update-Workstation $UserCSVFilePath C:\marvel_users.csv -Automate
+    #>
+
     param(
         [string]
         $UserCSVFilePath = 'C:\Marvel-Lab\Earth-DC\Import-Marvel\marvel_users.csv',

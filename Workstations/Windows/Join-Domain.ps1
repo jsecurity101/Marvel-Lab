@@ -1,4 +1,25 @@
 function Join-Domain {
+
+    <#
+    .SYNOPSIS
+    Joins workstation to marvel domain.
+
+    .DESCRIPTION
+    Join-Domain was designed to add the current workstation to the marvel domain.
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+
+    .PARAMETER Automate
+    Switch statement to create a scheduled task to run New-WorkstationAutomatedTask
+    
+    .EXAMPLE
+    Join-Domain
+
+    .EXAMPLE
+    Join-Domain -ProjectFilePath C:\Marvel-Lab -Automate
+    #>
+
     param(
         [string]
         $ProjectFilePath = 'C:\Marvel-Lab',

@@ -1,4 +1,29 @@
 function Update-Workstation {
+
+    <#
+    .SYNOPSIS
+    Updates workstation's administators/RDP group.
+
+    .DESCRIPTION
+    Update-Workstation was designed to update various workstation settings/policies.
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+     
+    .PARAMETER Automate
+    Switch statement to create a scheduled task to run Get-Tools
+    
+    .EXAMPLE
+    Update-Workstation
+    
+    .EXAMPLE
+    Update-Workstation -Automate
+
+    .EXAMPLE
+    Update-Workstation -ProjectFilePath C:\Marvel-Lab -Automate
+    #>
+
+
     param(
         [string]
         $ProjectFilePath = 'C:\Marvel-Lab',

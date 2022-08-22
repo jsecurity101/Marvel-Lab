@@ -1,4 +1,33 @@
 function New-DCAutomatedTask {
+    <#
+    .SYNOPSIS
+    Creates Update-Domain scheduled task.
+
+    .DESCRIPTION
+    New-DCAutomatedTask was designed to create a scheduled task for Update-Domain with the user marvel\Administrator.
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+
+    .PARAMETER UserCSVFilePath
+    Path of the Marvel-Lab directory.
+
+    .PARAMETER WallpaperFilePath
+    Path to the wallpaper you want to use.
+
+    .PARAMETER GPOFilePath
+    Path to the GPO files.
+    
+    .PARAMETER Password
+    Administrators password.
+
+    .EXAMPLE
+    New-DCAutomatedTask -Password 'Changeme1!'
+
+    .EXAMPLE
+    New-DCAutomatedTask -Password 'Changeme1!' -ProjectFilePath C:\Marvel-Lab
+    #>
+
     param(
         [string]
         [ValidateNotNullOrEmpty()]

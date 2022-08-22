@@ -1,4 +1,31 @@
 function Rename-Workstation {
+
+    <#
+    .SYNOPSIS
+    Rename's the workstation.
+
+    .DESCRIPTION
+    Rename-Workstation was designed to update the workstations name to Asgard-Wrkstn or Wakanda-Wrkstn.
+
+    .PARAMETER WorkstationName
+    The new name of the workstation (Asgard-Wrkstn/Wakanda-Wrkstn) 
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+     
+    .PARAMETER Automate
+    Switch statement to create a scheduled task to run Join-Domain
+    
+    .EXAMPLE
+    Rename-Workstation
+    
+    .EXAMPLE
+    Rename-Workstation -WorkstationName 'Wakanda-Wrkstn' -Automate
+
+    .EXAMPLE
+    Rename-Workstation -ProjectFilePath C:\Marvel-Lab -Automate
+    #>
+
     param(
         [string]
         [ValidateSet('Asgard-Wrkstn', 'Wakanda-Wrkstn')]

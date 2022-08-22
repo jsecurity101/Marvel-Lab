@@ -1,21 +1,59 @@
 function Install-Logging {
-    [CmdletBinding()]
+
+    <#
+    .SYNOPSIS
+    Installs looging tools.
+
+    .DESCRIPTION
+    Install-Logging installs logging tools and the respective programs needed to forward logs to a SIEM.
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+
+    .PARAMETER SysmonConfigType
+    A string value to represent which sysmon config they want to use.
+
+    .PARAMETER SIEM_IP
+    IP address of the SIEM.
+
+    .PARAMETER ELK_Cert_Path
+    File path of the ELK cert file.
+     
+    .PARAMETER ELK
+    Switch statement to specify that the user is wanting to use ELK as their SIEM.
+    
+    .EXAMPLE
+    Install-Logging -SIEM_IP 127.0.0.1
+    
+    .EXAMPLE
+    Install-Logging -SIEM_IP 127.0.0.1 -ELK -ELK_Cert_Path C:\elk.crt -SysmonConfigType Olaf-Hartong-Modular
+    #>
+
+    [CmdletBinding(DefaultParameterSetName = 'Splunk')]
     param(
         [Parameter(Mandatory=$true)]
         [string]
         $ProjectFilePath,
 
+        [Parameter(ParameterSetName = 'ELK')]
+        [Parameter(ParameterSetName = 'Splunk')]
         [string]
         [ValidateSet('Olaf-Hartong-Modular', 'Marvel-Lab-Research')]
-        $SysmonConfigType, 
+        $SysmonConfigType = 'Marvel-Lab-Research', 
 
-        [string]
-        [ValidateSet('Splunk', 'ELK')]
-        $SIEM,
+        [Parameter(Mandatory, ParameterSetName = 'ELK')]
+        [switch]
+        $ELK,
 
+        [Parameter(ParameterSetName = 'ELK')]
+        [Parameter(ParameterSetName = 'Splunk')]
         [Parameter(Mandatory=$true)]
         [string]
-        $SIEM_IP
+        $SIEM_IP, 
+
+        [Parameter(Mandatory, ParameterSetName = 'ELK')]
+        [string]
+        $ELK_Cert_Path
 )
 
     Write-Host "[*] Checking to see if Sysmon is installed on host"
@@ -32,8 +70,9 @@ function Install-Logging {
         New-Item -Path "c:\" -Name "Sysmon" -ItemType "directory"
 
         Write-Host "[*] Downloading Sysmon" -ForegroundColor Green
-        Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Downloading Sysmon"
-        Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\Sysmon.zip
+        Add-Content $ProjectFilePath\Deploymentlog.txt "[*] $SysmonUrlDownloading Sysmon"
+        (New-Object System.Net.WebClient).DownloadFile($SysmonUrl, 'C:\Sysmon\Sysmon.zip')
+        #Invoke-WebRequest $SysmonUrl -OutFile C:\Sysmon\Sysmon.zip
         Expand-Archive -LiteralPath C:\Sysmon\Sysmon.zip -DestinationPath C:\Sysmon\
 
         switch ($SysmonConfigType)
@@ -60,7 +99,7 @@ function Install-Logging {
     Write-Host "[*] Setting up SIEM connection"
     Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Setting up SIEM connection"
 
-    switch ($SIEM) {
+    switch ($PSCmdlet.ParameterSetName) {
         'Splunk'{
             Write-Host "[*] Checking to see if Splunk is installed on host"
             Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Checking to see if Splunk is installed on host"
@@ -101,11 +140,9 @@ function Install-Logging {
             }
             else {
                 #Winlogbeat Arguments:
-                $WinlogbeatVer = "7.13.0"
+                $WinlogbeatVer = "8.3.3"
                 $WinlogbeatUrl = "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-" + $WinlogbeatVer + "-windows-x86_64.zip"
-                $WinlogbeatOutputFile = "winlogbeat.zip"
-                $WinlogbeatConfig = "https://gist.github.com/jsecurity101/ec4c829e6d32a984d7ccf4c1e9247590/archive/8d85c6c443704e821a7f53e536be61667c67febd.zip"
-                $WinlogZip = "winlogconfig.zip"
+                $WinlogbeatConfig = "https://gist.github.com/jsecurity101/ec4c829e6d32a984d7ccf4c1e9247590/archive/a880c8c34a398d36c9a8a4f85b3a0f204606a2d2.zip"
     
     
                 Write-Host "[*] Creating winlogbeat path - C:\Winlogbeat" -ForegroundColor Green
@@ -114,19 +151,25 @@ function Install-Logging {
     
                 Write-Host "[*] Installing Winlogbeat" -ForegroundColor Green
                 Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Installing Winlogbeat"
-                Invoke-WebRequest $WinlogbeatUrl -OutFile C:\Winlogbeat\$WinlogbeatOutputFile
-                Expand-Archive -LiteralPath C:\Winlogbeat\$WinlogbeatOutputFile -DestinationPath C:\Winlogbeat\
+                
+                (New-Object System.Net.WebClient).DownloadFile($WinlogbeatUrl, 'C:\Winlogbeat\winlogbeat.zip')
+                #Invoke-WebRequest $WinlogbeatUrl -OutFile C:\Winlogbeat\$WinlogbeatOutputFile
+                Expand-Archive -LiteralPath C:\Winlogbeat\winlogbeat.zip -DestinationPath C:\Winlogbeat\
     
-                Invoke-WebRequest $WinlogbeatConfig -OutFile C:\Winlogbeat\$WinlogZip
-                Expand-Archive -LiteralPath C:\Winlogbeat\$WinlogZip -DestinationPath C:\Winlogbeat\
+                (New-Object System.Net.WebClient).DownloadFile($WinlogbeatConfig, 'C:\Winlogbeat\winlogconfig.zip')
+                #Invoke-WebRequest $WinlogbeatConfig -OutFile C:\Winlogbeat\$WinlogZip
+                Expand-Archive -LiteralPath C:\Winlogbeat\winlogconfig.zip -DestinationPath C:\Winlogbeat\
     
                 Remove-Item C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml
-                Move-Item C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd\winlogbeat.yml C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\
-                Remove-Item C:\Winlogbeat\$WinlogZip, C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-8d85c6c443704e821a7f53e536be61667c67febd
+                Move-Item C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-a880c8c34a398d36c9a8a4f85b3a0f204606a2d2\winlogbeat.yml C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\
+                Remove-Item 'C:\Winlogbeat\winlogconfig.zip', C:\Winlogbeat\ec4c829e6d32a984d7ccf4c1e9247590-a880c8c34a398d36c9a8a4f85b3a0f204606a2d2
+
+                $ELKCertPath = $ELK_Cert_Path.Replace('\', '\\')
     
-                (Get-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml).replace('<HELK-IP>', $SIEM_IP) | Set-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml
+                (Get-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml).replace('<ELK-IP>', $SIEM_IP) | Set-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml
+                (Get-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml).replace('<ELK_Cert_Path>', $ELKCertPath) | Set-Content C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\winlogbeat.yml
     
-                Remove-Item C:\Winlogbeat\$WinlogbeatOutputFile 
+                Remove-Item 'C:\Winlogbeat\winlogbeat.zip'
     
                 & C:\Winlogbeat\winlogbeat-$WinlogbeatVer-windows-x86_64\install-service-winlogbeat.ps1 
     
@@ -137,6 +180,21 @@ function Install-Logging {
 }
 
 function Uninstall-Logging {
+
+<#
+    .SYNOPSIS
+    Uninstalls looging tools.
+
+    .DESCRIPTION
+    Uninstall-Logging installs logging tools and the respective programs needed to forward logs to a SIEM.
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+
+    .PARAMETER SIEM
+    A string value to represent which SIEM (ELK/Splunk) they are using.
+    #>
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
@@ -191,6 +249,7 @@ function Uninstall-Logging {
                 Write-Host "[*] Uninstalling Winlogbeat and removing its folders"
                 Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Uninstalling Winlogbeat and removing its folders"
                 Stop-Service winlogbeat
+                & C:\Winlogbeat\winlogbeat-8.3.3-windows-x86_64\uninstall-service-winlogbeat.ps1 
                 Remove-Item "C:\Winlogbeat\" -Recurse -Force
             }
         }

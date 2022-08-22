@@ -1,4 +1,43 @@
 function Get-Tools {
+
+    <#
+    .SYNOPSIS
+    Gets blue and red tools for the workstation.
+
+    .DESCRIPTION
+    Get-Tools was designed to pull down blue and red team tools for the user to use for analysis/simulation.
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+
+    .PARAMETER Automate
+    Switch statement to create a scheduled task to run New-WorkstationAutomatedTask
+    
+    .PARAMETER FolderPath
+    Specifies the path you want the tool directory to be places
+
+    .PARAMETER DirectoryName
+    Specifies the name of the tool directory 
+
+    .PARAMETER Blue
+    Switch statement to pull blue team tools
+
+    .PARAMETER Red
+    Switch statement to pull red team tools
+
+    .EXAMPLE
+    Get-Tools 
+
+    .EXAMPLE
+    Get-Tools -ProjectFilePath C:\Marvel-Lab -Automate 
+
+    .EXAMPLE
+    Get-Tools -ProjectFilePath C:\Marvel-Lab -Automate -Red
+
+    .EXAMPLE
+    Get-Tools -ProjectFilePath C:\Marvel-Lab -Automate -Blue
+    #>
+
     [CmdletBinding(DefaultParameterSetName = 'Full')]
     param (
 

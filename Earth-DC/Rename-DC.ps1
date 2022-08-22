@@ -1,4 +1,32 @@
 function Rename-DC {
+
+    <#
+    .SYNOPSIS
+    Rename's the Domain Controller.
+
+    .DESCRIPTION
+    Rename-DC was designed to update the domain controller's name.
+
+    .PARAMETER DomainControllerName
+    The new name of the Domain Controller (Asgard-Wrkstn/Wakanda-Wrkstn) 
+
+    .PARAMETER ProjectFilePath
+    Path of the Marvel-Lab directory.
+
+    .PARAMETER Password
+    Password of the current administrator
+     
+    .PARAMETER Automate
+    Switch statement to create a scheduled task to run Initialize-MarvelDomain
+    
+    .EXAMPLE
+    Rename-DC -Password 'Changeme1!'
+    
+    .EXAMPLE
+    Rename-DC -Password 'Changeme1!' -Automate
+
+    #>
+
     param(
  
         [string]
