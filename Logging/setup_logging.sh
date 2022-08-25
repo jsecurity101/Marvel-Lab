@@ -80,6 +80,13 @@ if [ "$SETUP_ELASTIC" = "True" ]; then
 		sed -i "s/KIBANA_PASSWORD=/KIBANA_PASSWORD=$NEW_ELASTIC_PASSWORD/" Config/elasticstack/.env
 		fi
 
+	echo -e "\x1B[01;34m[*] Checking vm.max_map_count\x1B[0m"
+	if [[ "$(sysctl vm.max_map_count)" != "vm.max_map_count = 262144" ]]; then
+		echo -e "\x1B[01;34m[*] Updating vm.max_map_count in /etc/sysctl.conf\x1B[0m"
+		echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+		sysctl -p
+		fi
+
 	echo -e "\x1B[01;34m[*] Creating Elastic Stack:\x1B[0m"
 	docker compose -f ./Config/elasticstack/elasticstack-compose.yml up -d
 	fi
