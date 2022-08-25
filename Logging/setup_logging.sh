@@ -28,9 +28,12 @@ if [[ $(which docker) && $(docker compose version) ]]; then
   fi
 
 # Enabling docker service:
-echo -e "\x1B[01;34m[*] Enabling Docker Service...\x1B[0m"
-systemctl enable docker.service
-
+echo -e "\x1B[01;34m[*] Checking for the Docker service...\x1B[0m"
+if [[ $(systemctl list-unit-files --state=enabled | grep docker.service) ]]; then
+	echo -e "\x1B[01;32m[*] Docker service already enabled\x1B[0m"
+	else
+		systemctl enable docker.service
+	fi
 # Starting containers
 echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
 docker compose up -d
