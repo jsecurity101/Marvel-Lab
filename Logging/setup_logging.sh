@@ -40,20 +40,29 @@ docker compose up -d
 
 # Zeek
 if [ "$SETUP_ZEEK" = "True" ]; then
-	read -r -p "Zeek needs a network interface to monitor. Would you like to print out your interfaces to see which one to monitor? [y/N] " response
-
-	if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
-	then
-		if hash ifconfig 2>/dev/null; then
-			ifconfig
+	export $(grep -v '^#' Config/zeek/.env | xargs)
+	echo -e "Zeek needs a network interface to monitor. The currently configured interface is '${INTERFACE}'."
+	read -r -p "Would you like to change the selected interface? You'll need to set the interface if this is the first time running this script. Otherwise you can set it in Config/zeek/.env [y/N] " response1
+	
+	if [[ "$response1" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+		
+		read -r -p "Would you like to print out your interfaces to see which one to monitor? [y/N] " response2
+		
+		if [[ "$response2" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+			if hash ifconfig 2>/dev/null; then
+				ifconfig
+			else
+				ip address
+			fi
 		else
-			ip address
+			echo -e "\x1B[01;34m[*] Moving on...\x1B[0m"
 		fi
-	else
-		echo -e "\x1B[01;34m[*] Moving on...\x1B[0m"
-	fi
 
-	read -p 'Input the network interface you would like Zeek to monitor and press [ENTER]: ' Interface
+		read -p 'Input the network interface you would like Zeek to monitor and press [ENTER]: ' INTERFACE
+
+		echo -e "\x1B[01;34m[*] Writing desired interface to Config/zeek/.env\x1B[0m"
+		echo "INTERFACE=${INTERFACE}" > ./Config/zeek/.env
+	fi
 
 	echo -e "\x1B[01;34m[*] Creating Zeek:\x1B[0m"
 	docker compose -f ./Config/zeek/zeek-compose.yml up -d
