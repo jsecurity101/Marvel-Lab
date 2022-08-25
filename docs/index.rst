@@ -2,60 +2,6 @@
 Marvel Lab
 ***********
 
-.. meta::
-   description lang=en: A collection of scripts that will help automate the build process for a Marvel domain.
+ :doc:`v1.0 <subpages/v1.0>`
 
-.. image:: /images/thor-rocket.gif
-   :align: center
-   :alt: thor-rocket
-
-Installation: 
--------------
-Go see - :doc:`Build Steps <subpages/build_steps>`. 
-
-Logging: 
---------
-This lab is meant to be used for research and detection development. The logging information for this lab is held within the - :doc:`Logging <subpages/logging>` page. If there is any other telemtry you would like to see, let us know! 
-
-Troubleshooting:
-----------------
-Before creating an issue within the Github, please check out the - :doc:`Troubleshooing <subpages/troubleshooting>` page. 
-
-Scripts: 
---------
-Many scripts are being used for this build, for explanations on these scripts please see - :doc:`Script Explanations <subpages/script_explanations>`. 
-
-
-Tools: 
-------
-Tools for red-teaming, blue-teaming, and debugging are installed. To see the full list, visit the - :doc:`Tools <subpages/tools>` page. If there is any other tools you'd like to see, let us know!
-
-Acknowledgements: 
--------
-
-- `Olaf Hartong`_'s Sysmon Modular `Config`_
-
-
-To Do: 
--------
-
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Lab Info
-
-   subpages/build_steps
-   subpages/troubleshooting
-   subpages/script_explanations
-   subpages/tools
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Logging information
-
-   subpages/logging
-
-.. _Config: https://github.com/olafhartong/sysmon-modular
-.. _Olaf Hartong: https://twitter.com/olafhartong
+ :doc:`v2.0 <subpages/v2.0>`

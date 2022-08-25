@@ -40,6 +40,9 @@ function Update-Domain {
         $WallpaperFilePath = 'C:\Marvel-Lab\images\cap.jpg',
 
         [string]
+        $ProjectFilePath = 'C:\Marvel-Lab',
+
+        [string]
         $GPOFilePath = 'C:\Marvel-Lab\Earth-DC\GPOBackup',
 
         [switch]
