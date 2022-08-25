@@ -34,6 +34,7 @@ if [[ $(systemctl list-unit-files --state=enabled | grep docker.service) ]]; the
 	else
 		systemctl enable docker.service
 	fi
+
 # Starting containers
 echo -e "\x1B[01;34m[*] Starting containers\x1B[0m"
 docker compose up -d
