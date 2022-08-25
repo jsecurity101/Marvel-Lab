@@ -70,6 +70,15 @@ if [ "$SETUP_ZEEK" = "True" ]; then
 
 # Elastic
 if [ "$SETUP_ELASTIC" = "True" ]; then
+	export $(grep -v '^#' Config/elasticstack/.env | xargs)
+
+	if [ "$ELASTIC_PASSWORD" = '' ]; then
+		echo -e "\x1B[01;34m[*] Elastic and Kibana need a password. You can enter it here, or close this script and configure in Config/elasticstack/.env\x1B[0m"
+		read -p 'Enter your desired password: ' NEW_ELASTIC_PASSWORD
+		sed -i "s/ELASTIC_PASSWORD=/ELASTIC_PASSWORD=$NEW_ELASTIC_PASSWORD/" Config/elasticstack/.env
+		sed -i "s/KIBANA_PASSWORD=/KIBANA_PASSWORD=$NEW_ELASTIC_PASSWORD/" Config/elasticstack/.env
+		fi
+
 	echo -e "\x1B[01;34m[*] Creating Elastic Stack:\x1B[0m"
 	docker compose -f ./Config/elasticstack/elasticstack-compose.yml up -d
 	fi
@@ -109,4 +118,3 @@ if [ "$SETUP_SPLUNK" = "True" ]; then
 
 # Print out info
 echo -e "\x1B[01;32m[*] Access Portainer at https://$HOST_IP/portainer/ \x1B[0m"
-
