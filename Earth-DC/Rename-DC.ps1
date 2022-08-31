@@ -55,7 +55,7 @@ function Rename-DC {
 
     if ($Automate){
         Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Creating ScheduledTask for Initialize-MarvelDomain"
-        $action = New-ScheduledTaskAction -Execute 'powershell' -Argument "Import-Module $ProjectFilePath\Marvel-Lab.psm1; Initialize-MarvelDomain -Automate -Password $Password 2>&1 | tee -filePath $ProjectFilePath\Earth-DC\deploymentlog.txt"
+        $action = New-ScheduledTaskAction -Execute 'powershell' -Argument "Import-Module $ProjectFilePath\Marvel-Lab.psm1; Initialize-MarvelDomain -Automate -Password $Password 2>&1 | tee -filePath $ProjectFilePath\scheduledtasklog.txt"
         $trigger = New-ScheduledTaskTrigger -AtLogOn
         $principal = New-ScheduledTaskPrincipal -UserID "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount -RunLevel Highest
         $ScheduledTask = Register-ScheduledTask -Action $action -Trigger $trigger  -Principal $Principal -TaskName Initialize-MarvelDomain 

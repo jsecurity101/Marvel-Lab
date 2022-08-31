@@ -11,7 +11,7 @@ Marvel Lab
 
 Installation: 
 -------------
-Go see - :doc:`Build Steps <v1-build_steps>`. 
+Go see - :doc:`Build Steps <.\v1-build_steps>`. 
 
 Logging: 
 --------
