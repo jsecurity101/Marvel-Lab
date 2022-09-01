@@ -10,9 +10,9 @@ Documentation on the project can be found project's [ReadTheDocs](https://marvel
 
 ## Support: 
 
-* Windows 10 +
+* Windows 10+
 * Windows Server 2016 +
-* Ubuntu 18 +
+* Ubuntu 22.04+
 * MacOS Catalina
 
 # Authors:

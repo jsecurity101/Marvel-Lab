@@ -1,0 +1,53 @@
+services:
+  splunk:
+    container_name: splunk
+    image: splunk/splunk:${SPLUNK_VER}
+    ports:
+      - 9997:9997
+      - 8089:8089
+    environment:
+      SPLUNK_PASSWORD: 'Changeme1!'
+      SPLUNK_START_ARGS: '--accept-license'
+      #SPLUNK_UPGRADE: 'true' # Only use when upgrading splunk. Modify SPLUNK_VER in .env to the version you want
+    volumes:
+      - splunk_etc:/opt/splunk/etc
+      - splunk_var:/opt/splunk/var
+      - ./Config/splunk/web.conf:/opt/splunk/etc/system/local/web.conf
+      - ./Config/zeek/zeek-logs/:/logs/zeek-logs/
+    labels:
+      - "traefik.http.routers.splunk.rule=PathPrefix(`/splunk`)"
+      - "traefik.http.routers.splunk.middlewares=https-redirect"
+      - "traefik.http.routers.splunk-secure.tls=true"
+      - "traefik.http.routers.splunk-secure.rule=PathPrefix(`/splunk`)"
+      - "traefik.http.services.splunk.loadbalancer.server.port=8000"
+    restart: unless-stopped
+
+  jupyter-notebooks:
+    container_name: jupyter-notebooks
+    image: jupyter/all-spark-notebook:${JUPYTER_VER}
+    ports:
+      - "8888:8888"
+    environment:
+      - NB_UID=1001
+      - NB_GID=1001
+      - JUPYTER_ENABLE_LAB=yes
+      - NB_USER=splunk
+      - CHOWN_EXTRA=/home/splunk
+    depends_on:
+      - "splunk"
+    volumes:
+      - splunk_etc:/home/splunk/etc
+      - splunk_var:/home/splunk/var
+      - jupyter-notebooks:/home/jovyan
+    labels:
+      - "traefik.http.routers.jupyter.rule=PathPrefix(`/jupyter`)"
+      - "traefik.http.routers.jupyter.middlewares=https-redirect"
+      - "traefik.http.routers.jupyter-secure.tls=true"
+      - "traefik.http.routers.jupyter-secure.rule=PathPrefix(`/jupyter`)"
+      - "traefik.http.services.jupyter.loadbalancer.server.port=8888"
+    restart: always
+
+volumes:
+  jupyter-notebooks:
+  splunk_etc:
+  splunk_var:
