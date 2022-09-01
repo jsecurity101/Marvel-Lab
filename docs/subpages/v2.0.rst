@@ -30,26 +30,5 @@ Acknowledgements:
 
 - `Olaf Hartong`_'s Sysmon Modular `Config`_
 
-
-To Do: 
--------
-
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Lab Info
-
-   v2-build_steps
-   v2-troubleshooting
-   v2-tools
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Logging information
-
-   v2-logging
-
 .. _Config: https://github.com/olafhartong/sysmon-modular
 .. _Olaf Hartong: https://twitter.com/olafhartong

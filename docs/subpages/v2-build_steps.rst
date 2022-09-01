@@ -61,19 +61,22 @@ Install the required scripts on the Ubuntu box first before setting up logging o
 
 
 On Ubuntu box:
-###############
+**************
 
-1. On the Ubuntu machine download the Marvel-Lab repository.
-2. Go into ``Marvel-Lab\Logging\splunk`` and run ``splunk_logging.sh``.
+1. Install Docker by following these steps, assuming you’re on Ubuntu: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository.
+2. Install Docker Compose by following the documentation here: https://docs.docker.com/compose/install/.
+3. On the Ubuntu machine download the Marvel-Lab repository.
+4. Go into ``Marvel-Lab\Logging\`` and run ``setup_logging.sh``.
 
-**Note**: Only Ubuntu 18+ is supported for this script.
+**Note**: Only Ubuntu 22.04+ is supported for this script.
+
 
 On Windows Workstation and DC:
-##############################
+******************************
 
-**In order to recieve logs in Splunk, the splunk_logging.sh script must have succeeded on the Logger box (Ubuntu).**
+**Note**: In order to receive logs in Splunk, the ``setup_logging.sh`` script must have succeeded on the Logger box (Ubuntu).
 
-1. Go into Server and download this repo into the ``C:\`` directory. If you downloaded the .zip of the repo, move the child folder to the C: directory and rename to ``Marvel-Lab``.
+1. Go into the Server and download this repo into the ``C:\`` directory. If you downloaded the .zip of the repo, move the child folder to the C:\ directory and rename to ``Marvel-Lab``.
 2. Go into the ``Marvel-Lab`` folder.
 3. Import Marvel-Lab Module - ``Import-Module Marvel-Lab.psd1``
 4. Logging supports ELK and Splunk

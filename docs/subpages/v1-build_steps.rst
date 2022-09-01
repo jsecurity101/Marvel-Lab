@@ -74,7 +74,7 @@ On Ubuntu box:
 1. Install Docker by following these steps, assuming you’re on Ubuntu: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository.
 2. Install Docker Compose by following the documentation here: https://docs.docker.com/compose/install/.
 3. On the Ubuntu machine download the Marvel-Lab repository.
-4. Go into ``Marvel-Lab\Logging\splunk`` and run ``setup_logging.sh``.
+4. Go into ``Marvel-Lab\Logging\splunk`` and run ``splunk_logging.sh``.
 
 **Note**: Only Ubuntu 22.04+ is supported for this script.
 
@@ -82,7 +82,7 @@ On Ubuntu box:
 On Windows Workstation and DC:
 ******************************
 
-**Note**: In order to recieve logs in Splunk, the ``setup_logging.sh`` script must have succeeded on the Logger box (Ubuntu).
+**Note**: In order to receive logs in Splunk, the ``splunk_logging.sh`` script must have succeeded on the Logger box (Ubuntu).
 
 1. Download the Marvel-Lab repository in the ``C:\`` directory. (If you
    downloaded the .zip of the repo, move the child folder to the

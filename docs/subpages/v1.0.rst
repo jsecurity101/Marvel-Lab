@@ -19,7 +19,7 @@ This lab is meant to be used for research and detection development. The logging
 
 Troubleshooting:
 ----------------
-Before creating an issue within the Github, please check out the - :doc:`Troubleshooing <v1-troubleshooting>` page. 
+Before creating an issue within the Github, please check out the - :doc:`Troubleshooting <v1-troubleshooting>` page. 
 
 Scripts: 
 --------
@@ -35,27 +35,6 @@ Acknowledgements:
 
 - `Olaf Hartong`_'s Sysmon Modular `Config`_
 
-
-To Do: 
--------
-
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Lab Info
-
-   build_steps
-   troubleshooting
-   script_explanations
-   tools
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Logging information
-
-   logging
 
 .. _Config: https://github.com/olafhartong/sysmon-modular
 .. _Olaf Hartong: https://twitter.com/olafhartong
