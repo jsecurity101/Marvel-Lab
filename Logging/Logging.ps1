@@ -82,7 +82,7 @@ function Install-Logging {
             }
             'Marvel-Lab-Research'
             {
-                $SysmonConfig = "https://raw.githubusercontent.com/jsecurity101/Marvel-Lab/master/Logging/research-sysmon-config.xml"
+                $SysmonConfig = "https://raw.githubusercontent.com/jsecurity101/Marvel-Lab/master/Logging/Config/Windows/research-sysmon-config.xml"
             }
         }
 
