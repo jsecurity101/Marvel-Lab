@@ -40,16 +40,16 @@ To Do:
    :hidden:
    :caption: Lab Info
 
-   build_steps
-   troubleshooting
-   tools
+   v2-build_steps
+   v2-troubleshooting
+   v2-tools
 
 .. toctree::
    :maxdepth: 2
    :hidden:
    :caption: Logging information
 
-   logging
+   v2-logging
 
 .. _Config: https://github.com/olafhartong/sysmon-modular
 .. _Olaf Hartong: https://twitter.com/olafhartong
