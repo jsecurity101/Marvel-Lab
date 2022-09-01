@@ -1,4 +1,4 @@
-# Marvel-Lab
+# Marvel-Lab 2.0
 A collection of scripts that will help automate the build process for a Marvel domain.
 
 <img src="https://thumbs.gfycat.com/KlutzyIdealisticCanine-size_restricted.gif" width=900 />
@@ -13,7 +13,6 @@ Documentation on the project can be found project's [ReadTheDocs](https://marvel
 * Windows 10+
 * Windows Server 2016 +
 * Ubuntu 22.04+
-* MacOS Catalina
 
 # Authors:
 * [Jonathan Johnson](https://twitter.com/jsecurity101) 
