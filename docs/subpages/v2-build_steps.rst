@@ -65,21 +65,20 @@ On Ubuntu box:
 
 1. On the Ubuntu machine download the Marvel-Lab repository.
 2. Go into ``Marvel-Lab\Logging\splunk`` and run ``splunk_logging.sh``.
-3. Go to the hosts and AFTER Kolide has been set up from the ``On Windows Workstation and DC`` instructions, run ``fleet-pack.sh``. 
 
 **Note**: Only Ubuntu 18+ is supported for this script.
 
 On Windows Workstation and DC:
 ##############################
 
-**In order to recieve logs in Splunk, the ``splunk_logging.sh`` script must have succeeded on the Logger box (Ubuntu).**
+**In order to recieve logs in Splunk, the splunk_logging.sh script must have succeeded on the Logger box (Ubuntu).**
 
 1. Go into Server and download this repo into the ``C:\`` directory. If you downloaded the .zip of the repo, move the child folder to the C: directory and rename to ``Marvel-Lab``.
 2. Go into the ``Marvel-Lab`` folder.
 3. Import Marvel-Lab Module - ``Import-Module Marvel-Lab.psd1``
 4. Logging supports ELK and Splunk
-   For ELK: 
-   * Pull the ``elk.cert`` from the Ubuntu box.
+   * For ELK: 
+   -  Pull the ``elk.cert`` from the Ubuntu box.
    ``Install-Logging -SIEM_IP 127.0.0.1 -ELK -ELK_Cert_Path C:\elk.crt``
 
    * For Splunk: 

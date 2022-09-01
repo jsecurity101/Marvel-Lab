@@ -26,7 +26,6 @@ Analytic Platforms:
 ###################
 
 -  ELK
-   - Zeek is currently unsupported with ELK
    
 -  Splunk
 
@@ -36,11 +35,17 @@ Analytic Platforms:
 
 -  Jupyter Notebooks
 
+Current data sources being shipped to ELK:
+#############################################
+
+-  Windows Events (Window Event Logs (Application, Security, System, Setup))
+-  Sysmon 
+
 Current data sources being shipped to Splunk:
 #############################################
 
--  Windows Events (Window Event Logs (Application, Security, System, Setup) (Windows Workstations))
--  Sysmon (Windows Workstations) 
+-  Windows Events (Window Event Logs (Application, Security, System, Setup))
+-  Sysmon 
 -  Zeek
 
 .. _Sysmon: https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
