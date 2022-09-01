@@ -31,9 +31,8 @@ function Install-Logging {
 
     [CmdletBinding(DefaultParameterSetName = 'Splunk')]
     param(
-        [Parameter(Mandatory=$true)]
         [string]
-        $ProjectFilePath,
+        $ProjectFilePath = 'C:\Marvel-Lab',
 
         [Parameter(ParameterSetName = 'ELK')]
         [Parameter(ParameterSetName = 'Splunk')]
@@ -55,7 +54,7 @@ function Install-Logging {
         [string]
         $ELK_Cert_Path
 )
-
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Write-Host "[*] Checking to see if Sysmon is installed on host"
     Add-Content $ProjectFilePath\Deploymentlog.txt "[*] Checking to see if Sysmon is installed on host"
     $sysmonservice = [bool](Get-Service Sysmon* -ErrorAction SilentlyContinue)

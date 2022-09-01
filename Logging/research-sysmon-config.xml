@@ -1,4 +1,4 @@
-<Sysmon schemaversion="4.81">
+<Sysmon schemaversion="4.82">
    <!-- Capture all hashes -->
    <HashAlgorithms>*</HashAlgorithms>
   <CaptureClipboard />
@@ -175,5 +175,7 @@
 	  </RuleGroup>
 	  <!-- Event ID 26  Not Collecting-->
 	  <FileDeleteDetected onmatch="include" />
+	  <!-- Event ID 27  Not Collecting-->
+	  <FileBlockExecutable onmatch="include" />
   </EventFiltering>
 </Sysmon>
