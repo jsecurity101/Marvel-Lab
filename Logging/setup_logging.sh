@@ -6,7 +6,7 @@ SETUP_SPLUNK="False"
 SETUP_ELASTIC="True"
 SETUP_ZEEK="True"
 
-HOST_IP=localhost
+HOST_IP="<logger-IP>"
 
 # Checking to see if script is running as root
 if [[ $EUID -ne 0 ]]; then
@@ -104,6 +104,14 @@ if [ "$SETUP_SPLUNK" = "True" ]; then
 		done
 	}
 
+	export $(grep -v '^#' Config/splunk/.env | xargs)
+
+	if [ "$SPLUNK_PASSWORD" = '' ]; then
+		echo -e "\x1B[01;34m[*] Splunk needs a password. You can enter it here, or close this script and configure in Config/splunk/.env\x1B[0m"
+		read -p 'Enter your desired password: ' NEW_SPLUNK_PASSWORD
+		sed -i "s/SPLUNK_PASSWORD=/SPLUNK_PASSWORD=$NEW_SPLUNK_PASSWORD/" Config/splunk/.env
+		fi
+		
 	# Wait for splunk to finish installing
 	splunk_healthcheck
 
