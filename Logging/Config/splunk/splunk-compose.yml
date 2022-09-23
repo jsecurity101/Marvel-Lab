@@ -5,15 +5,16 @@ services:
     ports:
       - 9997:9997
       - 8089:8089
+      - 8000:8000
     environment:
-      SPLUNK_PASSWORD: 'Changeme1!'
+      SPLUNK_PASSWORD: $SPLUNK_PASSWORD
       SPLUNK_START_ARGS: '--accept-license'
       #SPLUNK_UPGRADE: 'true' # Only use when upgrading splunk. Modify SPLUNK_VER in .env to the version you want
     volumes:
       - splunk_etc:/opt/splunk/etc
       - splunk_var:/opt/splunk/var
-      - ./Config/splunk/web.conf:/opt/splunk/etc/system/local/web.conf
-      - ./Config/zeek/zeek-logs/:/logs/zeek-logs/
+      - ./web.conf:/opt/splunk/etc/system/local/web.conf
+      - ../zeek/zeek-logs/:/logs/zeek-logs/
     labels:
       - "traefik.http.routers.splunk.rule=PathPrefix(`/splunk`)"
       - "traefik.http.routers.splunk.middlewares=https-redirect"
