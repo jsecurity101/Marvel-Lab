@@ -6,7 +6,7 @@ SETUP_SPLUNK="False"
 SETUP_ELASTIC="True"
 SETUP_ZEEK="True"
 
-HOST_IP=localhost
+HOST_IP="<logger-IP>"
 
 # Checking to see if script is running as root
 if [[ $EUID -ne 0 ]]; then
@@ -104,12 +104,24 @@ if [ "$SETUP_SPLUNK" = "True" ]; then
 		done
 	}
 
+	export $(grep -v '^#' Config/splunk/.env | xargs)
+
+	if [ "$SPLUNK_PASSWORD" = '' ]; then
+		echo -e "\x1B[01;34m[*] Splunk needs a password. You can enter it here, or close this script and configure in Config/splunk/.env\x1B[0m"
+		read -p 'Enter your desired password: ' NEW_SPLUNK_PASSWORD
+		sed -i "s/SPLUNK_PASSWORD=/SPLUNK_PASSWORD=$NEW_SPLUNK_PASSWORD/" Config/splunk/.env
+		fi
+		
+
+	# Start Splunk
+	docker compose -f ./Config/splunk/splunk-compose.yml up -d
+
 	# Wait for splunk to finish installing
 	splunk_healthcheck
 
 	# The 'docker cp' commands are needed after Splunk install, otherwise our custom config would be overwritten
-	docker cp splunk/inputs.conf splunk:/opt/splunk/etc/system/local/inputs.conf
-	docker cp splunk/indexes.conf splunk:/opt/splunk/etc/system/local/indexes.conf
+	docker cp Config/splunk/inputs.conf splunk:/opt/splunk/etc/system/local/inputs.conf
+	docker cp Config/splunk/indexes.conf splunk:/opt/splunk/etc/system/local/indexes.conf
 	echo -e "\x1B[01;32m[*] Restarting splunk to apply inputs.conf and indexes.conf\x1B[0m"
 	docker restart splunk
 	splunk_healthcheck
@@ -117,11 +129,10 @@ if [ "$SETUP_SPLUNK" = "True" ]; then
 	# Checking Jupyter Notebooks
 	echo -e "\x1B[01;34m[*] Checking Jupyter Notebooks...\x1B[0m"
 	sleep 10
-	token="$(docker exec -it jupyter-notebooks sh -c 'jupyter notebook list' | grep token | sed 's/.*token=\([^ ]*\).*/\1/')"
+	token="$(docker logs jupyter-notebooks 2>&1 | grep "ServerApp]  or http" | cut -d "?" -f 2)"
 
-	echo -e "\x1B[01;32m[*] Access Splunk at https://$HOST_IP/splunk/ ; Credentials - admin:Changeme1! (unless you changed them in the DockerFile)\x1B[0m"
-	echo -e "\x1B[01;32m[*] Access Jupyter Notebook at: http://$HOST_IP:8888\x1B[0m"
-	echo -e "\x1B[01;32m[*] Jupyter Notebook token is $token\x1B[0m"
+	echo -e "\x1B[01;32m[*] Access Splunk at http://$HOST_IP:8000 with the username 'admin'\x1B[0m"
+	echo -e "\x1B[01;32m[*] Access Jupyter Notebook at: http://$HOST_IP:8888/lab?$token \x1B[0m"
 	fi
 
 # Print out info
