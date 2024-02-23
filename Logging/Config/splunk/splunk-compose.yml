@@ -9,6 +9,7 @@ services:
     environment:
       SPLUNK_PASSWORD: $SPLUNK_PASSWORD
       SPLUNK_START_ARGS: '--accept-license'
+      SPLUNK_APPS_URL: https://github.com/splunk/security_content/releases/download/v4.25.0/DA-ESS-ContentUpdate-latest.tar.gz
       #SPLUNK_UPGRADE: 'true' # Only use when upgrading splunk. Modify SPLUNK_VER in .env to the version you want
     volumes:
       - splunk_etc:/opt/splunk/etc
